@@ -1,3 +1,9 @@
+> **Licensing transition (2026-10-19):** inherited standalone sample builds,
+> GCC v10/v11/v13 runtime copies, and unqualified sample workflows have been
+> retired. Integrating applications supply matching audited C++17 runtime
+> sources. Build commands and design details below are historical;
+> see the component THIRD_PARTY_NOTICES.md for current ownership and licensing.
+
 C++ FreeRTOS GCC
 ================
 
