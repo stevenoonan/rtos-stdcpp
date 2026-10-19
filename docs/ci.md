@@ -1,5 +1,11 @@
 # C++17 continuous integration
 
+**Rollout status (2026-10-19):** implementation and local validation are ready.
+The owner requested keeping these changes local. No hosted run or remote policy
+configuration is claimed. Hosted execution is required before Step 7 can be
+marked fully complete; server-side merge enforcement is separately pending by
+the owner's explicit choice.
+
 The library's `C++17 qualification` workflow uses only GitHub-hosted Ubuntu 24.04
 x86_64 runners. Pushes, pull requests and manual dispatch execute source policy,
 four host jobs (GCC/Clang, Debug/Release), two A9 jobs (Debug/Release, both ordinary

@@ -351,9 +351,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 7 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "fdf46da369d407f288873bc7efc7a361be4e508c1b13d1ec8c6a584781f5a9a6",
-      "bytes": 5180
+      "local_modifications": [
+        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged"
+      ],
+      "sha256": "bfd961a38f4dac752a91679db2b68c5b0082e68d83a47f2c6a02a5e09e690f4e",
+      "bytes": 5524
     },
     {
       "path": "docs/integration.md",
