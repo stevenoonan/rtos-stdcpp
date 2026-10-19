@@ -1,11 +1,19 @@
+# rtos-stdcpp
+
+This independently maintained project began as Piotr Grygorczuk's
+[FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11). C++17 is the minimum
+supported language version. The maintained repository is
+[stevenoonan/rtos-stdcpp](https://github.com/stevenoonan/rtos-stdcpp), on branch
+`rtos-stdcpp`. Existing source folders and public extension names are retained
+until their separately reviewed reorganization.
+
 > **Licensing transition (2026-10-19):** inherited standalone sample builds,
 > GCC v10/v11/v13 runtime copies, and unqualified sample workflows have been
 > retired. Integrating applications supply matching audited C++17 runtime
 > sources. Build commands and design details below are historical;
 > see the component THIRD_PARTY_NOTICES.md for current ownership and licensing.
 
-C++ FreeRTOS GCC
-================
+## Historical implementation guide
 
 # Introduction
 
@@ -1390,7 +1398,7 @@ Please have a look at LICENSE file in root directory for details.
 
 ### STM32N6 / GCC 14 maintenance branch
 
-The `stm32-n6-cxx17` branch is maintained for GCC 14 C++17 integration. It uses
+The `rtos-stdcpp` branch retains the GCC 14 C++17 integration. It uses
 canonical thread IDs, independently owned completion state, intrusive CV waiters,
 and separate monotonic/realtime clocks. Do not combine its native types with
 objects compiled against the upstream or earlier branch headers.

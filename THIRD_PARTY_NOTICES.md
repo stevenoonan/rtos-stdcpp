@@ -2,8 +2,10 @@
 
 This independently maintained project began as Piotr Grygorczuk's
 [FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11), based on commit
-`4805aaf62744926d7e6200e5ff1852ce27841383`. Its checkout is still named
-FreeRTOS_cpp11 until the repository migration. The root [LICENSE](LICENSE)
+`4805aaf62744926d7e6200e5ff1852ce27841383`. Its maintained repository is
+[stevenoonan/rtos-stdcpp](https://github.com/stevenoonan/rtos-stdcpp), on branch
+`rtos-stdcpp`. Historical source URLs below identify the original import rather
+than the current checkout layout. The root [LICENSE](LICENSE)
 covers the project-authored code; it does not relicense third-party components.
 Preserve individual copyright and permission notices when distributing sources.
 

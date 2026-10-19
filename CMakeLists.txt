@@ -19,7 +19,7 @@
 # THE SOFTWARE.
 
 cmake_minimum_required(VERSION 3.10)
-project(FreeRTOS_cpp11 NONE)
+project(rtos-stdcpp NONE)
 
 message(FATAL_ERROR
   "Inherited standalone sample builds were retired during the licensing audit. "

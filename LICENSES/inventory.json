@@ -2,7 +2,6 @@
   "schema_version": 1,
   "captured_date": "2026-10-19",
   "project": "rtos-stdcpp",
-  "checkout_name_until_step3": "FreeRTOS_cpp11",
   "base_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
   "upstream_base": "4805aaf62744926d7e6200e5ff1852ce27841383",
   "self_exclusion": "This inventory is project MIT metadata and is excluded from its own byte hash to avoid recursion.",
@@ -41,8 +40,8 @@
     },
     {
       "path": "CMakeLists.txt",
-      "sha256": "414ea5ec592b68c36c070ae1f1f7445052198e61093921775fd465db0c4eb0e1",
-      "bytes": 1498,
+      "sha256": "47b453eecbf91354dbf8f4246370f2ce19a89265e8101843d4a43009ddb05097",
+      "bytes": 1495,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -54,7 +53,8 @@
       },
       "local_modifications": [
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
-        "Consumer-independent wording; no implementation or original license text changed"
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
       ],
       "modified_since_original_upstream": false
     },
@@ -1136,8 +1136,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "805652c53126d9f2c7198c2a1313f0f5fdbfc83566c74b710c7681404919d5ff",
-      "bytes": 47708,
+      "sha256": "7494995e01247d18b00a04a1fa29c4fecc42f8b8124caff241a593516385cf30",
+      "bytes": 48130,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -1149,21 +1149,23 @@
       },
       "local_modifications": [
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
-        "Consumer-independent wording; no implementation or original license text changed"
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
       ],
       "modified_since_original_upstream": true
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "b25f2c42a9e86b483398120cebd529900eae69751387ff2b650043f8351706d3",
-      "bytes": 6477,
+      "sha256": "25931743200491a9f52f81865fdbe1280fd85ad584e2cf6548fb41c7c7ccd4f8",
+      "bytes": 6626,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
         "kind": "Step 2 project metadata"
       },
       "local_modifications": [
-        "Consumer-independent wording; no implementation or original license text changed"
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
       ]
     },
     {
@@ -2792,5 +2794,7 @@
     "license_expression": "GPL-3.0-or-later",
     "runtime_exception_granted_by_file": false,
     "disposition": "Retired; not compiled by qualified STM32 profile"
-  }
+  },
+  "project_repository": "https://github.com/stevenoonan/rtos-stdcpp",
+  "maintenance_branch": "rtos-stdcpp"
 }
