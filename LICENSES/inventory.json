@@ -68,9 +68,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "0a40eff47130d66070c318d7fd998e592a0d340beae2b2e110fcd197fc46ab76",
-      "bytes": 933
+      "local_modifications": [
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "sha256": "4c00664971dc8d2c0131a0980df9967373d1b5f5e2cabc34e4aa577f8fa0ae4f",
+      "bytes": 1095
     },
     {
       "path": "LICENSE",
@@ -265,9 +267,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "1e4c6a9aade9ab661e7e11f6e6f15de573d22bc169ff04690a71136d067efb11",
-      "bytes": 1833
+      "local_modifications": [
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "sha256": "21383f89f825860ca5c59f586f31900bc9c3d5ee32d57033c4ae3c867f460d97",
+      "bytes": 2014
     },
     {
       "path": "examples/compile-check/CMakeLists.txt",

@@ -4,7 +4,7 @@
     {
       "name": "host-debug",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/host-debug",
+      "binaryDir": "${sourceDir}/../build/rtos-stdcpp/host-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
@@ -15,16 +15,36 @@
     {
       "name": "host-release",
       "inherits": "host-debug",
-      "binaryDir": "${sourceDir}/build/host-release",
-      "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}
+      "binaryDir": "${sourceDir}/../build/rtos-stdcpp/host-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
     }
   ],
   "buildPresets": [
-    {"name": "host-debug", "configurePreset": "host-debug"},
-    {"name": "host-release", "configurePreset": "host-release"}
+    {
+      "name": "host-debug",
+      "configurePreset": "host-debug"
+    },
+    {
+      "name": "host-release",
+      "configurePreset": "host-release"
+    }
   ],
   "testPresets": [
-    {"name": "host-debug", "configurePreset": "host-debug", "output": {"outputOnFailure": true}},
-    {"name": "host-release", "configurePreset": "host-release", "output": {"outputOnFailure": true}}
+    {
+      "name": "host-debug",
+      "configurePreset": "host-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "host-release",
+      "configurePreset": "host-release",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
   ]
 }

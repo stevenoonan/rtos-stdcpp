@@ -11,6 +11,9 @@ cmake --build --preset host-release
 ctest --preset host-release --no-tests=error
 ```
 
+Presets put generated files in `../build/rtos-stdcpp/`, outside the source
+checkout, so source and license inventories stay free of build artifacts.
+
 Each configuration runs two C++17 arithmetic tests, at 100 and 1000 Hz. Checks
 abort on failure even in Release, use UBSan and have a CTest timeout. Stubs are
 private to these host targets; they must never reach embedded compilation.
@@ -19,12 +22,12 @@ To check the embedded target independently, put the exact audited toolchain's
 `bin` directory on PATH and supply local dependency paths:
 
 ```sh
-cmake -S examples/compile-check -B build/compile-check -G Ninja \
-  -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchains/arm-none-eabi.cmake \
+cmake -S examples/compile-check -B ../build/rtos-stdcpp/compile-check -G Ninja \
+  -DCMAKE_TOOLCHAIN_FILE="$PWD/cmake/toolchains/arm-none-eabi.cmake" \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DFREERTOS_KERNEL_ROOT=/absolute/path/to/kernel \
   -DFREERTOS_PORT_INCLUDE=/absolute/path/to/kernel/portable/GCC/ARM_CM55_NTZ/non_secure
-cmake --build build/compile-check
+cmake --build ../build/rtos-stdcpp/compile-check
 ```
 
 The compile fixture has no startup, linked kernel or runtime execution. The
