@@ -167,8 +167,11 @@ extern "C" void Reset_Handler(void) {
   "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
   "CPS    #0x1F                                    \n"
   "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
+  "B runtime_start \n"
   );
+}
 
+extern "C" [[noreturn]] void runtime_start(void) {
   SystemInit();
 
   // Zero fill the bss segment
@@ -194,7 +197,7 @@ extern "C" void Reset_Handler(void) {
                             "main",
                             configMAIN_STACK_SIZE,
                             NULL,
-                            tskIDLE_PRIORITY + 1,
+                            tskIDLE_PRIORITY + 3,
                             NULL))
   {
     while (1)
@@ -203,6 +206,7 @@ extern "C" void Reset_Handler(void) {
 
   // Start the real time scheduler.
   vTaskStartScheduler();
+  _Exit(85);
 }
 
 /*----------------------------------------------------------------------------

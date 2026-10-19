@@ -3,7 +3,7 @@ __RAM_SIZE       = 0x00200000;
 __RW_DATA_SIZE   = 0x00100000;
 __ZI_DATA_SIZE   = 0x000F0000;
 __STACK_SIZE     = 0x00001000;
-__HEAP_SIZE      = 0x00008000;
+__HEAP_SIZE      = 0x00040000;
 __UND_STACK_SIZE = 0x00000100;
 __ABT_STACK_SIZE = 0x00000100;
 __SVC_STACK_SIZE = 0x00001000;
@@ -38,6 +38,7 @@ GROUP (
   "libc_nano.a"
   "libm.a"
   "libgcc.a"
+  "libnosys.a"
   "crtbegin.o"
   "crtend.o" 
   "crti.o"
@@ -223,3 +224,5 @@ SECTIONS
         
     } > RAM
 }
+
+ASSERT(Image$$HEAP$$ZI$$Limit <= Image$$SYS_STACK$$ZI$$Base, "RAM heap/stack overlap")

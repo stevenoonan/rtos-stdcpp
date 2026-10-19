@@ -3,8 +3,9 @@
 The maintained embedded profile is `stm32-gcc-14.3.1-cxx17`: the exact GNU Tools
 for STM32 release recorded in [the profile lock](../cmake/profiles/stm32-gcc-14.3.1-cxx17.json),
 Cortex-M55 hard-float multilib, newlib-nano, C++17, exceptions and RTTI disabled.
-Other compilers, architectures, libraries and C++20 features require separate
-qualification. Sources and licenses for the two selected libstdc++ implementation
+The standalone A9 test platform has its own qualified profile and multilib;
+see [the support matrix](support-matrix.md). Other compilers, architectures,
+libraries and C++20 features require separate qualification. Sources and licenses for the two selected libstdc++ implementation
 files are delivered in this checkout, with their immutable source manifest.
 
 Define an existing target supplying the selected FreeRTOS kernel, port headers

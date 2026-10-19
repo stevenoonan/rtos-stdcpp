@@ -1,0 +1,93 @@
+{
+  "compiler_id": "arm-none-eabi-g++ (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623",
+  "cpu_flags": [
+    "-marm",
+    "-mcpu=cortex-a9",
+    "-mfpu=vfpv3",
+    "-mfloat-abi=hard"
+  ],
+  "multilib": "thumb/v7-a+fp/hard",
+  "files": [
+    {
+      "path": "bin/arm-none-eabi-g++",
+      "sha256": "2023954b9da13d445add2b17549df4f798cb0aecaaace36c46076c434a4dbdd3"
+    },
+    {
+      "path": "arm-none-eabi/include/c++/14.3.1/arm-none-eabi/thumb/v7-a+fp/hard/bits/c++config.h",
+      "sha256": "8553265872f1e34b4deb9e46bcb1bc13c35d5a11b9d5453fd82bce4d4db7f921"
+    },
+    {
+      "path": "arm-none-eabi/include/newlib-nano/newlib.h",
+      "sha256": "e4a8bab50e5f3cfd809db5bcf00463698205e08e87adef8d47ae55495becba55"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/libstdc++_nano.a",
+      "sha256": "0cd306451963762e5732fc1d54ab39d50391306a3af9965032ea918e844d5a7f"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/libsupc++_nano.a",
+      "sha256": "fd5d1687ac1b31ede9527de9b1af431cd7fc1a01343e902c6dae121ea3ab48e4"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/libc_nano.a",
+      "sha256": "7fcbe711e0f18939c0004575ce574eb65fca0442f35529b901e35f47064c0c38"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v7-a+fp/hard/libgcc.a",
+      "sha256": "855ab30e0182d64bdf947c982264d2d02f1bf60ee82be9f356640052cd2175f0"
+    },
+    {
+      "path": "bin/arm-none-eabi-gcc",
+      "sha256": "51e7ad9c07341e6d0c801e341ac0573dc31d3189714108102ccf712a4f5ce4dc"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/libm.a",
+      "sha256": "7ca946aae2e0538453f7aaa8f53660c7c36a53d1663f4cab78e22c4a005ec28b"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/libnosys.a",
+      "sha256": "061dcbb9a54ded5eb0616115069bea20fc6578e2ad32538768fd4a2bb9bf2619"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v7-a+fp/hard/crtbegin.o",
+      "sha256": "a210ab2c55ece358eadc09b77ee607ae7ebd975312160948b5359e9958702fbc"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v7-a+fp/hard/crtend.o",
+      "sha256": "47fab7884bf329cd5c58b6054bf721102953680bd1f3620c76cca4be90ba0ec8"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v7-a+fp/hard/crti.o",
+      "sha256": "362d2da6cd1fda09a155b66bdad77e2cc6de93b9ba5f29fd27c05dfea2db024e"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v7-a+fp/hard/crtn.o",
+      "sha256": "dec40a0c7cec35560678234f10235efee9e2a88ffe12d0ef26a08979eca41064"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/nano.specs",
+      "sha256": "e5990c86ef6bf1920280680db8627595e1210aabd5321906bb4dbf07650bf703"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v7-a+fp/hard/nosys.specs",
+      "sha256": "24f0304a9ef660646fcb468d0ecf308b6e82ee5648e9b10b568e19ed4726d8d8"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/cc1",
+      "sha256": "8d036880439d2a7588930054b9546f79f6402fac5757245694cb097471bee061"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/cc1plus",
+      "sha256": "b74c9407487a393ffd5e7b892dec75723f6294d45ca1d71a6e85d6ed64522566"
+    },
+    {
+      "path": "arm-none-eabi/bin/as",
+      "sha256": "5a2f563961640ebcc6b2446e11a853cddcac1d93af18737144642b32cd56f02e"
+    },
+    {
+      "path": "arm-none-eabi/bin/ld",
+      "sha256": "f9d67e672b7d471c02086e7cafbc9aa989d97b9b04d954901cf742ac3af7ea2e"
+    }
+  ],
+  "runtime_profile": "stm32-gcc-14.3.1-cxx17"
+}

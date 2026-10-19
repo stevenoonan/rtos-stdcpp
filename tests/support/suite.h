@@ -8,6 +8,7 @@ struct Metrics {
 };
 void run_shared_round(Report &, Metrics &);
 void run_inherited_cases(Report &);
+void run_extended_cases(Report &);
 inline bool run_suite(Report &report) {
     reset(report, Suite::cxx17);
     Metrics metrics;

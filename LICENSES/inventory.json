@@ -42,8 +42,8 @@
     },
     {
       "path": "CMakeLists.txt",
-      "sha256": "f759942c50924ca6dcabdf250aa8c567c9bc3629886f8a64c8e4c53717fbebed",
-      "bytes": 4359,
+      "sha256": "c8a70be314c8931287b4af59603aa4d307a9150de45170f2cd49d240babeb7f7",
+      "bytes": 4777,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -58,7 +58,8 @@
         "Consumer-independent wording; no implementation or original license text changed",
         "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
         "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
       "modified_since_original_upstream": false
     },
@@ -181,15 +182,61 @@
       ]
     },
     {
+      "path": "cmake/profiles/host-linux-x86_64.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "d3122a7108b5e0069fdfee962bfb325e031c3abef85246156d0c5857403ff39f",
+      "bytes": 1072
+    },
+    {
+      "path": "cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "fd896911df0a7bcb0966438c6bd96e90d8ef6840508987b4982126784c0248d0",
+      "bytes": 2556
+    },
+    {
+      "path": "cmake/profiles/qemu-a9-gcc-14.3.1-cxx17.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "b5bea51cc8cc67e811f39ff3fc45af61d5937d20b53bf241bb04857134f84b95",
+      "bytes": 3474
+    },
+    {
+      "path": "cmake/profiles/qemu-a9-kernel.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "627c440069fae5e2059c78c56eaea13f881c8b3c2b89ffbd822b23f340a571d1",
+      "bytes": 7041
+    },
+    {
       "path": "cmake/profiles/stm32-gcc-14.3.1-cxx17.cmake",
       "license_expression": "MIT",
       "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "dc04912ad7d63ceccf08dfc93ac6d5c576b8304516642adce51661d8904ec965",
-      "bytes": 859
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "4c329b02fa4f24556780f437327325a4cbf0d12c23f7014758477729230311a2",
+      "bytes": 894
     },
     {
       "path": "cmake/profiles/stm32-gcc-14.3.1-cxx17.json",
@@ -212,6 +259,17 @@
       "local_modifications": [],
       "sha256": "f763e6274d7cecc05a0eec2a8d7308dd1b37c88c3d5f98d091a6d9e789ca955e",
       "bytes": 395
+    },
+    {
+      "path": "cmake/toolchains/qemu-a9.cmake",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "0d77ff7b20f39a18b92924e3ab0edc9809a00dab9d783e4456266ad350f2f211",
+      "bytes": 739
     },
     {
       "path": "cpp20_actions.md",
@@ -250,10 +308,11 @@
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "22209188252379285ed85aee71ddeeb864cfa703f3f4b5011cdf2865012a21d5",
-      "bytes": 4264
+      "sha256": "d4e37c5578088bd5907325fdb2ab0b864f6f67e77a735483f1d2b565a9ca5ce2",
+      "bytes": 4385
     },
     {
       "path": "docs/support-matrix.md",
@@ -263,10 +322,11 @@
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "03fc264803041550105b7a9474325dd71a67eb6262e5b452ba018c458532129d",
-      "bytes": 1933
+      "sha256": "b25c04205ba3aba8dfbaf2f984e0f3e3b8371a033149a06ce2059bb7d0953eaa",
+      "bytes": 4173
     },
     {
       "path": "docs/testing.md",
@@ -277,10 +337,11 @@
       },
       "local_modifications": [
         "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "576f0f21b509ddb1b9e05814bacda64f69caaaedb71a7fa645a15e46efc8890e",
-      "bytes": 6564
+      "sha256": "fa1da3092201123b9bf767cf346de71b1974b0ecc3b4e1dc00c43bb1be1f9d24",
+      "bytes": 9174
     },
     {
       "path": "examples/compile-check/CMakeLists.txt",
@@ -366,9 +427,20 @@
       "modified_since_original_upstream": true
     },
     {
+      "path": "platforms/qemu-vexpress-a9/CMakeLists.txt",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "d06916a38b60fe81990b59b7e8f4b419befac2f72b3deff68768a7e22c8c17a5",
+      "bytes": 4680
+    },
+    {
       "path": "platforms/qemu-vexpress-a9/FreeRTOSConfig.h",
-      "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca",
-      "bytes": 7016,
+      "sha256": "9e29a82e8bcaa5d67c396e9bf299784bfad49fc127b306d08ec85d56c0aa2408",
+      "bytes": 7272,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -378,13 +450,15 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOSConfig.h",
         "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
       "modified_since_original_upstream": false
     },
     {
       "path": "platforms/qemu-vexpress-a9/FreeRTOS_ca9_hooks.c",
-      "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3",
-      "bytes": 2059,
+      "sha256": "f0094ffd85195cedc9e8b0ce81de3e742d172eaaf5c668af694574a87e0cdb23",
+      "bytes": 2100,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -394,13 +468,15 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOS_ca9_hooks.c",
         "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
       "modified_since_original_upstream": false
     },
     {
       "path": "platforms/qemu-vexpress-a9/README.md",
-      "sha256": "f747b4c871ef954fe13e5a084e47bada4f33185b7e57e3b4e61f5bf66f4f4708",
-      "bytes": 2209,
+      "sha256": "8d3eb029e2a5d31cb4c745f633cb7cce1f467ead96a8da4759dd90cfeed23137",
+      "bytes": 3044,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -414,7 +490,8 @@
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
         "Consumer-independent wording; no implementation or original license text changed",
         "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
       "modified_since_original_upstream": false
     },
@@ -564,8 +641,8 @@
     },
     {
       "path": "platforms/qemu-vexpress-a9/console.cpp",
-      "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680",
-      "bytes": 1926,
+      "sha256": "6ef0f128345dce31b36858cc0260a77655643784b6e1923f475db3262cd56169",
+      "bytes": 1942,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -575,7 +652,9 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/console.cpp",
         "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
       "modified_since_original_upstream": false
     },
     {
@@ -595,9 +674,42 @@
       "modified_since_original_upstream": false
     },
     {
+      "path": "platforms/qemu-vexpress-a9/cxx_guards.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "3ab968e007f9aedb4720eeef410259a08a29ea74a19827a13e556b3b60358b59",
+      "bytes": 1570
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cxx_nothrow.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "7086cb67f373f58fe6da07e01d450140fb1da375d6881d3c22ed40a540cd509e",
+      "bytes": 1502
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/failure.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "d363fa2f4d7b5b957a310c8eb53aaf35ff01c5d71c0042497b25d65ace165c95",
+      "bytes": 875
+    },
+    {
       "path": "platforms/qemu-vexpress-a9/linker.ld",
-      "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0",
-      "bytes": 5278,
+      "sha256": "a435367d426d78f6761a61a69c875f87f37065fdafbc6a6628477eecd7c84d39",
+      "bytes": 5381,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -607,7 +719,9 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/linker.ld",
         "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
       "modified_since_original_upstream": false
     },
     {
@@ -627,9 +741,44 @@
       "modified_since_original_upstream": false
     },
     {
+      "path": "platforms/qemu-vexpress-a9/qualification.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "2a3a2aa1b209ddb2b0e915954445844bdf4dba6c5a68bec24e763fb5ed439d98",
+      "bytes": 5180
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/regression_main.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "294e39b0c6652b7e104d276d6f175f840850986b0a056c04451849c6b581ac8d",
+      "bytes": 415
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/runtime.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "6b1d89d4e442716482e001a09c1a022ca524ff806e26dc82c9be0cea364fa313",
+      "bytes": 2701
+    },
+    {
       "path": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
-      "sha256": "62069b08ee4968f850542aac5bc9af5c15659eafd6502bcad3b7d204b61dbbbf",
-      "bytes": 9109,
+      "sha256": "ccd47a747b02eabc4f7080e0087fe9df4a03410bb2224fdad977a584ed1b6965",
+      "bytes": 9198,
       "license_expression": "Apache-2.0",
       "license_evidence": "Explicit file header",
       "source": {
@@ -640,7 +789,8 @@
         "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9"
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
       "modified_since_original_upstream": false
     },
@@ -683,9 +833,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 5 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "e4f1ca428b0a817e0f6c016ce74d415838c2876e16f0213835f4a69326e8fe9c",
-      "bytes": 886
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "e6cd4924df85807d6bbde626829ad0233c04c4322d4e44b3fcabe1b91f8d7bdb",
+      "bytes": 997
     },
     {
       "path": "platforms/riscv-virt/FreeRTOSConfig.h",
@@ -1010,10 +1162,11 @@
         "origin": "rtos-stdcpp Step 5 project contribution"
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "9ab25a5d2a1d166f5117cda6c48c7ce52bba021523e3e36ea9c073ceff64fb0f",
-      "bytes": 3299
+      "sha256": "73f1d28cc20fcb935a17c2dd556d115410313f5827152c7d1fa7d7184d8e5e86",
+      "bytes": 3351
     },
     {
       "path": "tests/catalog.json",
@@ -1022,9 +1175,24 @@
       "source": {
         "origin": "rtos-stdcpp Step 5 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "ab17c448fd1c0ccf76cc44e2415a11d508674b1b2de477ea976faf9aef06fd06",
-      "bytes": 2850
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "3092c51b18f3484d93b10abbc3f044e5d4b51bdcfaacdc07e4728bf7795bec2b",
+      "bytes": 4088
+    },
+    {
+      "path": "tests/conformance/extended.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "bb6c6c96ab36267aaef8bb892ae0100296c9e8469a836eb738cc8d10ab692e65",
+      "bytes": 2539
     },
     {
       "path": "tests/conformance/inherited.cpp",
@@ -1064,10 +1232,11 @@
         ]
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "f960ba3515753614366a5649761e4a40eee3a6a37526d7dd313bd238b316b1a7",
-      "bytes": 4230
+      "sha256": "3aca556263b25e583fdc89427fa62e88f8aed8d485e33c35e7692db479dfa51e",
+      "bytes": 4262
     },
     {
       "path": "tests/conformance/standard.cpp",
@@ -1077,10 +1246,11 @@
         "origin": "Reusable C++17 cases transferred from the integrating application; platform policy remains external"
       },
       "local_modifications": [
-        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
       ],
-      "sha256": "bea7f74e460f2bc9d45df61b0b3b3b4fd9e0bff34ef383c7768372508286bfc0",
-      "bytes": 5994
+      "sha256": "2da7c1350cecd0c3abc9f5154251d472d16d3d4ea7b58b98ce790369a33cd7b9",
+      "bytes": 6103
     },
     {
       "path": "tests/deferred/test_atomic.h",
@@ -1374,9 +1544,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 5 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "9d6d8504a53a3fa96633c9de82511048a9cec6abd9d80ed8171488f755ebe604",
-      "bytes": 520
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "b042c343dbfb1cb857981146785b652e24a4c2d040c4905602c18169f7a5dffc",
+      "bytes": 555
     },
     {
       "path": "tests/support/test_helpers.h",
@@ -2295,15 +2467,28 @@
       "bytes": 3033
     },
     {
+      "path": "tools/check_a9.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "d32c0f691d973752defff1cdea45681b92c4f21aebd502d8ed7fecbc56f19891",
+      "bytes": 3561
+    },
+    {
       "path": "tools/check_profile.py",
       "license_expression": "MIT",
       "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "3e08b42dc693a17c70b4b8d841304d7972ce080dcedcf6647082db33ca9a07a6",
-      "bytes": 2363
+      "local_modifications": [
+        "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained"
+      ],
+      "sha256": "db4bb5bc57a47103c781807764515d952e836e74e6d73fdb3ce6bb068e6380e2",
+      "bytes": 2553
     },
     {
       "path": "tools/generate_test_catalog.py",
@@ -2317,6 +2502,28 @@
       "bytes": 1280
     },
     {
+      "path": "tools/run_matrix.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "fc8e585f02e20c4909524e9a109550dd5a11a2a19be49152cb5ef6d4a663d545",
+      "bytes": 6841
+    },
+    {
+      "path": "tools/run_qemu.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "6e135d319f174ec50711d7d61ca05bfad3f890c27099e8525146f08189e8c2fe",
+      "bytes": 2593
+    },
+    {
       "path": "tools/run_tests.py",
       "license_expression": "MIT",
       "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
@@ -2326,6 +2533,17 @@
       "local_modifications": [],
       "sha256": "8068297e96b668cb3022949ed1faf9e763671f0a0d6497223f26ea1407adee77",
       "bytes": 2192
+    },
+    {
+      "path": "tools/setup_qemu.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 6 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
+      "source": {
+        "origin": "rtos-stdcpp Step 6 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "76f40293968cc1b821bf8f5ae85e9cf69b4a7da0493d1310c97124a8668418ae",
+      "bytes": 1989
     },
     {
       "path": "tools/test_protocol.py",
@@ -3574,5 +3792,9 @@
       "lib_test_CA9/cmsis/cmsis_cp15.h": "platforms/qemu-vexpress-a9/cmsis/cmsis_cp15.h"
     },
     "implementation_bytes_changed": false
-  }
+  },
+  "qualified_embedded_profiles": [
+    "stm32-gcc-14.3.1-cxx17",
+    "qemu-a9-gcc-14.3.1-cxx17"
+  ]
 }

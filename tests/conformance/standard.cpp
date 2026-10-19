@@ -131,19 +131,20 @@ void conditions() {
 }
 void exit_callbacks() {
     std::mutex mutex; std::condition_variable cv; bool ready = false;
-    bool detached = (metrics->exit_callbacks & 1U) != 0;
-    auto exiting = worker(detached ? 0 : 2, [&] {
+    auto exiting = worker(2, [&] {
         std::unique_lock<std::mutex> lock(mutex);
         ready = true;
         std::notify_all_at_thread_exit(cv, std::move(lock));
         platform::observe_stack();
     });
-    if (detached) exiting.detach();
     {
         std::unique_lock<std::mutex> lock(mutex);
         TEST_REQUIRE(cv.wait_for(lock, 500ms, [&] { return ready; }));
     }
-    if (!detached) exiting.join();
+    // Keep mutex/CV alive through the entire exit callback. A predicate can
+    // become observable after unlock but before notify_all has completed.
+    // Detached owner lifetimes are exercised independently by lifecycle cases.
+    exiting.join();
     TEST_REQUIRE(mutex.try_lock()); mutex.unlock();
     ++metrics->exit_callbacks;
     ++metrics->threads;

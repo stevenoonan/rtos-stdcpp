@@ -24,9 +24,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--compiler", required=True)
     parser.add_argument("--c-compiler", required=True)
+    parser.add_argument("--profile", default=PROFILE, choices=[PROFILE, "qemu-a9-gcc-14.3.1-cxx17"])
     args = parser.parse_args()
     try:
-        lock = json.loads((ROOT / "cmake/profiles" / (PROFILE + ".json")).read_text())
+        lock = json.loads((ROOT / "cmake/profiles" / (args.profile + ".json")).read_text())
         cxx = Path(shutil.which(args.compiler) or args.compiler).resolve()
         cc = Path(shutil.which(args.c_compiler) or args.c_compiler).resolve()
         toolchain = cxx.parent.parent
@@ -39,9 +40,10 @@ def main():
         multilib = subprocess.check_output([cxx, *lock["cpu_flags"], "-print-multi-directory"], text=True).strip()
         if multilib != lock["multilib"]:
             raise RuntimeError("Compiler multilib does not match the selected profile")
-        runtime = ROOT / "third_party/libstdcxx" / PROFILE
+        runtime_profile = lock.get("runtime_profile", args.profile)
+        runtime = ROOT / "third_party/libstdcxx" / runtime_profile
         manifest = json.loads((runtime / "SOURCES.json").read_text())
-        if manifest["profile"] != PROFILE:
+        if manifest["profile"] != runtime_profile:
             raise RuntimeError("Runtime source manifest selects another profile")
         verify(runtime, manifest["files"])
         print("rtos-stdcpp exact GCC 14.3.1 / newlib-nano / C++17 profile verified offline")

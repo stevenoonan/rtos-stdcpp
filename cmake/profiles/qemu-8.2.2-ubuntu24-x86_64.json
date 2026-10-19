@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "host": "Ubuntu 24.04 compatible x86_64; system shared dependencies still required",
+  "base_url": "https://apt.pop-os.org/ubuntu/",
+  "version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+  "binary_sha256": "e5dc5f9ef15a3f39d65666ae0ff8facc3ae08c97cf642dfa1164531aa91bfdfb",
+  "packages": [
+    {
+      "Package": "qemu-system-arm",
+      "Version": "1:8.2.2+ds-0ubuntu1.18",
+      "Filename": "pool/main/q/qemu/qemu-system-arm_8.2.2+ds-0ubuntu1.18_amd64.deb",
+      "SHA256": "06184a21b9c8dc573ab6d255e9826cc4732df90e56bd65c52e92ad640af4d60a"
+    },
+    {
+      "Package": "qemu-system-common",
+      "Version": "1:8.2.2+ds-0ubuntu1.18",
+      "Filename": "pool/main/q/qemu/qemu-system-common_8.2.2+ds-0ubuntu1.18_amd64.deb",
+      "SHA256": "0a0b744f31e87d72dd0465436b8dfbb1ef9f574ecd0d5a2e9dd8c5cb7d0fef1f"
+    },
+    {
+      "Package": "qemu-system-data",
+      "Version": "1:8.2.2+ds-0ubuntu1.18",
+      "Filename": "pool/main/q/qemu/qemu-system-data_8.2.2+ds-0ubuntu1.18_all.deb",
+      "SHA256": "a14b88d864859bd61c8a3274971da4ecb7da6cec15be6c265d0d411f783d5f2e"
+    },
+    {
+      "Package": "libfdt1",
+      "Version": "1.7.0-2build1",
+      "Filename": "pool/main/d/device-tree-compiler/libfdt1_1.7.0-2build1_amd64.deb",
+      "SHA256": "274d20dfab9d6b216b5de85446a93f6ce5b2cd82c847b8dfdc508577f76eb96a"
+    },
+    {
+      "Package": "libpmem1",
+      "Version": "1.13.1-1.1ubuntu2",
+      "Filename": "pool/main/p/pmdk/libpmem1_1.13.1-1.1ubuntu2_amd64.deb",
+      "SHA256": "8f1be1cc834a98f0cf5c0950153f7f939a0c2c92095e98cd7bb40c752c545c1b"
+    },
+    {
+      "Package": "librdmacm1t64",
+      "Version": "50.0-2ubuntu0.2",
+      "Filename": "pool/main/r/rdma-core/librdmacm1t64_50.0-2ubuntu0.2_amd64.deb",
+      "SHA256": "7b7cc2fa16564bf301751b43d05d16f0846288b080d9a25a92a691d0df33fc68"
+    },
+    {
+      "Package": "liburing2",
+      "Version": "2.5-1build1",
+      "Filename": "pool/main/libu/liburing/liburing2_2.5-1build1_amd64.deb",
+      "SHA256": "c2aef62accee92a06263c3ad4ef46132c13e409b54296c44792a20491830a7b0"
+    },
+    {
+      "Package": "libdaxctl1",
+      "Version": "77-2ubuntu2",
+      "Filename": "pool/main/n/ndctl/libdaxctl1_77-2ubuntu2_amd64.deb",
+      "SHA256": "c6629b49c79343fb11ae404aeaa3156f051168da6c6d3d9d8d516acd94705061"
+    },
+    {
+      "Package": "libndctl6",
+      "Version": "77-2ubuntu2",
+      "Filename": "pool/main/n/ndctl/libndctl6_77-2ubuntu2_amd64.deb",
+      "SHA256": "4eab53588a8fa9e3192635e118c2d91bc069cde46a4a3785c77a0bb1ae001d02"
+    }
+  ]
+}

@@ -69,11 +69,11 @@ uint32_t SystemCoreClockFreq();
 #define configUSE_TICKLESS_IDLE					0
 #define configTICK_RATE_HZ						( ( TickType_t ) 1000 )
 #define configUSE_PREEMPTION					1
-#define configUSE_IDLE_HOOK						0
+#define configUSE_IDLE_HOOK 1
 #define configUSE_TICK_HOOK						0
 #define configMAX_PRIORITIES					( 7 )
 #define configMINIMAL_STACK_SIZE				( ( unsigned short ) 250 ) /* Large in case configUSE_TASK_FPU_SUPPORT is 2 in which case all tasks have an FPU context. */
-#define configTOTAL_HEAP_SIZE					( 125 * 1024 )
+#define configTOTAL_HEAP_SIZE					( 512 * 1024 )
 #define configMAX_TASK_NAME_LEN					( 10 )
 #define configUSE_TRACE_FACILITY				0
 #define configUSE_16_BIT_TICKS					0
@@ -86,10 +86,14 @@ uint32_t SystemCoreClockFreq();
 #define configUSE_APPLICATION_TASK_TAG			0
 #define configUSE_COUNTING_SEMAPHORES			1
 #define configUSE_QUEUE_SETS					1
-#define configSUPPORT_STATIC_ALLOCATION			0
+#define configSUPPORT_STATIC_ALLOCATION 1
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
 
-#define configMAIN_STACK_SIZE 384 // in words (bytes = x4)
+#define configTASK_NOTIFICATION_ARRAY_ENTRIES 2
+#define configUSE_NEWLIB_REENTRANT 1
+#define INCLUDE_xTaskGetSchedulerState 1
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define configMAIN_STACK_SIZE 4096 // in words (bytes = x4)
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 					0
@@ -106,7 +110,7 @@ be created without an FPU context, and a task must call vTaskUsesFPU() before
 making use of any FPU registers.  If configUSE_TASK_FPU_SUPPORT is set to 2 then
 tasks are created with an FPU context by default, and calling vTaskUsesFPU() has
 no effect. */
-#define configUSE_TASK_FPU_SUPPORT				1
+#define configUSE_TASK_FPU_SUPPORT 2
 
 /* Set the following definitions to 1 to include the API function, or zero
 to exclude the API function. */
@@ -128,7 +132,8 @@ to exclude the API function. */
 
 /* Normal assert() semantics without relying on the provision of an assert.h
 header file. */
-#define configASSERT( x ) if( ( x ) == 0 ) while(1);
+void rtos_test_assert_fail(const char *, unsigned);
+#define configASSERT(x) do { if (!(x)) rtos_test_assert_fail(__FILE__, __LINE__); } while (0)
 
 /* If configTASK_RETURN_ADDRESS is not defined then a task that attempts to
 return from its implementing function will end up in a "task exit error"

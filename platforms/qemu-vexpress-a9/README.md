@@ -1,77 +1,49 @@
-> **Current test handoff:** the old print-only runner is removed. The shared
-> report/exit runner and outer timeout command are documented in
-> [testing](../../docs/testing.md). An actual A9 image and its dependencies
-> still require separate qualification; commands below are historical.
+# Qualified standalone A9 test platform
 
-> **Licensing transition (2026-10-19):** inherited standalone sample builds,
-> GCC v10/v11/v13 runtime copies, and unqualified sample workflows have been
-> retired. The maintained library target now supplies its exact audited runtime
-> selection. Build commands and design details below are historical;
-> see the component THIRD_PARTY_NOTICES.md for current ownership and licensing.
+This image runs the shared C++17 cases against the actual FreeRTOS adapter on
+QEMU `vexpress-a9`, one Cortex-A9 CPU, 128 MiB RAM. Debug and Release, including
+an accelerated real kernel tick-wrap configuration, are qualified. See
+[testing](../../docs/testing.md) for setup and commands and the
+[support matrix](../../docs/support-matrix.md) for the exact scope.
 
-# Example Program to use GCC FreeRTOS C++ library with QEMU
+The selected ST GCC 14.3.1 distribution supplies the separate A9
+`thumb/v7-a+fp/hard` multilib. A9 code uses ARM instructions, VFPv3 and hard float;
+its compiler/header/archive hashes are in the A9 profile. The two libstdc++
+implementation sources are shared with the existing exact-release runtime
+selection; no second implementation copy is maintained.
 
-## QEMU
+The bundled kernel has a 10.4.3 version label. Its complete 49-file snapshot is
+pinned in `cmake/profiles/qemu-a9-kernel.json` to the inherited import bytes.
+The exact upstream kernel commit is not established. No dependency is fetched
+by configure/build/test. Do not substitute another kernel, port or compiler
+without reviewing and executing a new profile.
 
-QEMU can run ARM code in virtual machine. In this way the library 
-can be tested without dependency on hardware.
+This platform owns its startup, linker script, allocator arenas, failure policy,
+newlib scheduler locks, static guards and semihost exit. These are optional test
+platform choices, not providers injected into applications by the library target.
+The kernel heap is 512 KiB; the bounded C++ arena is 256 KiB. Main has 4096 stack
+words, default workers 512, and the stack workload 1536. Every observed worker
+and main stack must retain at least 128 words. Resource gates require exact
+recovery after idle opportunities; this is a single-core profile.
 
-I have tested with this version
+UART0 uses the PL011 flag register at offset 0x18 and TXFF bit 5. The selected
+[QEMU PL011 model](https://github.com/qemu/qemu/blob/v8.2.2/hw/char/pl011.c)
+and [board map](https://github.com/qemu/qemu/blob/v8.2.2/hw/arm/vexpress.c)
+are the platform references. The
+[global timer model](https://github.com/qemu/qemu/blob/v8.2.2/hw/timer/a9gtimer.c)
+uses a 10 ns counter period with prescaler zero, so the platform programs 100 MHz
+and a 1000 Hz RTOS tick. All tasks preserve a full FPU context. The pinned port
+omits the memset declaration in that configuration; its C translation unit
+force-includes string.h, preserving the dependency source bytes.
 
+Reset sets CPU modes/stacks and branches to an ordinary C++ function before
+performing runtime initialization. This avoids mixing compiler-generated C++
+with a naked function. The inherited Arm/Piotr notices remain in those sources.
+SYS_EXIT_EXTENDED carries the process status. A missing exit, exception loop,
+crash, malformed report or missing required case fails the outer deadline/gate.
+Expected failures require both the pre-fault marker and the exact exit status;
+each runs in a fresh emulator process.
 
-```console
-$ qemu-system-arm --version
-QEMU emulator version 6.1.0 (v6.1.0-11882-g7deea770bf-dirty)
-Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
-```
-
-## Platform Decision
-
-There is quiet good selection of platforms supported by QEMU.
-I picked `ARM Versatile Express for Cortex-A9` due to:
-
-Pros:
-
-`+` Enough memory to run entire library test  
-`+` Easy to port FreeRTOS to it
-
-Cons:
-
-`-` Nothing of the importance
-
-## Execution
-
-Build the demo project with this commands:
-
-```console
-$ cmake ../FreeRTOS_cpp11 -G "Eclipse CDT4 - Unix Makefiles" -Darmca9=1
-$ cmake --build .
-```
-
-To run the program execute this command:
-
-```console
-$ qemu-system-arm -M vexpress-a9 -m 128M -nographic -kernel test_ca9.elf
-```
-
-The test is run in a loop printing to a console:
-
-```console
-$ qemu-system-arm -M vexpress-a9 -m 128M -nographic -kernel test_ca9.elf
-ARM CA9 - start test
-Run...OK
-Run...OK
-```
-
-# Run in GDB mode
-
-It is possible to debug the application with gdb using the following command: 
-
-```console
-$ qemu-system-arm -M vexpress-a9 -m 128M -nographic -kernel test_ca9.elf -s -S
-```
-
-QEMU window will open but will halt the program. The window will be blank. 
-Look for QEMU documentation how to use it with gdb.
-
-Do not forget to compile the application with -g -O0 flags in the cmake script.
+For interactive debugging, use the same machine options as tools/run_qemu.py,
+add `-s -S`, and attach arm-none-eabi-gdb to localhost:1234. Keep manual debug
+sessions separate from automated deadline-based evidence.

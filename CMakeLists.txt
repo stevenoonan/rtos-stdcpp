@@ -30,8 +30,9 @@ set(RTOS_STDCPP_PROFILE "" CACHE STRING "Exact qualified compiler/runtime profil
 set(RTOS_STDCPP_FREERTOS_TARGET "" CACHE STRING "Existing target supplying FreeRTOS configuration/includes")
 
 if(RTOS_STDCPP_BUILD_LIBRARY)
-    if(NOT RTOS_STDCPP_PROFILE STREQUAL "stm32-gcc-14.3.1-cxx17")
-        message(FATAL_ERROR "Select RTOS_STDCPP_PROFILE=stm32-gcc-14.3.1-cxx17; no other embedded profile is qualified")
+    set(qualified_profiles stm32-gcc-14.3.1-cxx17 qemu-a9-gcc-14.3.1-cxx17)
+    if(NOT RTOS_STDCPP_PROFILE IN_LIST qualified_profiles)
+        message(FATAL_ERROR "Select an exact qualified RTOS_STDCPP_PROFILE (stm32-gcc-14.3.1-cxx17 or qemu-a9-gcc-14.3.1-cxx17)")
     endif()
     if(NOT RTOS_STDCPP_FREERTOS_TARGET OR NOT TARGET "${RTOS_STDCPP_FREERTOS_TARGET}")
         message(FATAL_ERROR "RTOS_STDCPP_FREERTOS_TARGET must name an existing target supplying FreeRTOS headers/configuration")
@@ -51,11 +52,19 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
     target_compile_features(rtos_stdcpp_config INTERFACE cxx_std_17)
     target_compile_definitions(rtos_stdcpp_config INTERFACE
         $<$<COMPILE_LANGUAGE:CXX>:_GLIBCXX_HAS_GTHREADS=1>)
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/cmake/profiles/${RTOS_STDCPP_PROFILE}.json" profile_json)
+    string(JSON flag_count LENGTH "${profile_json}" cpu_flags)
+    math(EXPR flag_last "${flag_count} - 1")
+    set(cpu_flags)
+    foreach(index RANGE ${flag_last})
+        string(JSON flag GET "${profile_json}" cpu_flags ${index})
+        list(APPEND cpu_flags "${flag}")
+    endforeach()
     target_compile_options(rtos_stdcpp_config INTERFACE
-        $<$<COMPILE_LANGUAGE:C,CXX>:-mthumb;-mcpu=cortex-m55;-mfpu=fpv5-d16;-mfloat-abi=hard;-mcmse;--specs=nano.specs>
+        $<$<COMPILE_LANGUAGE:C,CXX>:${cpu_flags};--specs=nano.specs>
         $<$<COMPILE_LANGUAGE:CXX>:-include${CMAKE_CURRENT_SOURCE_DIR}/src/toolchains/gcc/gcc_threading_config.h;-fthreadsafe-statics;-fno-exceptions;-fno-rtti;-Werror=c++20-extensions>)
 
-    set(runtime "${CMAKE_CURRENT_SOURCE_DIR}/third_party/libstdcxx/${RTOS_STDCPP_PROFILE}/libstdc++-v3/src/c++11")
+    set(runtime "${CMAKE_CURRENT_SOURCE_DIR}/third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/libstdc++-v3/src/c++11")
     # OBJECT is intentional: providers must be linked even if an archive could
     # otherwise satisfy a reference with the stock single-thread implementation.
     add_library(rtos_stdcpp OBJECT

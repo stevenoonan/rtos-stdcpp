@@ -100,20 +100,64 @@ it identifies the transport/evidence layer, not an automatic support claim.
 A hardware runner must apply both the common result validation and its own
 native-health checks and timeout. Board transports belong to their integrations.
 
-## Emulator handoff
+## Qualified host and A9 matrix
 
-The common `tests/support/embedded_main.cpp` writes the report and exits with its
-result. For A9, this calls the inherited `SYS_EXIT_EXTENDED` semihost mechanism;
-if that mechanism returns, the platform waits and the outer deadline fails.
-After separately qualifying an A9 compiler/kernel/image, its execution command is:
+Use Python 3, CMake >=3.22, Ninja, the exact compiler distribution in the embedded
+profile, and the Linux host compilers/runtime in the host lock. Clang is optional
+unless --clang is selected; embedded Clang is unsupported. Setup QEMU explicitly
+on Ubuntu 24.04 compatible x86_64 Linux (curl/network access is unnecessary during
+ordinary matrix runs):
 
 ```sh
-python3 tools/run_tests.py --suite cxx17 --layer emulator --timeout 30 -- \
-  qemu-system-arm -M vexpress-a9 -m 128M -nographic \
-  -semihosting-config enable=on,target=native -kernel /absolute/path/to/qualified-test.elf
+python3 tools/setup_qemu.py --destination /absolute/path/to/prepared/qemu
+python3 tools/run_matrix.py \
+  --toolchain-root /absolute/path/to/audited/toolchain \
+  --qemu-root /absolute/path/to/prepared/qemu --clang \
+  --output /absolute/path/to/new-matrix-results
 ```
 
-The platform can use `platforms/qemu-vexpress-a9/test_platform.cpp` for the
-support hooks. Neither an A9 image nor QEMU is qualified by the host process
-fixtures. Actual emulator build/execution, dependencies and UART/exit behavior
-must be qualified in Step 6. The RISC-V source is historical with no active runner.
+Setup downloads SHA256-pinned Ubuntu packages and extracts them without sudo.
+The wrapper uses the extracted libraries; remaining system shared dependencies
+must be available. The matrix records their actual hashes and verifies the QEMU
+binary/version. Prepared packages can be cached and setup repeated offline.
+Downloads, builds and reports must stay outside the audited library source tree.
+Changing a package/compiler identity requires a reviewed lock update and new
+execution evidence; never update hashes merely to bypass verification.
+
+With --clang, this runs four host compiler/configuration combinations (five CTest
+entries each) and four A9 combinations (Debug/Release, normal/wrap; eight CTest
+entries each): **52 CTest entries**. Without --clang it runs 42. The matrix rejects
+missing prepared tools and every required test failure. It never downloads
+inputs. Each configuration records its command logs and JUnit report. A9 has
+three success images (shared conformance, lifecycle regression, platform
+qualification), four separately reset failure images, and one link-provenance
+check. Each process has a 25-second deadline and CTest has an outer 35-second
+limit. Expected failures require an armed marker and the exact status, including
+OOM, joinable-thread destruction and recursive static initialization.
+
+To build/run one A9 configuration directly:
+
+```sh
+cmake -S platforms/qemu-vexpress-a9 -B /absolute/path/to/a9-build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_TOOLCHAIN_FILE="$PWD/cmake/toolchains/qemu-a9.cmake" \
+  -DRTOS_STDCPP_TOOLCHAIN_ROOT=/absolute/path/to/audited/toolchain \
+  -DRTOS_STDCPP_QEMU=/absolute/path/to/prepared/qemu/qemu-system-arm
+cmake --build /absolute/path/to/a9-build
+ctest --test-dir /absolute/path/to/a9-build --output-on-failure --no-tests=error
+```
+
+Add -DRTOS_STDCPP_A9_TICK_WRAP=ON in a separate build directory to start the
+actual kernel 30 ticks before 32-bit wrap. The platform suite proves the kernel
+overflow count increments and steady time advances across it. Its resource gate
+warms lazy state, executes 64 shared rounds with exact heap recovery, then 64
+allocation/thread cycles, nothrow OOM, notification-index isolation and stack
+headroom. Sleep checks include sub-tick rounding, zero/negative durations, a
+100 ms sleep, monotonic deadlines and wall-clock steps. Saturation/very long
+relative-time arithmetic is checked on the host without waiting for that duration.
+The STM32 integration supplies sustained physical timing/resource/failure and
+wrap evidence independently; its commands belong in that application checkout.
+
+See the [A9 platform contract](../platforms/qemu-vexpress-a9/README.md) and
+[support matrix](support-matrix.md). RISC-V has historical sources and no active
+runner. A compile-only fixture or successful host run does not qualify a scheduler.

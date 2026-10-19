@@ -2,15 +2,15 @@
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 set(generated "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/catalog.json" "${PROJECT_SOURCE_DIR}/tools/generate_test_catalog.py")
-execute_process(COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tools/generate_test_catalog.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/catalog.json" "${CMAKE_CURRENT_SOURCE_DIR}/../tools/generate_test_catalog.py")
+execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/../tools/generate_test_catalog.py"
     "${CMAKE_CURRENT_SOURCE_DIR}/catalog.json" "${generated}/test_catalog.h"
     RESULT_VARIABLE generated_result)
 if(NOT generated_result EQUAL 0)
     message(FATAL_ERROR "Test catalog generation failed")
 endif()
 add_library(rtos_stdcpp_test_support OBJECT
-    support/runner.cpp conformance/standard.cpp conformance/inherited.cpp)
+    support/runner.cpp conformance/standard.cpp conformance/inherited.cpp conformance/extended.cpp)
 add_library(rtos-stdcpp::test-support ALIAS rtos_stdcpp_test_support)
 target_include_directories(rtos_stdcpp_test_support PUBLIC support "${generated}")
 target_compile_features(rtos_stdcpp_test_support PUBLIC cxx_std_17)
@@ -37,7 +37,7 @@ if(RTOS_STDCPP_BUILD_HOST_TESTS)
     foreach(target cxx17_reference runner_fixture test_host_platform)
         set_target_properties(${target} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
     endforeach()
-    add_test(NAME cxx17_reference COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tools/run_tests.py"
+    add_test(NAME cxx17_reference COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/../tools/run_tests.py"
         --suite cxx17 --layer host --timeout 20 -- $<TARGET_FILE:cxx17_reference>)
     set_tests_properties(cxx17_reference PROPERTIES LABELS "host;reference" TIMEOUT 25)
     add_test(NAME runner_negative_controls COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/support/check_runner.py"

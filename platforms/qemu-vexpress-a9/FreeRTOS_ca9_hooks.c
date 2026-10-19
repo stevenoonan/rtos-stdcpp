@@ -48,7 +48,7 @@ void vSetupTickInterrupt(void)
   IRQ_SetHandler(GlobalTimer_IRQn, FreeRTOS_Tick_Handler);
   IRQ_Enable(GlobalTimer_IRQn);
 
-  // random value out of nowhere
+  // Selected QEMU A9 global-timer model: 10 ns counter period (100 MHz).
   const int clkHz = 100 * 1000 * 1000;
 
   GlobTimer_Init();

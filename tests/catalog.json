@@ -136,6 +136,69 @@
       "requirements": [
         "cxx17"
       ]
+    },
+    {
+      "id": "thread.arguments_hash",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "initialization.local_statics",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.predicate_recheck",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "runtime.startup",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "time.clocks_sleep",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "runtime.resources",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "condition.notification_isolation",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
     }
   ]
 }

@@ -89,5 +89,6 @@ void run_inherited_cases(Report &report) {
     begin(report, Case::condition_any); condition_any(); end(report, Case::condition_any);
     begin(report, Case::once_concurrent); call_once(); end(report, Case::once_concurrent);
     begin(report, Case::thread_move_stack_workload); attributes(); end(report, Case::thread_move_stack_workload);
+    run_extended_cases(report);
 }
 }

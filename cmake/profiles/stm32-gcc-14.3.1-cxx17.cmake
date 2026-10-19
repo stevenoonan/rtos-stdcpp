@@ -8,7 +8,7 @@ function(rtos_stdcpp_check_profile)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     execute_process(COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../../tools/check_profile.py"
-        --compiler "${CMAKE_CXX_COMPILER}" --c-compiler "${CMAKE_C_COMPILER}"
+        --profile "${RTOS_STDCPP_PROFILE}" --compiler "${CMAKE_CXX_COMPILER}" --c-compiler "${CMAKE_C_COMPILER}"
         RESULT_VARIABLE result OUTPUT_VARIABLE output ERROR_VARIABLE error)
     if(NOT result EQUAL 0)
         message(FATAL_ERROR "rtos-stdcpp profile verification failed:\n${output}${error}")
