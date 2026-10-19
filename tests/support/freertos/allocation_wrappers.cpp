@@ -23,55 +23,6 @@
 
 extern "C"
 {
-  struct stat;
-  int _stat(const char *path, struct stat *buf)
-  {
-    (void)path;
-    (void)buf;
-    return -1;
-  }
-  int _fstat(int fd, struct stat *buf)
-  {
-    (void)fd;
-    (void)buf;
-    return -1;
-  }
-
-  int _lstat(const char *path, struct stat *buf)
-  {
-    (void)path;
-    (void)buf;
-    return -1;
-  }
-
-  struct _reent;
-  int _open_r(struct _reent *, const char *, int, int)
-  {
-    return -1;
-  }
-  int _close(struct _reent *, int)
-  {
-    return -1;
-  }
-  long _write(struct _reent *, int, const char *, int)
-  {
-    return -1;
-  }
-  long _read(struct _reent *, int, char *, int)
-  {
-    return -1;
-  }
-
-  int _sbrk(int)
-  {
-    while (1)
-      ;
-  }
-  void _kill(int, int) {}
-  int _getpid() { return 1; }
-  int _isatty(int) { return -1; }
-  int _lseek(int, int, int) { return 0; }
-
   // FreeRTOS malloc/free declarations
   void *pvPortMalloc(size_t);
   void vPortFree(void *);

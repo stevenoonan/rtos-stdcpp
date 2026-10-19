@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "captured_date": "2026-10-19",
   "project": "rtos-stdcpp",
   "base_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
@@ -11,7 +11,6 @@
   },
   "qualified_runtime_profile": {
     "id": "stm32-gcc-14.3.1-cxx17",
-    "owner_until_step4": "Integrating application",
     "source_commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
     "source_files": [
       "libstdc++-v3/src/c++11/mutex.cc",
@@ -19,13 +18,14 @@
     ],
     "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
     "local_modifications": [],
-    "authoritative_manifest": "Integration-supplied source manifest during standalone packaging transition"
+    "authoritative_manifest": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json",
+    "owner": "rtos-stdcpp"
   },
   "retained_files": [
     {
       "path": ".gitignore",
-      "sha256": "565c47cc7853d1371630d5e3e6398713d3bc275310ddfa6f2410bcbe48e0960a",
-      "bytes": 20,
+      "sha256": "93ba2d10443a253cdb6cf227fbbd79178c6190cf75e1ae2724e7eab14ca9c77f",
+      "bytes": 42,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -35,13 +35,15 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/.gitignore",
         "sha256": "565c47cc7853d1371630d5e3e6398713d3bc275310ddfa6f2410bcbe48e0960a"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
       "modified_since_original_upstream": false
     },
     {
       "path": "CMakeLists.txt",
-      "sha256": "47b453eecbf91354dbf8f4246370f2ce19a89265e8101843d4a43009ddb05097",
-      "bytes": 1495,
+      "sha256": "b8e9fdf522a5db8df25a7a607d4927d87b66c6e389eec6376f8857da9c9a4fb3",
+      "bytes": 4176,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -54,25 +56,1228 @@
       "local_modifications": [
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
         "Consumer-independent wording; no implementation or original license text changed",
-        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
       ],
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/CMakeLists.txt",
-      "sha256": "2b3e3fb203ed95c2f55239aeb4195e60cd36f0a4c58c619f52376890913eb808",
-      "bytes": 2112,
+      "path": "CMakePresets.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "0a40eff47130d66070c318d7fd998e592a0d340beae2b2e110fcd197fc46ab76",
+      "bytes": 933
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "b755249314213652ed368997410af81c7cb8da6c6e5e8479d6d87b5ec47d7291",
+      "bytes": 1139,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
         "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
         "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/CMakeLists.txt",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/CMakeLists.txt",
-        "sha256": "2b3e3fb203ed95c2f55239aeb4195e60cd36f0a4c58c619f52376890913eb808"
+        "path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/LICENSE",
+        "sha256": "6a92dc15b72025947f98708b40c11533bc644cbfadea3a7f90a318cbe9b9f067"
+      },
+      "local_modifications": [
+        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged"
+      ],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "LICENSES/Apache-2.0.txt",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357,
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "license_evidence": "Document copying terms printed in the full text",
+      "source": {
+        "kind": "Verbatim license text copy; source identity verified by the integrating application",
+        "document_sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+      },
+      "local_modifications": []
+    },
+    {
+      "path": "LICENSES/FreeRTOS_cpp11-original.txt",
+      "sha256": "6a92dc15b72025947f98708b40c11533bc644cbfadea3a7f90a318cbe9b9f067",
+      "bytes": 2402,
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "license_evidence": "Document copying terms printed in the full text",
+      "source": {
+        "kind": "Verbatim license text copy",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "LICENSE",
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11"
+      },
+      "local_modifications": []
+    },
+    {
+      "path": "LICENSES/GCC-exception-3.1.txt",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "bytes": 3324,
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "license_evidence": "Document copying terms printed in the full text",
+      "source": {
+        "kind": "Verbatim license text copy; source identity verified by the integrating application",
+        "document_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+      },
+      "local_modifications": []
+    },
+    {
+      "path": "LICENSES/GPL-3.0-or-later.txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147,
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "license_evidence": "Document copying terms printed in the full text",
+      "source": {
+        "kind": "Verbatim license text copy; source identity verified by the integrating application",
+        "document_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      },
+      "local_modifications": []
+    },
+    {
+      "path": "README.md",
+      "sha256": "2f10a90002bc8c42dd62949a22d60ade320657a0d45a9eb311030fb5c4b125af",
+      "bytes": 48544,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "README.md",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/README.md",
+        "sha256": "ce4869973c3b11509f119ccd342619860c5db887e624e88464d04ab6817b2c1c"
+      },
+      "local_modifications": [
+        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "e762734230bfa9a880584bb011103730df4528f9463ed1e7eca9b4b8f99e8af5",
+      "bytes": 6634,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "kind": "Step 2 project metadata"
+      },
+      "local_modifications": [
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ]
+    },
+    {
+      "path": "cmake/profiles/stm32-gcc-14.3.1-cxx17.cmake",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "dc04912ad7d63ceccf08dfc93ac6d5c576b8304516642adce51661d8904ec965",
+      "bytes": 859
+    },
+    {
+      "path": "cmake/profiles/stm32-gcc-14.3.1-cxx17.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "c8b234efbd0947c05193008eb9716e4ad761e3dbe914fbee40f1163bf7677108",
+      "bytes": 1594
+    },
+    {
+      "path": "cmake/toolchains/arm-none-eabi.cmake",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "f763e6274d7cecc05a0eec2a8d7308dd1b37c88c3d5f98d091a6d9e789ca955e",
+      "bytes": 395
+    },
+    {
+      "path": "cpp20_actions.md",
+      "sha256": "cd3fc254b5d7e119591e9c5248cb7ecb3f21190d00ae2d362a672d04d564c4bb",
+      "bytes": 851,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "cpp20_actions.md",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/cpp20_actions.md",
+        "sha256": "cd3fc254b5d7e119591e9c5248cb7ecb3f21190d00ae2d362a672d04d564c4bb"
       },
       "local_modifications": [],
       "modified_since_original_upstream": false
+    },
+    {
+      "path": "docs/architecture.md",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "19b19f6e95d7425897cf461f68923cbf933698e577b8c63a39593ceb466cc0c7",
+      "bytes": 2454
+    },
+    {
+      "path": "docs/integration.md",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "c6cd9a713b3fb00ac843741e719bc4c42eda1f34460e72386dbb93012e6dbbbf",
+      "bytes": 3880
+    },
+    {
+      "path": "docs/support-matrix.md",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "afad738e425dd2be31c5c3595690e8082c1d9bb7ac7663cca37c3116bae664f7",
+      "bytes": 1481
+    },
+    {
+      "path": "docs/testing.md",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "1e4c6a9aade9ab661e7e11f6e6f15de573d22bc169ff04690a71136d067efb11",
+      "bytes": 1833
+    },
+    {
+      "path": "examples/compile-check/CMakeLists.txt",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "e5e24fd132690e0af55db439fd692b01a97ac0f8a18374ea40cfff690c712833",
+      "bytes": 1170
+    },
+    {
+      "path": "examples/compile-check/FreeRTOSConfig.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "a209c93838e911726d67b218fa23a26e9549a907126a4194d52c1bc7d4e87357",
+      "bytes": 1677
+    },
+    {
+      "path": "examples/compile-check/public_api.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "7722bb2f78ff94d10fe3f700508b79b110f5dd500c9311fca9b4dba9f31cfec5",
+      "bytes": 556
+    },
+    {
+      "path": "include/rtos_stdcpp/freertos_thread_attributes.h",
+      "sha256": "d3d9419aa5717c4abf8ced3bdbd7ba8fa3da22584355e38181227be8028f32ff",
+      "bytes": 2158,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/freertos_thread_attributes.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_thread_attributes.h",
+        "sha256": "d3d9419aa5717c4abf8ced3bdbd7ba8fa3da22584355e38181227be8028f32ff"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "include/rtos_stdcpp/freertos_time.h",
+      "sha256": "c66d1a800797618e8094766c0413dd5bffc46aab1503e66e5356b5f3be758212",
+      "bytes": 1445,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/freertos_time.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_time.h",
+        "sha256": "c66d1a800797618e8094766c0413dd5bffc46aab1503e66e5356b5f3be758212"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "include/rtos_stdcpp/thread_with_attributes.h",
+      "sha256": "0cce443958cf4ddc50840c9f3727ddf3a2e105d047ff32b455e49ffc43a80f5c",
+      "bytes": 2486,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/thread_with_attributes.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread_with_attributes.h",
+        "sha256": "0cce443958cf4ddc50840c9f3727ddf3a2e105d047ff32b455e49ffc43a80f5c"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/FreeRTOSConfig.h",
+      "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca",
+      "bytes": 7016,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/FreeRTOSConfig.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOSConfig.h",
+        "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/FreeRTOS_ca9_hooks.c",
+      "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3",
+      "bytes": 2059,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/FreeRTOS_ca9_hooks.c",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOS_ca9_hooks.c",
+        "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/README.md",
+      "sha256": "46fac6bbf11572bcd3b4b8d6be9070d31c985fef46558e60cd5320a2288743f4",
+      "bytes": 1919,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/README.md",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/README.md",
+        "sha256": "b80456427b16001d1d64dc11d3730680edde21e9705936e3e2a6aefd9cf19b50"
+      },
+      "local_modifications": [
+        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
+        "Consumer-independent wording; no implementation or original license text changed",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.c",
+      "sha256": "f58ab81fee61326f3bf9040e45203ad0eea218077a69ea97c42737eae7051c6a",
+      "bytes": 1219,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/ca9_global_timer.c",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/ca9_global_timer.c",
+        "sha256": "f58ab81fee61326f3bf9040e45203ad0eea218077a69ea97c42737eae7051c6a"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.h",
+      "sha256": "d82e7a2cba12bd92aa312258c4cc40ab666cd90c46ef72031c73a37c1bcd77b0",
+      "bytes": 4348,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/ca9_global_timer.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/ca9_global_timer.h",
+        "sha256": "d82e7a2cba12bd92aa312258c4cc40ab666cd90c46ef72031c73a37c1bcd77b0"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/ARMCA9.h",
+      "sha256": "56e4c7d73cd0d4a7937b7f9109acac70a3f522534f67d02ac113730dabd04c33",
+      "bytes": 9067,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/ARMCA9.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/ARMCA9.h",
+        "sha256": "56e4c7d73cd0d4a7937b7f9109acac70a3f522534f67d02ac113730dabd04c33"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_compiler.h",
+      "sha256": "9d23b89a02e7a94f1079fbb2d9cde4a11a07457bbda8cd4b5da6c31e873713b9",
+      "bytes": 5807,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/cmsis_compiler.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_compiler.h",
+        "sha256": "9d23b89a02e7a94f1079fbb2d9cde4a11a07457bbda8cd4b5da6c31e873713b9"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_cp15.h",
+      "sha256": "0c5c95b8dd77645c184910715b38085610ba86680e0f1b967011e425b10bbd5c",
+      "bytes": 12037,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/cmsis_cp15.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_cp15.h",
+        "sha256": "0c5c95b8dd77645c184910715b38085610ba86680e0f1b967011e425b10bbd5c"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_gcc.h",
+      "sha256": "bf4d85dcdf2a04198f29ed3cdfc74097362e90a66dbd73cc601372beac412159",
+      "bytes": 24786,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/cmsis_gcc.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_gcc.h",
+        "sha256": "bf4d85dcdf2a04198f29ed3cdfc74097362e90a66dbd73cc601372beac412159"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/core_ca.h",
+      "sha256": "9e0fbe0d41544c5a7d3efa051f0241124138dae548c0a14927abee7bcacf0198",
+      "bytes": 106321,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/core_ca.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/core_ca.h",
+        "sha256": "9e0fbe0d41544c5a7d3efa051f0241124138dae548c0a14927abee7bcacf0198"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl.h",
+      "sha256": "4b3f00502b2ca0266356e069de815c50a173cc6a28ad3b97d71fea68929354b6",
+      "bytes": 8290,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/irq_ctrl.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/irq_ctrl.h",
+        "sha256": "4b3f00502b2ca0266356e069de815c50a173cc6a28ad3b97d71fea68929354b6"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl_gic.c",
+      "sha256": "0958694407662cd066f56968be007115c125793bdfd4c13a86259470b76018c6",
+      "bytes": 9116,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/cmsis/irq_ctrl_gic.c",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/irq_ctrl_gic.c",
+        "sha256": "0958694407662cd066f56968be007115c125793bdfd4c13a86259470b76018c6"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/console.cpp",
+      "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680",
+      "bytes": 1926,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/console.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/console.cpp",
+        "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/console.h",
+      "sha256": "1e9eeb75ccfa6025c1a3e5d9ca9299e08f52538e79bdce28c6f92f853caf4b81",
+      "bytes": 1386,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/console.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/console.h",
+        "sha256": "1e9eeb75ccfa6025c1a3e5d9ca9299e08f52538e79bdce28c6f92f853caf4b81"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/linker.ld",
+      "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0",
+      "bytes": 5278,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/linker.ld",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/linker.ld",
+        "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/mem_ARMCA9.h",
+      "sha256": "f39497d5551b5925633f95f7d81dbc9c5e736965d71f247d1869088c22438ef6",
+      "bytes": 3804,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/mem_ARMCA9.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/mem_ARMCA9.h",
+        "sha256": "f39497d5551b5925633f95f7d81dbc9c5e736965d71f247d1869088c22438ef6"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
+      "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9",
+      "bytes": 8998,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/startup_ARMCA9.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/startup_ARMCA9.cpp",
+        "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.c",
+      "sha256": "2a5c0082a16f3a27729a578dd0106731f147c0b9c51b0397cc6f654c3f24f0e8",
+      "bytes": 2695,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/system_ARMCA9.c",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/system_ARMCA9.c",
+        "sha256": "2a5c0082a16f3a27729a578dd0106731f147c0b9c51b0397cc6f654c3f24f0e8"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.h",
+      "sha256": "10aa5197f4b0abb256df9f2f4b67ae9d969ed46b955d0a035f8330b05f027220",
+      "bytes": 1718,
+      "license_expression": "Apache-2.0",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/system_ARMCA9.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/system_ARMCA9.h",
+        "sha256": "10aa5197f4b0abb256df9f2f4b67ae9d969ed46b955d0a035f8330b05f027220"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/FreeRTOSConfig.h",
+      "sha256": "a8c802a1230879c19727c237da475934beccc123684a525e2938cdca615413a0",
+      "bytes": 4223,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/FreeRTOSConfig.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/FreeRTOSConfig.h",
+        "sha256": "a8c802a1230879c19727c237da475934beccc123684a525e2938cdca615413a0"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/FreeRTOS_riscv_hooks.cpp",
+      "sha256": "2c12287ef3020555062811c411fe7b0e7bae3f90fa07db482e2ff367829aacb7",
+      "bytes": 1247,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp",
+        "sha256": "2c12287ef3020555062811c411fe7b0e7bae3f90fa07db482e2ff367829aacb7"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/console.cpp",
+      "sha256": "0af7834c8b3a440555b29bdf7964425123fdc9603f7d2f25b3ef4715d0760d53",
+      "bytes": 1641,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/console.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/console.cpp",
+        "sha256": "0af7834c8b3a440555b29bdf7964425123fdc9603f7d2f25b3ef4715d0760d53"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/console.h",
+      "sha256": "28ae965bc10ca41b01b877c1799020cee6097efe6ec115f31ab58507f842062a",
+      "bytes": 1418,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/console.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/console.h",
+        "sha256": "28ae965bc10ca41b01b877c1799020cee6097efe6ec115f31ab58507f842062a"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/linker.ld",
+      "sha256": "cbc8f5bb45644265c2561e48b7d19a12a81b3eefcd6bb251403093602e5ce9ee",
+      "bytes": 1741,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/linker.ld",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/linker.ld",
+        "sha256": "cbc8f5bb45644265c2561e48b7d19a12a81b3eefcd6bb251403093602e5ce9ee"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/riscv-reg.h",
+      "sha256": "b64189d5efcc418a73400fbdf609ea664faaa7e99042c3e4cec439082947bfc8",
+      "bytes": 1562,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/riscv-reg.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/riscv-reg.h",
+        "sha256": "b64189d5efcc418a73400fbdf609ea664faaa7e99042c3e4cec439082947bfc8"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/riscv-virt.h",
+      "sha256": "4fe417c2ceaa4f9295ccbafa66c7455a05b2405311e11ef09ba14617ad7215bc",
+      "bytes": 1713,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/riscv-virt.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/riscv-virt.h",
+        "sha256": "4fe417c2ceaa4f9295ccbafa66c7455a05b2405311e11ef09ba14617ad7215bc"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/startup_riscv.S",
+      "sha256": "f7acec165e92ddfefa1fa90a412033844a7a7bb8f7a39230c2f29e238fb4e7af",
+      "bytes": 2078,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/startup_riscv.S",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/startup_riscv.S",
+        "sha256": "f7acec165e92ddfefa1fa90a412033844a7a7bb8f7a39230c2f29e238fb4e7af"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/riscv-virt/startup_riscv.cpp",
+      "sha256": "217325b6b49be2ab1104398c95f53b3e7e57818ad2e426b9fe970287d8b182d7",
+      "bytes": 3012,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/startup_riscv.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/startup_riscv.cpp",
+        "sha256": "217325b6b49be2ab1104398c95f53b3e7e57818ad2e426b9fe970287d8b182d7"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "src/backends/freertos/backend_time.h",
+      "sha256": "2580e2e1bfd3c28654d320aceab916e1ce2ef5d9ce284ba38e87576e9f359bdd",
+      "bytes": 2083,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/backend_time.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/backend_time.h",
+        "sha256": "2580e2e1bfd3c28654d320aceab916e1ce2ef5d9ce284ba38e87576e9f359bdd"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/condition_variable.h",
+      "sha256": "41a0604bc2cc2913aa0dc4d32742958089ba6c0483a66102a108b780098c7b21",
+      "bytes": 3716,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/condition_variable.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/condition_variable.h",
+        "sha256": "41a0604bc2cc2913aa0dc4d32742958089ba6c0483a66102a108b780098c7b21"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/critical_section.h",
+      "sha256": "7bbed61c34234a4932ff8538f77d60c2dabbde03023facb288ed942eaa82933a",
+      "bytes": 2072,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/critical_section.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/critical_section.h",
+        "sha256": "7bbed61c34234a4932ff8538f77d60c2dabbde03023facb288ed942eaa82933a"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/freertos_time.cpp",
+      "sha256": "dff49f55518ac2d640e973d9795023cbd8fce1b9d0ac3dffd928ec792a017c11",
+      "bytes": 3102,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/freertos_time.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_time.cpp",
+        "sha256": "dff49f55518ac2d640e973d9795023cbd8fce1b9d0ac3dffd928ec792a017c11"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/gthr_key.cpp",
+      "sha256": "4c933a9ed8c342ce83c80303692aaffc6592d0fed624254e269aa34d8debb919",
+      "bytes": 2458,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/gthr_key.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key.cpp",
+        "sha256": "4c933a9ed8c342ce83c80303692aaffc6592d0fed624254e269aa34d8debb919"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/gthr_key.h",
+      "sha256": "54d925b71b134b62602a59010f85252ccff7314aa013d7f8737232f8e513890b",
+      "bytes": 1540,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/gthr_key.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key.h",
+        "sha256": "54d925b71b134b62602a59010f85252ccff7314aa013d7f8737232f8e513890b"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "src/backends/freertos/gthr_key_type.h",
+      "sha256": "8f6a9cc3b729356ea88b9d0c4b937a9312bf19125bd38cbfb66c6b0ea7b7cd62",
+      "bytes": 2070,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/gthr_key_type.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key_type.h",
+        "sha256": "8f6a9cc3b729356ea88b9d0c4b937a9312bf19125bd38cbfb66c6b0ea7b7cd62"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/thread.cpp",
+      "sha256": "743ee4ad024359b6352ef1e02293229568dc88e274e6d89e92f4d146ff2a215b",
+      "bytes": 3847,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/thread.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread.cpp",
+        "sha256": "743ee4ad024359b6352ef1e02293229568dc88e274e6d89e92f4d146ff2a215b"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/backends/freertos/thread_gthread.h",
+      "sha256": "df345d13ea6ed135105cf57158e76e64e11ea0f1947e23d3532cac865016100c",
+      "bytes": 7209,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/thread_gthread.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread_gthread.h",
+        "sha256": "df345d13ea6ed135105cf57158e76e64e11ea0f1947e23d3532cac865016100c"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/toolchains/gcc/bits/gthr-default.h",
+      "sha256": "a684f1c0bfa582e63b472eaf4e8c0c08c0b6e9f109a4269f58e5dc2e2b474dcc",
+      "bytes": 9190,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/bits/gthr-default.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/bits/gthr-default.h",
+        "sha256": "a684f1c0bfa582e63b472eaf4e8c0c08c0b6e9f109a4269f58e5dc2e2b474dcc"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "src/toolchains/gcc/gcc_threading_config.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "03fe735446fb4fae1cbd99119c14ab2812ed4fd90e74cbdef243461a2650d7ab",
+      "bytes": 415
+    },
+    {
+      "path": "tests/conformance/legacy/test_atomic.h",
+      "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd",
+      "bytes": 1629,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_atomic.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_atomic.h",
+        "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_cv.h",
+      "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da",
+      "bytes": 4454,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_cv.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_cv.h",
+        "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_future.h",
+      "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3",
+      "bytes": 3106,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_future.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_future.h",
+        "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_mutex.h",
+      "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c",
+      "bytes": 2269,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_mutex.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_mutex.h",
+        "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_once.h",
+      "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e",
+      "bytes": 1842,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_once.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_once.h",
+        "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
+      "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e",
+      "bytes": 2742,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_semaphore_latch_barrier.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_semaphore_latch_barrier.h",
+        "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/conformance/legacy/test_thread.h",
+      "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46",
+      "bytes": 3987,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_thread.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_thread.h",
+        "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/regression/lifecycle_regression.cpp",
+      "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753",
+      "bytes": 2939,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "tests/lifecycle_regression.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/tests/lifecycle_regression.cpp",
+        "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "tests/regression/lifecycle_regression.h",
+      "sha256": "fc0895d721fd9d46322f0caabd7a71dc598c2544c08e58ce27964e060d4730cd",
+      "bytes": 265,
+      "license_expression": "MIT",
+      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "tests/lifecycle_regression.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/tests/lifecycle_regression.h",
+        "sha256": "fc0895d721fd9d46322f0caabd7a71dc598c2544c08e58ce27964e060d4730cd"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": true
+    },
+    {
+      "path": "tests/support/freertos/FreeRTOS_hooks.cpp",
+      "sha256": "c79b890e7a1a103d8a40e3bc6dd62a856f74704cce8e276d1be25855961329b7",
+      "bytes": 2169,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "sys_common/FreeRTOS_hooks.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/FreeRTOS_hooks.cpp",
+        "sha256": "c79b890e7a1a103d8a40e3bc6dd62a856f74704cce8e276d1be25855961329b7"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/freertos/FreeRTOS_memory.cpp",
+      "sha256": "85a968fedfbd19a13fa9d5e78d6508734f2fa3e0bd06e44756568e81121ff6d0",
+      "bytes": 1570,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "sys_common/FreeRTOS_memory.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/FreeRTOS_memory.cpp",
+        "sha256": "85a968fedfbd19a13fa9d5e78d6508734f2fa3e0bd06e44756568e81121ff6d0"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/freertos/allocation_wrappers.cpp",
+      "sha256": "dc70483f4499dbe0c65874317d1b17419b908c67494d7dad4390fc4d71fa0836",
+      "bytes": 2443,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "sys_common/sys.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/sys.cpp",
+        "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab"
+      },
+      "local_modifications": [
+        "Step 4: mechanically split syscall stubs and allocation wrappers; function bodies unchanged",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/freertos/syscalls.cpp",
+      "sha256": "e1e6f59a337d2af5b0b201f6528dcfcf829baa398a60c1e742e8f31d1bc6ff2f",
+      "bytes": 2007,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "sys_common/sys.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/sys.cpp",
+        "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab"
+      },
+      "local_modifications": [
+        "Step 4: mechanically split syscall stubs and allocation wrappers; function bodies unchanged",
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+      ],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/legacy_ca9_runner.cpp",
+      "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4",
+      "bytes": 2872,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/main.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/main.cpp",
+        "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/legacy_riscv_runner.cpp",
+      "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6",
+      "bytes": 2778,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/main.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/main.cpp",
+        "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/support/test_helpers.h",
+      "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436",
+      "bytes": 2640,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_helpers.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_helpers.h",
+        "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/unit/CMakeLists.txt",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "9c295ac95d3537973109cd9d2005e085c0c1f6f6f204e1f3f3a6e9e11105643b",
+      "bytes": 859
+    },
+    {
+      "path": "tests/unit/stubs/FreeRTOS.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "b66611569102c1a575488768ad12fdba9429aa7b751b08645e041ff838a53804",
+      "bytes": 140
+    },
+    {
+      "path": "tests/unit/stubs/task.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "08d1da9563d8226e7ab7102847f3690859d66889e03ee1b2fd2c86466fd2ec1a",
+      "bytes": 45
+    },
+    {
+      "path": "tests/unit/time_algorithms.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "3a9aa5bfea8ab63517823e373bdd1038d6909aa3735eeae81c7f98bc25566b32",
+      "bytes": 1550
     },
     {
       "path": "third_party/freertos-kernel/LICENSE",
@@ -89,6 +1294,17 @@
       },
       "local_modifications": [],
       "modified_since_original_upstream": false
+    },
+    {
+      "path": "third_party/freertos-kernel/SOURCES.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
+      "source": {
+        "origin": "rtos-stdcpp Step 4 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "67a591871344b7ef49a359b05b05ecd7d5ab8279651ea6cc505d1b3ea67b5f7d",
+      "bytes": 7177
     },
     {
       "path": "third_party/freertos-kernel/croutine.c",
@@ -843,1053 +2059,86 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/CMakelists.txt",
-      "sha256": "94538f6aa8f7e14b6cbf435238ebc467262f15fa22529b34cf0790ccea494afc",
-      "bytes": 1155,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/CMakelists.txt",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/CMakelists.txt",
-        "sha256": "94538f6aa8f7e14b6cbf435238ebc467262f15fa22529b34cf0790ccea494afc"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "src/backends/freertos/backend_time.h",
-      "sha256": "2580e2e1bfd3c28654d320aceab916e1ce2ef5d9ce284ba38e87576e9f359bdd",
-      "bytes": 2083,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/backend_time.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/backend_time.h",
-        "sha256": "2580e2e1bfd3c28654d320aceab916e1ce2ef5d9ce284ba38e87576e9f359bdd"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/toolchains/gcc/bits/gthr-default.h",
-      "sha256": "a684f1c0bfa582e63b472eaf4e8c0c08c0b6e9f109a4269f58e5dc2e2b474dcc",
-      "bytes": 9190,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/bits/gthr-default.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/bits/gthr-default.h",
-        "sha256": "a684f1c0bfa582e63b472eaf4e8c0c08c0b6e9f109a4269f58e5dc2e2b474dcc"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/condition_variable.h",
-      "sha256": "41a0604bc2cc2913aa0dc4d32742958089ba6c0483a66102a108b780098c7b21",
-      "bytes": 3716,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/condition_variable.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/condition_variable.h",
-        "sha256": "41a0604bc2cc2913aa0dc4d32742958089ba6c0483a66102a108b780098c7b21"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/critical_section.h",
-      "sha256": "7bbed61c34234a4932ff8538f77d60c2dabbde03023facb288ed942eaa82933a",
-      "bytes": 2072,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/critical_section.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/critical_section.h",
-        "sha256": "7bbed61c34234a4932ff8538f77d60c2dabbde03023facb288ed942eaa82933a"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "include/rtos_stdcpp/freertos_thread_attributes.h",
-      "sha256": "d3d9419aa5717c4abf8ced3bdbd7ba8fa3da22584355e38181227be8028f32ff",
-      "bytes": 2158,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/freertos_thread_attributes.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_thread_attributes.h",
-        "sha256": "d3d9419aa5717c4abf8ced3bdbd7ba8fa3da22584355e38181227be8028f32ff"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/freertos_time.cpp",
-      "sha256": "dff49f55518ac2d640e973d9795023cbd8fce1b9d0ac3dffd928ec792a017c11",
-      "bytes": 3102,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/freertos_time.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_time.cpp",
-        "sha256": "dff49f55518ac2d640e973d9795023cbd8fce1b9d0ac3dffd928ec792a017c11"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "include/rtos_stdcpp/freertos_time.h",
-      "sha256": "c66d1a800797618e8094766c0413dd5bffc46aab1503e66e5356b5f3be758212",
-      "bytes": 1445,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/freertos_time.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/freertos_time.h",
-        "sha256": "c66d1a800797618e8094766c0413dd5bffc46aab1503e66e5356b5f3be758212"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "src/backends/freertos/gthr_key.cpp",
-      "sha256": "4c933a9ed8c342ce83c80303692aaffc6592d0fed624254e269aa34d8debb919",
-      "bytes": 2458,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/gthr_key.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key.cpp",
-        "sha256": "4c933a9ed8c342ce83c80303692aaffc6592d0fed624254e269aa34d8debb919"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/gthr_key.h",
-      "sha256": "54d925b71b134b62602a59010f85252ccff7314aa013d7f8737232f8e513890b",
-      "bytes": 1540,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/gthr_key.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key.h",
-        "sha256": "54d925b71b134b62602a59010f85252ccff7314aa013d7f8737232f8e513890b"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "src/backends/freertos/gthr_key_type.h",
-      "sha256": "8f6a9cc3b729356ea88b9d0c4b937a9312bf19125bd38cbfb66c6b0ea7b7cd62",
-      "bytes": 2070,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/gthr_key_type.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/gthr_key_type.h",
-        "sha256": "8f6a9cc3b729356ea88b9d0c4b937a9312bf19125bd38cbfb66c6b0ea7b7cd62"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/thread.cpp",
-      "sha256": "743ee4ad024359b6352ef1e02293229568dc88e274e6d89e92f4d146ff2a215b",
-      "bytes": 3847,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/thread.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread.cpp",
-        "sha256": "743ee4ad024359b6352ef1e02293229568dc88e274e6d89e92f4d146ff2a215b"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "src/backends/freertos/thread_gthread.h",
-      "sha256": "df345d13ea6ed135105cf57158e76e64e11ea0f1947e23d3532cac865016100c",
-      "bytes": 7209,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/thread_gthread.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread_gthread.h",
-        "sha256": "df345d13ea6ed135105cf57158e76e64e11ea0f1947e23d3532cac865016100c"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "include/rtos_stdcpp/thread_with_attributes.h",
-      "sha256": "0cce443958cf4ddc50840c9f3727ddf3a2e105d047ff32b455e49ffc43a80f5c",
-      "bytes": 2486,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "FreeRTOS/cpp11_gcc/thread_with_attributes.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/thread_with_attributes.h",
-        "sha256": "0cce443958cf4ddc50840c9f3727ddf3a2e105d047ff32b455e49ffc43a80f5c"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "LICENSE",
-      "sha256": "b755249314213652ed368997410af81c7cb8da6c6e5e8479d6d87b5ec47d7291",
-      "bytes": 1139,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "LICENSE",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/LICENSE",
-        "sha256": "6a92dc15b72025947f98708b40c11533bc644cbfadea3a7f90a318cbe9b9f067"
-      },
-      "local_modifications": [
-        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged"
-      ],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "LICENSES/Apache-2.0.txt",
-      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
-      "bytes": 11357,
+      "path": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/COPYING.RUNTIME",
       "license_expression": "LicenseRef-Verbatim-License-Document",
-      "license_evidence": "Document copying terms printed in the full text",
+      "license_evidence": "Original GCC source header or full license document; immutable source hash audited before transfer",
       "source": {
-        "kind": "Verbatim license text copy; source identity verified by the integrating application",
-        "document_sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+        "repository": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+        "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+        "path": "COPYING.RUNTIME",
+        "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/COPYING.RUNTIME",
+        "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
       },
-      "local_modifications": []
-    },
-    {
-      "path": "LICENSES/FreeRTOS_cpp11-original.txt",
-      "sha256": "6a92dc15b72025947f98708b40c11533bc644cbfadea3a7f90a318cbe9b9f067",
-      "bytes": 2402,
-      "license_expression": "LicenseRef-Verbatim-License-Document",
-      "license_evidence": "Document copying terms printed in the full text",
-      "source": {
-        "kind": "Verbatim license text copy",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "LICENSE",
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11"
-      },
-      "local_modifications": []
-    },
-    {
-      "path": "LICENSES/GCC-exception-3.1.txt",
+      "local_modifications": [],
       "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
-      "bytes": 3324,
-      "license_expression": "LicenseRef-Verbatim-License-Document",
-      "license_evidence": "Document copying terms printed in the full text",
-      "source": {
-        "kind": "Verbatim license text copy; source identity verified by the integrating application",
-        "document_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
-      },
-      "local_modifications": []
+      "bytes": 3324
     },
     {
-      "path": "LICENSES/GPL-3.0-or-later.txt",
+      "path": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/COPYING3",
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "license_evidence": "Original GCC source header or full license document; immutable source hash audited before transfer",
+      "source": {
+        "repository": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+        "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+        "path": "COPYING3",
+        "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/COPYING3",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      },
+      "local_modifications": [],
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
-      "bytes": 35147,
-      "license_expression": "LicenseRef-Verbatim-License-Document",
-      "license_evidence": "Document copying terms printed in the full text",
-      "source": {
-        "kind": "Verbatim license text copy; source identity verified by the integrating application",
-        "document_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
-      },
-      "local_modifications": []
+      "bytes": 35147
     },
     {
-      "path": "README.md",
-      "sha256": "7494995e01247d18b00a04a1fa29c4fecc42f8b8124caff241a593516385cf30",
-      "bytes": 48130,
+      "path": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json",
       "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
       "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "README.md",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/README.md",
-        "sha256": "ce4869973c3b11509f119ccd342619860c5db887e624e88464d04ab6817b2c1c"
+        "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [
-        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
-        "Consumer-independent wording; no implementation or original license text changed",
-        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
-      ],
-      "modified_since_original_upstream": true
+      "local_modifications": [],
+      "sha256": "fb863c89ab151793a0478a435f2748955ab3a32df8460c3bae63b0dda62e99a8",
+      "bytes": 2719
     },
     {
-      "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "25931743200491a9f52f81865fdbe1280fd85ad584e2cf6548fb41c7c7ccd4f8",
-      "bytes": 6626,
+      "path": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/libstdc++-v3/src/c++11/condition_variable.cc",
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "license_evidence": "Original GCC source header or full license document; immutable source hash audited before transfer",
+      "source": {
+        "repository": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+        "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+        "path": "libstdc++-v3/src/c++11/condition_variable.cc",
+        "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/condition_variable.cc",
+        "sha256": "8d7776f730b290f71cebd34d32c5caed32e2d19284d98375962c52ce7b2e7015"
+      },
+      "local_modifications": [],
+      "sha256": "8d7776f730b290f71cebd34d32c5caed32e2d19284d98375962c52ce7b2e7015",
+      "bytes": 3199
+    },
+    {
+      "path": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/libstdc++-v3/src/c++11/mutex.cc",
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "license_evidence": "Original GCC source header or full license document; immutable source hash audited before transfer",
+      "source": {
+        "repository": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+        "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+        "path": "libstdc++-v3/src/c++11/mutex.cc",
+        "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/mutex.cc",
+        "sha256": "c4f859e34d1b3e1f3dd1a9e5084518965d64dd77338eed2112d53ac4176c9ba6"
+      },
+      "local_modifications": [],
+      "sha256": "c4f859e34d1b3e1f3dd1a9e5084518965d64dd77338eed2112d53ac4176c9ba6",
+      "bytes": 3033
+    },
+    {
+      "path": "tools/check_profile.py",
       "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
+      "license_evidence": "Project-authored build, documentation, test or provenance metadata; root MIT license",
       "source": {
-        "kind": "Step 2 project metadata"
-      },
-      "local_modifications": [
-        "Consumer-independent wording; no implementation or original license text changed",
-        "Step 3: maintained repository/project/branch naming; original provenance and public API retained"
-      ]
-    },
-    {
-      "path": "compiler.cmake",
-      "sha256": "bc3b44f4314a40c2b3679394e358516dc8f1245911ab6bf1d4a7a3cc207033a5",
-      "bytes": 2579,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "compiler.cmake",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/compiler.cmake",
-        "sha256": "bc3b44f4314a40c2b3679394e358516dc8f1245911ab6bf1d4a7a3cc207033a5"
+        "origin": "rtos-stdcpp Step 4 project contribution"
       },
       "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "cpp20_actions.md",
-      "sha256": "cd3fc254b5d7e119591e9c5248cb7ecb3f21190d00ae2d362a672d04d564c4bb",
-      "bytes": 851,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "cpp20_actions.md",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/cpp20_actions.md",
-        "sha256": "cd3fc254b5d7e119591e9c5248cb7ecb3f21190d00ae2d362a672d04d564c4bb"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/FreeRTOSConfig.h",
-      "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca",
-      "bytes": 7016,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/FreeRTOSConfig.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOSConfig.h",
-        "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/FreeRTOS_ca9_hooks.c",
-      "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3",
-      "bytes": 2059,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/FreeRTOS_ca9_hooks.c",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/FreeRTOS_ca9_hooks.c",
-        "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/README.md",
-      "sha256": "b6c2b8722eb41964e71be7db7a1fb454dc639551de0f6f347d141d2992a6d9fd",
-      "bytes": 1911,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/README.md",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/README.md",
-        "sha256": "b80456427b16001d1d64dc11d3730680edde21e9705936e3e2a6aefd9cf19b50"
-      },
-      "local_modifications": [
-        "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
-        "Consumer-independent wording; no implementation or original license text changed"
-      ],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.c",
-      "sha256": "f58ab81fee61326f3bf9040e45203ad0eea218077a69ea97c42737eae7051c6a",
-      "bytes": 1219,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/ca9_global_timer.c",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/ca9_global_timer.c",
-        "sha256": "f58ab81fee61326f3bf9040e45203ad0eea218077a69ea97c42737eae7051c6a"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.h",
-      "sha256": "d82e7a2cba12bd92aa312258c4cc40ab666cd90c46ef72031c73a37c1bcd77b0",
-      "bytes": 4348,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/ca9_global_timer.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/ca9_global_timer.h",
-        "sha256": "d82e7a2cba12bd92aa312258c4cc40ab666cd90c46ef72031c73a37c1bcd77b0"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/ARMCA9.h",
-      "sha256": "56e4c7d73cd0d4a7937b7f9109acac70a3f522534f67d02ac113730dabd04c33",
-      "bytes": 9067,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/ARMCA9.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/ARMCA9.h",
-        "sha256": "56e4c7d73cd0d4a7937b7f9109acac70a3f522534f67d02ac113730dabd04c33"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_compiler.h",
-      "sha256": "9d23b89a02e7a94f1079fbb2d9cde4a11a07457bbda8cd4b5da6c31e873713b9",
-      "bytes": 5807,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/cmsis_compiler.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_compiler.h",
-        "sha256": "9d23b89a02e7a94f1079fbb2d9cde4a11a07457bbda8cd4b5da6c31e873713b9"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_cp15.h",
-      "sha256": "0c5c95b8dd77645c184910715b38085610ba86680e0f1b967011e425b10bbd5c",
-      "bytes": 12037,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/cmsis_cp15.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_cp15.h",
-        "sha256": "0c5c95b8dd77645c184910715b38085610ba86680e0f1b967011e425b10bbd5c"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_gcc.h",
-      "sha256": "bf4d85dcdf2a04198f29ed3cdfc74097362e90a66dbd73cc601372beac412159",
-      "bytes": 24786,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/cmsis_gcc.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/cmsis_gcc.h",
-        "sha256": "bf4d85dcdf2a04198f29ed3cdfc74097362e90a66dbd73cc601372beac412159"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/core_ca.h",
-      "sha256": "9e0fbe0d41544c5a7d3efa051f0241124138dae548c0a14927abee7bcacf0198",
-      "bytes": 106321,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/core_ca.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/core_ca.h",
-        "sha256": "9e0fbe0d41544c5a7d3efa051f0241124138dae548c0a14927abee7bcacf0198"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl.h",
-      "sha256": "4b3f00502b2ca0266356e069de815c50a173cc6a28ad3b97d71fea68929354b6",
-      "bytes": 8290,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/irq_ctrl.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/irq_ctrl.h",
-        "sha256": "4b3f00502b2ca0266356e069de815c50a173cc6a28ad3b97d71fea68929354b6"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl_gic.c",
-      "sha256": "0958694407662cd066f56968be007115c125793bdfd4c13a86259470b76018c6",
-      "bytes": 9116,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/cmsis/irq_ctrl_gic.c",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/cmsis/irq_ctrl_gic.c",
-        "sha256": "0958694407662cd066f56968be007115c125793bdfd4c13a86259470b76018c6"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/console.cpp",
-      "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680",
-      "bytes": 1926,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/console.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/console.cpp",
-        "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/console.h",
-      "sha256": "1e9eeb75ccfa6025c1a3e5d9ca9299e08f52538e79bdce28c6f92f853caf4b81",
-      "bytes": 1386,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/console.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/console.h",
-        "sha256": "1e9eeb75ccfa6025c1a3e5d9ca9299e08f52538e79bdce28c6f92f853caf4b81"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/linker.ld",
-      "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0",
-      "bytes": 5278,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/linker.ld",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/linker.ld",
-        "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/legacy_ca9_runner.cpp",
-      "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4",
-      "bytes": 2872,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/main.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/main.cpp",
-        "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/mem_ARMCA9.h",
-      "sha256": "f39497d5551b5925633f95f7d81dbc9c5e736965d71f247d1869088c22438ef6",
-      "bytes": 3804,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/mem_ARMCA9.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/mem_ARMCA9.h",
-        "sha256": "f39497d5551b5925633f95f7d81dbc9c5e736965d71f247d1869088c22438ef6"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
-      "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9",
-      "bytes": 8998,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/startup_ARMCA9.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/startup_ARMCA9.cpp",
-        "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.c",
-      "sha256": "2a5c0082a16f3a27729a578dd0106731f147c0b9c51b0397cc6f654c3f24f0e8",
-      "bytes": 2695,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/system_ARMCA9.c",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/system_ARMCA9.c",
-        "sha256": "2a5c0082a16f3a27729a578dd0106731f147c0b9c51b0397cc6f654c3f24f0e8"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.h",
-      "sha256": "10aa5197f4b0abb256df9f2f4b67ae9d969ed46b955d0a035f8330b05f027220",
-      "bytes": 1718,
-      "license_expression": "Apache-2.0",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/system_ARMCA9.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/system_ARMCA9.h",
-        "sha256": "10aa5197f4b0abb256df9f2f4b67ae9d969ed46b955d0a035f8330b05f027220"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/FreeRTOSConfig.h",
-      "sha256": "a8c802a1230879c19727c237da475934beccc123684a525e2938cdca615413a0",
-      "bytes": 4223,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/FreeRTOSConfig.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/FreeRTOSConfig.h",
-        "sha256": "a8c802a1230879c19727c237da475934beccc123684a525e2938cdca615413a0"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/FreeRTOS_riscv_hooks.cpp",
-      "sha256": "2c12287ef3020555062811c411fe7b0e7bae3f90fa07db482e2ff367829aacb7",
-      "bytes": 1247,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp",
-        "sha256": "2c12287ef3020555062811c411fe7b0e7bae3f90fa07db482e2ff367829aacb7"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/console.cpp",
-      "sha256": "0af7834c8b3a440555b29bdf7964425123fdc9603f7d2f25b3ef4715d0760d53",
-      "bytes": 1641,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/console.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/console.cpp",
-        "sha256": "0af7834c8b3a440555b29bdf7964425123fdc9603f7d2f25b3ef4715d0760d53"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/console.h",
-      "sha256": "28ae965bc10ca41b01b877c1799020cee6097efe6ec115f31ab58507f842062a",
-      "bytes": 1418,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/console.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/console.h",
-        "sha256": "28ae965bc10ca41b01b877c1799020cee6097efe6ec115f31ab58507f842062a"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/linker.ld",
-      "sha256": "cbc8f5bb45644265c2561e48b7d19a12a81b3eefcd6bb251403093602e5ce9ee",
-      "bytes": 1741,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/linker.ld",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/linker.ld",
-        "sha256": "cbc8f5bb45644265c2561e48b7d19a12a81b3eefcd6bb251403093602e5ce9ee"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/legacy_riscv_runner.cpp",
-      "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6",
-      "bytes": 2778,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/main.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/main.cpp",
-        "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/riscv-reg.h",
-      "sha256": "b64189d5efcc418a73400fbdf609ea664faaa7e99042c3e4cec439082947bfc8",
-      "bytes": 1562,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/riscv-reg.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/riscv-reg.h",
-        "sha256": "b64189d5efcc418a73400fbdf609ea664faaa7e99042c3e4cec439082947bfc8"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/riscv-virt.h",
-      "sha256": "4fe417c2ceaa4f9295ccbafa66c7455a05b2405311e11ef09ba14617ad7215bc",
-      "bytes": 1713,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/riscv-virt.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/riscv-virt.h",
-        "sha256": "4fe417c2ceaa4f9295ccbafa66c7455a05b2405311e11ef09ba14617ad7215bc"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/startup_riscv.S",
-      "sha256": "f7acec165e92ddfefa1fa90a412033844a7a7bb8f7a39230c2f29e238fb4e7af",
-      "bytes": 2078,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/startup_riscv.S",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/startup_riscv.S",
-        "sha256": "f7acec165e92ddfefa1fa90a412033844a7a7bb8f7a39230c2f29e238fb4e7af"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "platforms/riscv-virt/startup_riscv.cpp",
-      "sha256": "217325b6b49be2ab1104398c95f53b3e7e57818ad2e426b9fe970287d8b182d7",
-      "bytes": 3012,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/startup_riscv.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/startup_riscv.cpp",
-        "sha256": "217325b6b49be2ab1104398c95f53b3e7e57818ad2e426b9fe970287d8b182d7"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/freertos/FreeRTOS_hooks.cpp",
-      "sha256": "c79b890e7a1a103d8a40e3bc6dd62a856f74704cce8e276d1be25855961329b7",
-      "bytes": 2169,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "sys_common/FreeRTOS_hooks.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/FreeRTOS_hooks.cpp",
-        "sha256": "c79b890e7a1a103d8a40e3bc6dd62a856f74704cce8e276d1be25855961329b7"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/freertos/FreeRTOS_memory.cpp",
-      "sha256": "85a968fedfbd19a13fa9d5e78d6508734f2fa3e0bd06e44756568e81121ff6d0",
-      "bytes": 1570,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "sys_common/FreeRTOS_memory.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/FreeRTOS_memory.cpp",
-        "sha256": "85a968fedfbd19a13fa9d5e78d6508734f2fa3e0bd06e44756568e81121ff6d0"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/freertos/sys.cpp",
-      "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab",
-      "bytes": 3239,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "sys_common/sys.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/sys.cpp",
-        "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_atomic.h",
-      "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd",
-      "bytes": 1629,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_atomic.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_atomic.h",
-        "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_cv.h",
-      "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da",
-      "bytes": 4454,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_cv.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_cv.h",
-        "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_future.h",
-      "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3",
-      "bytes": 3106,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_future.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_future.h",
-        "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/support/test_helpers.h",
-      "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436",
-      "bytes": 2640,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_helpers.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_helpers.h",
-        "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_mutex.h",
-      "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c",
-      "bytes": 2269,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_mutex.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_mutex.h",
-        "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_once.h",
-      "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e",
-      "bytes": 1842,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_once.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_once.h",
-        "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
-      "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e",
-      "bytes": 2742,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_semaphore_latch_barrier.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_semaphore_latch_barrier.h",
-        "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_thread.h",
-      "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46",
-      "bytes": 3987,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_thread.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_thread.h",
-        "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/regression/lifecycle_regression.cpp",
-      "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753",
-      "bytes": 2939,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "tests/lifecycle_regression.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/tests/lifecycle_regression.cpp",
-        "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
-    },
-    {
-      "path": "tests/regression/lifecycle_regression.h",
-      "sha256": "fc0895d721fd9d46322f0caabd7a71dc598c2544c08e58ce27964e060d4730cd",
-      "bytes": 265,
-      "license_expression": "MIT",
-      "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "tests/lifecycle_regression.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/tests/lifecycle_regression.h",
-        "sha256": "fc0895d721fd9d46322f0caabd7a71dc598c2544c08e58ce27964e060d4730cd"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": true
+      "sha256": "3e08b42dc693a17c70b4b8d841304d7972ce080dcedcf6647082db33ca9a07a6",
+      "bytes": 2363
     }
   ],
   "retired_files": [
@@ -2783,6 +3032,74 @@
       "reason": "retired sample build/workflow depending on obsolete runtime snapshots",
       "license_expression": "MIT",
       "license_evidence": "Explicit file header"
+    },
+    {
+      "path": "FreeRTOS/CMakeLists.txt",
+      "sha256": "2b3e3fb203ed95c2f55239aeb4195e60cd36f0a4c58c619f52376890913eb808",
+      "bytes": 2112,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/CMakeLists.txt",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/CMakeLists.txt",
+        "sha256": "2b3e3fb203ed95c2f55239aeb4195e60cd36f0a4c58c619f52376890913eb808"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 4: replaced obsolete build entry point or split support source"
+    },
+    {
+      "path": "FreeRTOS/cpp11_gcc/CMakelists.txt",
+      "sha256": "94538f6aa8f7e14b6cbf435238ebc467262f15fa22529b34cf0790ccea494afc",
+      "bytes": 1155,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "FreeRTOS/cpp11_gcc/CMakelists.txt",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/FreeRTOS/cpp11_gcc/CMakelists.txt",
+        "sha256": "94538f6aa8f7e14b6cbf435238ebc467262f15fa22529b34cf0790ccea494afc"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 4: replaced obsolete build entry point or split support source"
+    },
+    {
+      "path": "compiler.cmake",
+      "sha256": "bc3b44f4314a40c2b3679394e358516dc8f1245911ab6bf1d4a7a3cc207033a5",
+      "bytes": 2579,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "compiler.cmake",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/compiler.cmake",
+        "sha256": "bc3b44f4314a40c2b3679394e358516dc8f1245911ab6bf1d4a7a3cc207033a5"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 4: replaced obsolete build entry point or split support source"
+    },
+    {
+      "path": "tests/support/freertos/sys.cpp",
+      "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab",
+      "bytes": 3239,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "sys_common/sys.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/sys_common/sys.cpp",
+        "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 4: replaced obsolete build entry point or split support source"
     }
   ],
   "libatomic_audit": {

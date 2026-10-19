@@ -4,13 +4,19 @@ This independently maintained project began as Piotr Grygorczuk's
 [FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11). C++17 is the minimum
 supported language version. The maintained repository is
 [stevenoonan/rtos-stdcpp](https://github.com/stevenoonan/rtos-stdcpp), on branch
-`rtos-stdcpp`. Existing source folders and public extension names are retained
-until their separately reviewed reorganization.
+`rtos-stdcpp`. The reorganized build provides `rtos-stdcpp::rtos-stdcpp`;
+existing public extension symbols remain unchanged.
+
+Start with [integration](docs/integration.md), [layout and ownership](docs/architecture.md),
+[the current support boundary](docs/support-matrix.md), and [local checks](docs/testing.md).
+The exact audited GCC runtime sources and their licenses are included in this checkout.
+A standalone host build uses `cmake --preset host-debug`,
+`cmake --build --preset host-debug`, and `ctest --preset host-debug`.
 
 > **Licensing transition (2026-10-19):** inherited standalone sample builds,
 > GCC v10/v11/v13 runtime copies, and unqualified sample workflows have been
-> retired. Integrating applications supply matching audited C++17 runtime
-> sources. Build commands and design details below are historical;
+> retired. The library now supplies the exact matching audited runtime
+> selection. Build commands and design details below are historical;
 > see the component THIRD_PARTY_NOTICES.md for current ownership and licensing.
 
 ## Historical implementation guide
@@ -58,7 +64,7 @@ $ cmake ../FreeRTOS_cpp11 -G "Eclipse CDT4 - Unix Makefiles" -Dk64frdmevk=1
 $ cmake --build .
 ```
 
-[Another example](lib_test_CA9/README.md) is `ARM Versatile Express Cortex-A9` and is used to run the program in QEMU instead 
+[Another example](platforms/qemu-vexpress-a9/README.md) is `ARM Versatile Express Cortex-A9` and is used to run the program in QEMU instead
 of the physical hardware. It can be build from the command line:
 
 ```console

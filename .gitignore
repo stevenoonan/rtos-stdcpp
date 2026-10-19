@@ -1,3 +1,5 @@
 *.ipch
 *.bin
 .vscode
+/build/
+__pycache__/

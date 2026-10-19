@@ -1,0 +1,202 @@
+{
+  "version_label": "10.4.3",
+  "source_repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+  "source_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+  "source_path": "FreeRTOS/Source",
+  "upstream_kernel_commit": "Not established by inherited import; do not infer from version label",
+  "status": "Preserved inherited dependency only; not selected by the maintained profile. Replace only after standalone platform qualification.",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "a7e2e701fa72d04dc18ca382b42e337b5a2d0abca681db6e5632211c43b8a1e7"
+    },
+    {
+      "path": "croutine.c",
+      "sha256": "9ea626b0c7504013abcd0dad620ca51726669cba6298af17534c554280f24855"
+    },
+    {
+      "path": "event_groups.c",
+      "sha256": "dbdf182fec562a6bda94d8f557793a43d7c932d06401e75f65f31a2c395a9428"
+    },
+    {
+      "path": "include/FreeRTOS.h",
+      "sha256": "ccf4cbe12e86f1a9cf6faab16933f2f0e1db7c4e886e526b05a3fc529af41a83"
+    },
+    {
+      "path": "include/StackMacros.h",
+      "sha256": "9f53d26bb4c4919f08663629298ec24217364e9ef385bfc57e8c83c2d37bf1a7"
+    },
+    {
+      "path": "include/atomic.h",
+      "sha256": "3e58bb23ca948617cc095e2c42cbb55510704cb46861f31cbb33c1375ff8d480"
+    },
+    {
+      "path": "include/croutine.h",
+      "sha256": "6c5c0aa43512d101c88cc21c0d1828ecd6e642bbbb7aa1b6fa1e29d4e72414d4"
+    },
+    {
+      "path": "include/deprecated_definitions.h",
+      "sha256": "65660fffd1fc0d9d4d56fdb67ce35ea34a63eab40000e7a460155f8770dc56ee"
+    },
+    {
+      "path": "include/event_groups.h",
+      "sha256": "0a21c7c0a10b9f9dc037fc097bbd4bf5a013dfdbfd85d7bc360fc8a8f9e663e1"
+    },
+    {
+      "path": "include/list.h",
+      "sha256": "3fdce838fec38d30a53ac4e522dd8e20c8cb2dc5372e547fa7f094a934e36fc7"
+    },
+    {
+      "path": "include/message_buffer.h",
+      "sha256": "bb3516838a6b16e63cdd5b2c07cc6950d97ae9eef9767da0fecb7251a984b514"
+    },
+    {
+      "path": "include/mpu_prototypes.h",
+      "sha256": "c12eaa119d4627efae78596bcdfbbf5aac86855e6e78256e1feeee7019aa6f22"
+    },
+    {
+      "path": "include/mpu_wrappers.h",
+      "sha256": "ed0c05191714cc61faa6e9e3d850f49c47c72e7f8dab1519d07fc61fa47b80f8"
+    },
+    {
+      "path": "include/portable.h",
+      "sha256": "459927375c3b204805f9c539987460f322f8cb9948b04245ab4f91a82897407e"
+    },
+    {
+      "path": "include/projdefs.h",
+      "sha256": "87c9907a9bc841cbba020246f8e7a1ee823d5c29aebc6c619e31bd13f2c451e4"
+    },
+    {
+      "path": "include/queue.h",
+      "sha256": "f39e8f18161d1d7b0040d76946a801f5ccdf1efeb50ecdb473b6bc511747d748"
+    },
+    {
+      "path": "include/semphr.h",
+      "sha256": "354e25ebf8564b60b2c796e1ec5c35af67659c9501d7dee8427cbb93dcdaa9b9"
+    },
+    {
+      "path": "include/stack_macros.h",
+      "sha256": "a1c840f730026c14c722284d773bca0a06568a752278ee71fc7dffdbdd78c57c"
+    },
+    {
+      "path": "include/stdint.readme",
+      "sha256": "2539107ae4d69ccbb106e7742589bc97d3c97e08222a9bef555a006c4de606d2"
+    },
+    {
+      "path": "include/stream_buffer.h",
+      "sha256": "db74b388621f5a00da11aabc66e60ccdbdfd779f526fed7b536b5127ea2c9217"
+    },
+    {
+      "path": "include/task.h",
+      "sha256": "b734313c3c29ecf83b7dc7d625387e6b442ce6e171d98e1a2b93d18c6980f23d"
+    },
+    {
+      "path": "include/timers.h",
+      "sha256": "ef6f2fb0919545e0e8522ea9fe1ed68d1def835b825aada9a1311c213480601c"
+    },
+    {
+      "path": "list.c",
+      "sha256": "32f96f5d99d4be5c9b526f2bedd3afeca3be5daaac981e8a862dcb23df566c6c"
+    },
+    {
+      "path": "portable/GCC/ARM_CA9/port.c",
+      "sha256": "4531766976f80a4ccbc86cf0c4b2bc7520c6e42f73d7057628e80ce90bf377d8"
+    },
+    {
+      "path": "portable/GCC/ARM_CA9/portASM.S",
+      "sha256": "f2f8f2fcb0240c29e342bd0d92d9fc439730c270343934aba6c0bdb6b6acb61c"
+    },
+    {
+      "path": "portable/GCC/ARM_CA9/portmacro.h",
+      "sha256": "b3f6003d9e1978072e78c8b771d45832abc592665fb7dff34cc8bc3968c7d50b"
+    },
+    {
+      "path": "portable/GCC/ARM_CM3/port.c",
+      "sha256": "3eb252945ac532ddb85e73ff6ff371fe957dd43845787bb4bea350e6dcab6089"
+    },
+    {
+      "path": "portable/GCC/ARM_CM3/portmacro.h",
+      "sha256": "2a29494e0b8c237cfe853d4a2e7a9b2a86cd05fc20a2be1ba46184c663477c9d"
+    },
+    {
+      "path": "portable/GCC/ARM_CM4F/port.c",
+      "sha256": "057f2e1d6abd50188f1f8d001ff0337deb60d6cec9a6f86999b1f1a88eea447a"
+    },
+    {
+      "path": "portable/GCC/ARM_CM4F/portmacro.h",
+      "sha256": "f1f1a07b0345074533318e69678421c938bbb864de750c01017ec3a252ee853f"
+    },
+    {
+      "path": "portable/GCC/RISC-V/Documentation.url",
+      "sha256": "03b58eac9262370ca618c78e81f36deca511ab3ff9142d719bae84afd9c9e865"
+    },
+    {
+      "path": "portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h",
+      "sha256": "547cf38fd46e6b036860cd4e1c733cefafee91022e77dad2b34cdc2dbbe03c64"
+    },
+    {
+      "path": "portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h",
+      "sha256": "8e0502a75ec1d25669a0a0e9e955f4522e53773282b41ca68355aed58e4574b8"
+    },
+    {
+      "path": "portable/GCC/RISC-V/chip_specific_extensions/readme.txt",
+      "sha256": "9df008f8587b6faaaa48ef37ce9e38f89639290d636c06f5eefb09848ac318d1"
+    },
+    {
+      "path": "portable/GCC/RISC-V/port.c",
+      "sha256": "7246d147706001999968d014a36c0d0fd2894bfb21512b668ae91af60a78ca2e"
+    },
+    {
+      "path": "portable/GCC/RISC-V/portASM.S",
+      "sha256": "4dd985e3e1b68890fe06c6c9edf8bd5cae853fadcdc2bc18e2c94a418692ad5e"
+    },
+    {
+      "path": "portable/GCC/RISC-V/portmacro.h",
+      "sha256": "cced653f2a223b5d705f3973a66d6e43d420ea28389369e78a378f0a2893a2ba"
+    },
+    {
+      "path": "portable/GCC/RISC-V/readme.txt",
+      "sha256": "9df008f8587b6faaaa48ef37ce9e38f89639290d636c06f5eefb09848ac318d1"
+    },
+    {
+      "path": "portable/MemMang/ReadMe.url",
+      "sha256": "c44abcb1837584d65d00768bde7c1471dbf3fe316275ccbb6922998c6f11ddc9"
+    },
+    {
+      "path": "portable/MemMang/heap_1.c",
+      "sha256": "6e8a3fa2316ac964a3df68dbee80bd5df0c72af2d36d884ff7e420abeb05cf16"
+    },
+    {
+      "path": "portable/MemMang/heap_2.c",
+      "sha256": "9b1757a23e930354b711303356fb89964a75c62199719c40bc2abcec5bf71349"
+    },
+    {
+      "path": "portable/MemMang/heap_3.c",
+      "sha256": "7ea069f198d4c417465803d78a7acaeb142cb900d8ba15ec05ff2eb8809ec8d4"
+    },
+    {
+      "path": "portable/MemMang/heap_4.c",
+      "sha256": "fbffb85f8f74fd2f57492e513b9abee0836e89390b0acccd5fcb45a0a0c08fa9"
+    },
+    {
+      "path": "portable/MemMang/heap_5.c",
+      "sha256": "56dbe256ddffbb7c4d23c2fa716714017fc0eceab691f5fafdbc8988932d1c6a"
+    },
+    {
+      "path": "queue.c",
+      "sha256": "5a0a02733555d666dbff70d8d61604fcadade3aa46c8a46913c411cb1c6f051c"
+    },
+    {
+      "path": "stream_buffer.c",
+      "sha256": "8f5ba61dcff8f7b1cf0c9d49ce92860c2dc9b01c7bea53c692db778d31685639"
+    },
+    {
+      "path": "tasks.c",
+      "sha256": "b7ceb4615978b698a45bb3715080fee61b2887db2ede57b6f70a58c32fd5ebf8"
+    },
+    {
+      "path": "timers.c",
+      "sha256": "1be5fd0558212771aae3359deb8f3e602a803bc7ca8400e447358184c7da5d94"
+    }
+  ]
+}

@@ -13,9 +13,9 @@ Preserve individual copyright and permission notices when distributing sources.
 
 | Component | Location | Applicable terms and provenance |
 |---|---|---|
-| Adapter, attributes, clocks, test/helper code and build scripts | `FreeRTOS/cpp11_gcc/`, `test/`, `tests/`, `sys_common/`, project-authored sample files | MIT. Piotr Grygorczuk's per-file notices include 2018–2025; retain their exact years/text. The original root notice is preserved in [LICENSES/FreeRTOS_cpp11-original.txt](LICENSES/FreeRTOS_cpp11-original.txt). |
-| Bundled FreeRTOS 10.4.3 | `FreeRTOS/Source/` | MIT, Copyright (C) 2020 Amazon.com, Inc. or its affiliates. Keep [FreeRTOS/License/license.txt](FreeRTOS/License/license.txt) and source notices. This is historical standalone-test material; integrating applications supply their own qualified kernel/port. |
-| Arm CMSIS and Cortex-A9 startup/system support | `lib_test_CA9/cmsis/`, `mem_ARMCA9.h`, `startup_ARMCA9.cpp`, `system_ARMCA9.c`, `system_ARMCA9.h` | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). These retained source files are not currently qualified standalone builds. |
+| Adapter, attributes, clocks, test/helper code and build scripts | `include/`, `src/`, `tests/`, build files and project-authored platform files | MIT. Piotr Grygorczuk's per-file notices include 2018–2025; retain their exact years/text. The original root notice is preserved in [LICENSES/FreeRTOS_cpp11-original.txt](LICENSES/FreeRTOS_cpp11-original.txt). |
+| Bundled FreeRTOS 10.4.3 | `third_party/freertos-kernel/` | MIT, Copyright (C) 2020 Amazon.com, Inc. or its affiliates. Keep [kernel LICENSE](third_party/freertos-kernel/LICENSE) and source notices. This is historical standalone-test material; integrating applications supply their own qualified kernel/port. |
+| Arm CMSIS and Cortex-A9 startup/system support | `platforms/qemu-vexpress-a9/cmsis/` and its Arm startup/system/memory support files | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). These retained source files are not currently qualified standalone builds. |
 
 [LICENSES/inventory.json](LICENSES/inventory.json) identifies retained files,
 hashes, license expressions, source revisions/URLs, and local changes. Files
@@ -31,9 +31,8 @@ specific CMSIS package tag that the inherited import did not record.
 
 ## Runtime selection and ownership
 
-The currently qualified profile is STM32 GCC 14.3.1 / C++17. During the packaging
-transition, an integrating application supplies the selected runtime sources and
-their authoritative source manifest:
+The currently qualified profile is STM32 GCC 14.3.1 / C++17. The library delivers the selected runtime sources, full license texts and
+[authoritative source manifest](third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json):
 
 - Source repository: `https://github.com/STMicroelectronics/gnu-tools-for-stm32`.
 - Immutable commit: `b8cdff71b827478c8510c70b3a15d2b50c759255`.
@@ -43,7 +42,7 @@ their authoritative source manifest:
   also available here as [GPLv3](LICENSES/GPL-3.0-or-later.txt) and
   [GCC exception](LICENSES/GCC-exception-3.1.txt).
 - There are no local changes to these runtime sources. They remain separate
-  from the MIT adapter. Standalone runtime packaging is migration work.
+  from the MIT adapter. The CMake object target compiles them exactly once.
 
 The GCC exception permits eligible compiled combinations with independent
 application modules; distribution of GCC source or an independent runtime
@@ -66,9 +65,8 @@ notes must be replaced by the standalone delivery contract before release.
 ## Retired components and libatomic provenance
 
 The Step 2 audit retired `libstdc++_gcc/v10`, `v11`, and `v13`, their four sample
-build scripts, and the inherited compiler workflows. The old root build now
-explains this retirement instead of selecting deleted sources. The unsupported
-K64F and LM3S811 samples were also removed. Retained A9/RISC-V source material
+build scripts, and the inherited compiler workflows. The reusable root build selects only the exact audited runtime profile. The unsupported
+K64F and LM3S811 samples were also removed. Retained A9/RISC-V platform source material
 can inform later maintained platforms, but has no active standalone build.
 
 All removed files remain recoverable at commit

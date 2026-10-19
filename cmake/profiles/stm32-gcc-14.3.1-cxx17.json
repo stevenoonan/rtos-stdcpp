@@ -1,0 +1,45 @@
+{
+  "compiler_id": "arm-none-eabi-g++ (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623",
+  "cpu_flags": [
+    "-mthumb",
+    "-mcpu=cortex-m55",
+    "-mfpu=fpv5-d16",
+    "-mfloat-abi=hard",
+    "-mcmse"
+  ],
+  "multilib": "thumb/v8-m.main+dp/hard",
+  "files": [
+    {
+      "path": "bin/arm-none-eabi-g++",
+      "sha256": "2023954b9da13d445add2b17549df4f798cb0aecaaace36c46076c434a4dbdd3"
+    },
+    {
+      "path": "arm-none-eabi/include/c++/14.3.1/arm-none-eabi/thumb/v8-m.main+dp/hard/bits/c++config.h",
+      "sha256": "8553265872f1e34b4deb9e46bcb1bc13c35d5a11b9d5453fd82bce4d4db7f921"
+    },
+    {
+      "path": "arm-none-eabi/include/newlib-nano/newlib.h",
+      "sha256": "e4a8bab50e5f3cfd809db5bcf00463698205e08e87adef8d47ae55495becba55"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v8-m.main+dp/hard/libstdc++_nano.a",
+      "sha256": "73b4a1d78429925dc73c69080c5a6e6d0e296cab4a022b93180d5aa26cb5408c"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v8-m.main+dp/hard/libsupc++_nano.a",
+      "sha256": "45c267216b223a020fc71c17a295c0e9f85edaf9da8fb9bb6bf73fae84f84c76"
+    },
+    {
+      "path": "arm-none-eabi/lib/thumb/v8-m.main+dp/hard/libc_nano.a",
+      "sha256": "6c6e574907afff800fc01aaa10fcce268d6bf995f754d737306d475c00145c72"
+    },
+    {
+      "path": "lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+dp/hard/libgcc.a",
+      "sha256": "b625aa740ec72700bab679537d2955d083724a47e662b55d10ac71d024e5616f"
+    },
+    {
+      "path": "bin/arm-none-eabi-gcc",
+      "sha256": "51e7ad9c07341e6d0c801e341ac0573dc31d3189714108102ccf712a4f5ce4dc"
+    }
+  ]
+}
