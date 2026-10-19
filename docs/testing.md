@@ -18,8 +18,8 @@ cmake --build --preset host-release
 ctest --preset host-release --no-tests=error
 ```
 
-Presets generate files in `../build/rtos-stdcpp/`. Each configuration has five
-CTest entries, labeled `host` plus `arithmetic`, `reference` or `harness`:
+Presets generate files in `../build/rtos-stdcpp/`. Each configuration has six
+CTest entries, labeled `host` plus `arithmetic`, `reference`, `harness` or `delivery`:
 
 - The actual backend time arithmetic at 100 and 1000 Hz: deadline edges,
   saturation, 100,000 randomized rounding inputs and 100,000 wrap/extension inputs
@@ -124,9 +124,9 @@ Downloads, builds and reports must stay outside the audited library source tree.
 Changing a package/compiler identity requires a reviewed lock update and new
 execution evidence; never update hashes merely to bypass verification.
 
-With --clang, this runs four host compiler/configuration combinations (five CTest
+With --clang, this runs four host compiler/configuration combinations (six CTest
 entries each) and four A9 combinations (Debug/Release, normal/wrap; eight CTest
-entries each): **52 CTest entries**. Without --clang it runs 42. The matrix rejects
+entries each): **56 CTest entries**. Without --clang it runs 44. The matrix rejects
 missing prepared tools and every required test failure. It never downloads
 inputs. Each configuration records its command logs and JUnit report. A9 has
 three success images (shared conformance, lifecycle regression, platform
@@ -161,3 +161,6 @@ wrap evidence independently; its commands belong in that application checkout.
 See the [A9 platform contract](../platforms/qemu-vexpress-a9/README.md) and
 [support matrix](support-matrix.md). RISC-V has historical sources and no active
 runner. A compile-only fixture or successful host run does not qualify a scheduler.
+
+The [CI contract](ci.md) documents hosted jobs, pinned userspace setup, external
+source/artifact policy, merge enforcement and physical-board obligations.
