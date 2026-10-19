@@ -75,7 +75,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/License/license.txt",
+      "path": "third_party/freertos-kernel/LICENSE",
       "sha256": "a7e2e701fa72d04dc18ca382b42e337b5a2d0abca681db6e5632211c43b8a1e7",
       "bytes": 2024,
       "license_expression": "MIT",
@@ -91,7 +91,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/croutine.c",
+      "path": "third_party/freertos-kernel/croutine.c",
       "sha256": "9ea626b0c7504013abcd0dad620ca51726669cba6298af17534c554280f24855",
       "bytes": 15720,
       "license_expression": "MIT",
@@ -107,7 +107,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/event_groups.c",
+      "path": "third_party/freertos-kernel/event_groups.c",
       "sha256": "dbdf182fec562a6bda94d8f557793a43d7c932d06401e75f65f31a2c395a9428",
       "bytes": 31113,
       "license_expression": "MIT",
@@ -123,7 +123,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/FreeRTOS.h",
+      "path": "third_party/freertos-kernel/include/FreeRTOS.h",
       "sha256": "ccf4cbe12e86f1a9cf6faab16933f2f0e1db7c4e886e526b05a3fc529af41a83",
       "bytes": 46363,
       "license_expression": "MIT",
@@ -139,7 +139,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/StackMacros.h",
+      "path": "third_party/freertos-kernel/include/StackMacros.h",
       "sha256": "9f53d26bb4c4919f08663629298ec24217364e9ef385bfc57e8c83c2d37bf1a7",
       "bytes": 1538,
       "license_expression": "MIT",
@@ -155,7 +155,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/atomic.h",
+      "path": "third_party/freertos-kernel/include/atomic.h",
       "sha256": "3e58bb23ca948617cc095e2c42cbb55510704cb46861f31cbb33c1375ff8d480",
       "bytes": 12807,
       "license_expression": "MIT",
@@ -171,7 +171,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/croutine.h",
+      "path": "third_party/freertos-kernel/include/croutine.h",
       "sha256": "6c5c0aa43512d101c88cc21c0d1828ecd6e642bbbb7aa1b6fa1e29d4e72414d4",
       "bytes": 28031,
       "license_expression": "MIT",
@@ -187,7 +187,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/deprecated_definitions.h",
+      "path": "third_party/freertos-kernel/include/deprecated_definitions.h",
       "sha256": "65660fffd1fc0d9d4d56fdb67ce35ea34a63eab40000e7a460155f8770dc56ee",
       "bytes": 7484,
       "license_expression": "MIT",
@@ -203,7 +203,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/event_groups.h",
+      "path": "third_party/freertos-kernel/include/event_groups.h",
       "sha256": "0a21c7c0a10b9f9dc037fc097bbd4bf5a013dfdbfd85d7bc360fc8a8f9e663e1",
       "bytes": 31893,
       "license_expression": "MIT",
@@ -219,7 +219,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/list.h",
+      "path": "third_party/freertos-kernel/include/list.h",
       "sha256": "3fdce838fec38d30a53ac4e522dd8e20c8cb2dc5372e547fa7f094a934e36fc7",
       "bytes": 19300,
       "license_expression": "MIT",
@@ -235,7 +235,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/message_buffer.h",
+      "path": "third_party/freertos-kernel/include/message_buffer.h",
       "sha256": "bb3516838a6b16e63cdd5b2c07cc6950d97ae9eef9767da0fecb7251a984b514",
       "bytes": 37898,
       "license_expression": "MIT",
@@ -251,7 +251,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/mpu_prototypes.h",
+      "path": "third_party/freertos-kernel/include/mpu_prototypes.h",
       "sha256": "c12eaa119d4627efae78596bcdfbbf5aac86855e6e78256e1feeee7019aa6f22",
       "bytes": 17458,
       "license_expression": "MIT",
@@ -267,7 +267,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/mpu_wrappers.h",
+      "path": "third_party/freertos-kernel/include/mpu_wrappers.h",
       "sha256": "ed0c05191714cc61faa6e9e3d850f49c47c72e7f8dab1519d07fc61fa47b80f8",
       "bytes": 11095,
       "license_expression": "MIT",
@@ -283,7 +283,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/portable.h",
+      "path": "third_party/freertos-kernel/include/portable.h",
       "sha256": "459927375c3b204805f9c539987460f322f8cb9948b04245ab4f91a82897407e",
       "bytes": 8975,
       "license_expression": "MIT",
@@ -299,7 +299,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/projdefs.h",
+      "path": "third_party/freertos-kernel/include/projdefs.h",
       "sha256": "87c9907a9bc841cbba020246f8e7a1ee823d5c29aebc6c619e31bd13f2c451e4",
       "bytes": 6240,
       "license_expression": "MIT",
@@ -315,7 +315,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/queue.h",
+      "path": "third_party/freertos-kernel/include/queue.h",
       "sha256": "f39e8f18161d1d7b0040d76946a801f5ccdf1efeb50ecdb473b6bc511747d748",
       "bytes": 65358,
       "license_expression": "MIT",
@@ -331,7 +331,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/semphr.h",
+      "path": "third_party/freertos-kernel/include/semphr.h",
       "sha256": "354e25ebf8564b60b2c796e1ec5c35af67659c9501d7dee8427cbb93dcdaa9b9",
       "bytes": 48415,
       "license_expression": "MIT",
@@ -347,7 +347,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/stack_macros.h",
+      "path": "third_party/freertos-kernel/include/stack_macros.h",
       "sha256": "a1c840f730026c14c722284d773bca0a06568a752278ee71fc7dffdbdd78c57c",
       "bytes": 8304,
       "license_expression": "MIT",
@@ -363,7 +363,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/stdint.readme",
+      "path": "third_party/freertos-kernel/include/stdint.readme",
       "sha256": "2539107ae4d69ccbb106e7742589bc97d3c97e08222a9bef555a006c4de606d2",
       "bytes": 2075,
       "license_expression": "MIT",
@@ -379,7 +379,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/stream_buffer.h",
+      "path": "third_party/freertos-kernel/include/stream_buffer.h",
       "sha256": "db74b388621f5a00da11aabc66e60ccdbdfd779f526fed7b536b5127ea2c9217",
       "bytes": 38773,
       "license_expression": "MIT",
@@ -395,7 +395,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/task.h",
+      "path": "third_party/freertos-kernel/include/task.h",
       "sha256": "b734313c3c29ecf83b7dc7d625387e6b442ce6e171d98e1a2b93d18c6980f23d",
       "bytes": 135760,
       "license_expression": "MIT",
@@ -411,7 +411,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/include/timers.h",
+      "path": "third_party/freertos-kernel/include/timers.h",
       "sha256": "ef6f2fb0919545e0e8522ea9fe1ed68d1def835b825aada9a1311c213480601c",
       "bytes": 62761,
       "license_expression": "MIT",
@@ -427,7 +427,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/list.c",
+      "path": "third_party/freertos-kernel/list.c",
       "sha256": "32f96f5d99d4be5c9b526f2bedd3afeca3be5daaac981e8a862dcb23df566c6c",
       "bytes": 9484,
       "license_expression": "MIT",
@@ -443,7 +443,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CA9/port.c",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CA9/port.c",
       "sha256": "4531766976f80a4ccbc86cf0c4b2bc7520c6e42f73d7057628e80ce90bf377d8",
       "bytes": 21714,
       "license_expression": "MIT",
@@ -459,7 +459,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CA9/portASM.S",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CA9/portASM.S",
       "sha256": "f2f8f2fcb0240c29e342bd0d92d9fc439730c270343934aba6c0bdb6b6acb61c",
       "bytes": 8902,
       "license_expression": "MIT",
@@ -475,7 +475,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CA9/portmacro.h",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CA9/portmacro.h",
       "sha256": "b3f6003d9e1978072e78c8b771d45832abc592665fb7dff34cc8bc3968c7d50b",
       "bytes": 8737,
       "license_expression": "MIT",
@@ -491,7 +491,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CM3/port.c",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CM3/port.c",
       "sha256": "3eb252945ac532ddb85e73ff6ff371fe957dd43845787bb4bea350e6dcab6089",
       "bytes": 30853,
       "license_expression": "MIT",
@@ -507,7 +507,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CM3/portmacro.h",
       "sha256": "2a29494e0b8c237cfe853d4a2e7a9b2a86cd05fc20a2be1ba46184c663477c9d",
       "bytes": 9558,
       "license_expression": "MIT",
@@ -523,7 +523,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CM4F/port.c",
       "sha256": "057f2e1d6abd50188f1f8d001ff0337deb60d6cec9a6f86999b1f1a88eea447a",
       "bytes": 33596,
       "license_expression": "MIT",
@@ -539,7 +539,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h",
+      "path": "third_party/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h",
       "sha256": "f1f1a07b0345074533318e69678421c938bbb864de750c01017ec3a252ee853f",
       "bytes": 9493,
       "license_expression": "MIT",
@@ -555,7 +555,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/Documentation.url",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/Documentation.url",
       "sha256": "03b58eac9262370ca618c78e81f36deca511ab3ff9142d719bae84afd9c9e865",
       "bytes": 139,
       "license_expression": "MIT",
@@ -571,7 +571,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h",
       "sha256": "547cf38fd46e6b036860cd4e1c733cefafee91022e77dad2b34cdc2dbbe03c64",
       "bytes": 4433,
       "license_expression": "MIT",
@@ -587,7 +587,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h",
       "sha256": "8e0502a75ec1d25669a0a0e9e955f4522e53773282b41ca68355aed58e4574b8",
       "bytes": 3059,
       "license_expression": "MIT",
@@ -603,7 +603,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/readme.txt",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/readme.txt",
       "sha256": "9df008f8587b6faaaa48ef37ce9e38f89639290d636c06f5eefb09848ac318d1",
       "bytes": 1270,
       "license_expression": "MIT",
@@ -619,7 +619,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/port.c",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/port.c",
       "sha256": "7246d147706001999968d014a36c0d0fd2894bfb21512b668ae91af60a78ca2e",
       "bytes": 9435,
       "license_expression": "MIT",
@@ -635,7 +635,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/portASM.S",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/portASM.S",
       "sha256": "4dd985e3e1b68890fe06c6c9edf8bd5cae853fadcdc2bc18e2c94a418692ad5e",
       "bytes": 19088,
       "license_expression": "MIT",
@@ -651,7 +651,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/portmacro.h",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/portmacro.h",
       "sha256": "cced653f2a223b5d705f3973a66d6e43d420ea28389369e78a378f0a2893a2ba",
       "bytes": 7283,
       "license_expression": "MIT",
@@ -667,7 +667,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/GCC/RISC-V/readme.txt",
+      "path": "third_party/freertos-kernel/portable/GCC/RISC-V/readme.txt",
       "sha256": "9df008f8587b6faaaa48ef37ce9e38f89639290d636c06f5eefb09848ac318d1",
       "bytes": 1270,
       "license_expression": "MIT",
@@ -683,7 +683,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/ReadMe.url",
+      "path": "third_party/freertos-kernel/portable/MemMang/ReadMe.url",
       "sha256": "c44abcb1837584d65d00768bde7c1471dbf3fe316275ccbb6922998c6f11ddc9",
       "bytes": 120,
       "license_expression": "MIT",
@@ -699,7 +699,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/heap_1.c",
+      "path": "third_party/freertos-kernel/portable/MemMang/heap_1.c",
       "sha256": "6e8a3fa2316ac964a3df68dbee80bd5df0c72af2d36d884ff7e420abeb05cf16",
       "bytes": 5487,
       "license_expression": "MIT",
@@ -715,7 +715,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/heap_2.c",
+      "path": "third_party/freertos-kernel/portable/MemMang/heap_2.c",
       "sha256": "9b1757a23e930354b711303356fb89964a75c62199719c40bc2abcec5bf71349",
       "bytes": 12530,
       "license_expression": "MIT",
@@ -731,7 +731,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/heap_3.c",
+      "path": "third_party/freertos-kernel/portable/MemMang/heap_3.c",
       "sha256": "7ea069f198d4c417465803d78a7acaeb142cb900d8ba15ec05ff2eb8809ec8d4",
       "bytes": 2987,
       "license_expression": "MIT",
@@ -747,7 +747,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/heap_4.c",
+      "path": "third_party/freertos-kernel/portable/MemMang/heap_4.c",
       "sha256": "fbffb85f8f74fd2f57492e513b9abee0836e89390b0acccd5fcb45a0a0c08fa9",
       "bytes": 18914,
       "license_expression": "MIT",
@@ -763,7 +763,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/portable/MemMang/heap_5.c",
+      "path": "third_party/freertos-kernel/portable/MemMang/heap_5.c",
       "sha256": "56dbe256ddffbb7c4d23c2fa716714017fc0eceab691f5fafdbc8988932d1c6a",
       "bytes": 21017,
       "license_expression": "MIT",
@@ -779,7 +779,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/queue.c",
+      "path": "third_party/freertos-kernel/queue.c",
       "sha256": "5a0a02733555d666dbff70d8d61604fcadade3aa46c8a46913c411cb1c6f051c",
       "bytes": 121065,
       "license_expression": "MIT",
@@ -795,7 +795,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/stream_buffer.c",
+      "path": "third_party/freertos-kernel/stream_buffer.c",
       "sha256": "8f5ba61dcff8f7b1cf0c9d49ce92860c2dc9b01c7bea53c692db778d31685639",
       "bytes": 52734,
       "license_expression": "MIT",
@@ -811,7 +811,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/tasks.c",
+      "path": "third_party/freertos-kernel/tasks.c",
       "sha256": "b7ceb4615978b698a45bb3715080fee61b2887db2ede57b6f70a58c32fd5ebf8",
       "bytes": 220387,
       "license_expression": "MIT",
@@ -827,7 +827,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/Source/timers.c",
+      "path": "third_party/freertos-kernel/timers.c",
       "sha256": "1be5fd0558212771aae3359deb8f3e602a803bc7ca8400e447358184c7da5d94",
       "bytes": 50729,
       "license_expression": "MIT",
@@ -859,7 +859,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/backend_time.h",
+      "path": "src/backends/freertos/backend_time.h",
       "sha256": "2580e2e1bfd3c28654d320aceab916e1ce2ef5d9ce284ba38e87576e9f359bdd",
       "bytes": 2083,
       "license_expression": "MIT",
@@ -875,7 +875,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/bits/gthr-default.h",
+      "path": "src/toolchains/gcc/bits/gthr-default.h",
       "sha256": "a684f1c0bfa582e63b472eaf4e8c0c08c0b6e9f109a4269f58e5dc2e2b474dcc",
       "bytes": 9190,
       "license_expression": "MIT",
@@ -891,7 +891,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/condition_variable.h",
+      "path": "src/backends/freertos/condition_variable.h",
       "sha256": "41a0604bc2cc2913aa0dc4d32742958089ba6c0483a66102a108b780098c7b21",
       "bytes": 3716,
       "license_expression": "MIT",
@@ -907,7 +907,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/critical_section.h",
+      "path": "src/backends/freertos/critical_section.h",
       "sha256": "7bbed61c34234a4932ff8538f77d60c2dabbde03023facb288ed942eaa82933a",
       "bytes": 2072,
       "license_expression": "MIT",
@@ -923,7 +923,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/freertos_thread_attributes.h",
+      "path": "include/rtos_stdcpp/freertos_thread_attributes.h",
       "sha256": "d3d9419aa5717c4abf8ced3bdbd7ba8fa3da22584355e38181227be8028f32ff",
       "bytes": 2158,
       "license_expression": "MIT",
@@ -939,7 +939,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/freertos_time.cpp",
+      "path": "src/backends/freertos/freertos_time.cpp",
       "sha256": "dff49f55518ac2d640e973d9795023cbd8fce1b9d0ac3dffd928ec792a017c11",
       "bytes": 3102,
       "license_expression": "MIT",
@@ -955,7 +955,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/freertos_time.h",
+      "path": "include/rtos_stdcpp/freertos_time.h",
       "sha256": "c66d1a800797618e8094766c0413dd5bffc46aab1503e66e5356b5f3be758212",
       "bytes": 1445,
       "license_expression": "MIT",
@@ -971,7 +971,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/gthr_key.cpp",
+      "path": "src/backends/freertos/gthr_key.cpp",
       "sha256": "4c933a9ed8c342ce83c80303692aaffc6592d0fed624254e269aa34d8debb919",
       "bytes": 2458,
       "license_expression": "MIT",
@@ -987,7 +987,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/gthr_key.h",
+      "path": "src/backends/freertos/gthr_key.h",
       "sha256": "54d925b71b134b62602a59010f85252ccff7314aa013d7f8737232f8e513890b",
       "bytes": 1540,
       "license_expression": "MIT",
@@ -1003,7 +1003,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/gthr_key_type.h",
+      "path": "src/backends/freertos/gthr_key_type.h",
       "sha256": "8f6a9cc3b729356ea88b9d0c4b937a9312bf19125bd38cbfb66c6b0ea7b7cd62",
       "bytes": 2070,
       "license_expression": "MIT",
@@ -1019,7 +1019,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/thread.cpp",
+      "path": "src/backends/freertos/thread.cpp",
       "sha256": "743ee4ad024359b6352ef1e02293229568dc88e274e6d89e92f4d146ff2a215b",
       "bytes": 3847,
       "license_expression": "MIT",
@@ -1035,7 +1035,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/thread_gthread.h",
+      "path": "src/backends/freertos/thread_gthread.h",
       "sha256": "df345d13ea6ed135105cf57158e76e64e11ea0f1947e23d3532cac865016100c",
       "bytes": 7209,
       "license_expression": "MIT",
@@ -1051,7 +1051,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "FreeRTOS/cpp11_gcc/thread_with_attributes.h",
+      "path": "include/rtos_stdcpp/thread_with_attributes.h",
       "sha256": "0cce443958cf4ddc50840c9f3727ddf3a2e105d047ff32b455e49ffc43a80f5c",
       "bytes": 2486,
       "license_expression": "MIT",
@@ -1201,7 +1201,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/FreeRTOSConfig.h",
+      "path": "platforms/qemu-vexpress-a9/FreeRTOSConfig.h",
       "sha256": "ccfbfa8b8f90f82e3b4ff481521ad58667de0fc7d9a674473eaa8ed617a15bca",
       "bytes": 7016,
       "license_expression": "MIT",
@@ -1217,7 +1217,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/FreeRTOS_ca9_hooks.c",
+      "path": "platforms/qemu-vexpress-a9/FreeRTOS_ca9_hooks.c",
       "sha256": "e898fcd5f7465f69f790ff002f9c6bedae2b00df31a7cd781158037291f3a3b3",
       "bytes": 2059,
       "license_expression": "MIT",
@@ -1233,7 +1233,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/README.md",
+      "path": "platforms/qemu-vexpress-a9/README.md",
       "sha256": "b6c2b8722eb41964e71be7db7a1fb454dc639551de0f6f347d141d2992a6d9fd",
       "bytes": 1911,
       "license_expression": "MIT",
@@ -1252,7 +1252,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/ca9_global_timer.c",
+      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.c",
       "sha256": "f58ab81fee61326f3bf9040e45203ad0eea218077a69ea97c42737eae7051c6a",
       "bytes": 1219,
       "license_expression": "MIT",
@@ -1268,7 +1268,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/ca9_global_timer.h",
+      "path": "platforms/qemu-vexpress-a9/ca9_global_timer.h",
       "sha256": "d82e7a2cba12bd92aa312258c4cc40ab666cd90c46ef72031c73a37c1bcd77b0",
       "bytes": 4348,
       "license_expression": "MIT",
@@ -1284,7 +1284,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/ARMCA9.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/ARMCA9.h",
       "sha256": "56e4c7d73cd0d4a7937b7f9109acac70a3f522534f67d02ac113730dabd04c33",
       "bytes": 9067,
       "license_expression": "Apache-2.0",
@@ -1300,7 +1300,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/cmsis_compiler.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_compiler.h",
       "sha256": "9d23b89a02e7a94f1079fbb2d9cde4a11a07457bbda8cd4b5da6c31e873713b9",
       "bytes": 5807,
       "license_expression": "Apache-2.0",
@@ -1316,7 +1316,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/cmsis_cp15.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_cp15.h",
       "sha256": "0c5c95b8dd77645c184910715b38085610ba86680e0f1b967011e425b10bbd5c",
       "bytes": 12037,
       "license_expression": "Apache-2.0",
@@ -1332,7 +1332,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/cmsis_gcc.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/cmsis_gcc.h",
       "sha256": "bf4d85dcdf2a04198f29ed3cdfc74097362e90a66dbd73cc601372beac412159",
       "bytes": 24786,
       "license_expression": "Apache-2.0",
@@ -1348,7 +1348,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/core_ca.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/core_ca.h",
       "sha256": "9e0fbe0d41544c5a7d3efa051f0241124138dae548c0a14927abee7bcacf0198",
       "bytes": 106321,
       "license_expression": "Apache-2.0",
@@ -1364,7 +1364,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/irq_ctrl.h",
+      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl.h",
       "sha256": "4b3f00502b2ca0266356e069de815c50a173cc6a28ad3b97d71fea68929354b6",
       "bytes": 8290,
       "license_expression": "Apache-2.0",
@@ -1380,7 +1380,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/cmsis/irq_ctrl_gic.c",
+      "path": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl_gic.c",
       "sha256": "0958694407662cd066f56968be007115c125793bdfd4c13a86259470b76018c6",
       "bytes": 9116,
       "license_expression": "Apache-2.0",
@@ -1396,7 +1396,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/console.cpp",
+      "path": "platforms/qemu-vexpress-a9/console.cpp",
       "sha256": "1ec2f76df7860977d0152453babec614a440426cb3cb4de82129685d40945680",
       "bytes": 1926,
       "license_expression": "MIT",
@@ -1412,7 +1412,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/console.h",
+      "path": "platforms/qemu-vexpress-a9/console.h",
       "sha256": "1e9eeb75ccfa6025c1a3e5d9ca9299e08f52538e79bdce28c6f92f853caf4b81",
       "bytes": 1386,
       "license_expression": "MIT",
@@ -1428,7 +1428,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/linker.ld",
+      "path": "platforms/qemu-vexpress-a9/linker.ld",
       "sha256": "4d897ccfa0719c15a76bcf7e02761b3f3e330b4aaf94ac7c214dfd67dc9f97d0",
       "bytes": 5278,
       "license_expression": "MIT",
@@ -1444,7 +1444,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/main.cpp",
+      "path": "tests/support/legacy_ca9_runner.cpp",
       "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4",
       "bytes": 2872,
       "license_expression": "MIT",
@@ -1460,7 +1460,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/mem_ARMCA9.h",
+      "path": "platforms/qemu-vexpress-a9/mem_ARMCA9.h",
       "sha256": "f39497d5551b5925633f95f7d81dbc9c5e736965d71f247d1869088c22438ef6",
       "bytes": 3804,
       "license_expression": "Apache-2.0",
@@ -1476,7 +1476,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/startup_ARMCA9.cpp",
+      "path": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
       "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9",
       "bytes": 8998,
       "license_expression": "Apache-2.0",
@@ -1492,7 +1492,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/system_ARMCA9.c",
+      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.c",
       "sha256": "2a5c0082a16f3a27729a578dd0106731f147c0b9c51b0397cc6f654c3f24f0e8",
       "bytes": 2695,
       "license_expression": "Apache-2.0",
@@ -1508,7 +1508,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_CA9/system_ARMCA9.h",
+      "path": "platforms/qemu-vexpress-a9/system_ARMCA9.h",
       "sha256": "10aa5197f4b0abb256df9f2f4b67ae9d969ed46b955d0a035f8330b05f027220",
       "bytes": 1718,
       "license_expression": "Apache-2.0",
@@ -1524,7 +1524,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/FreeRTOSConfig.h",
+      "path": "platforms/riscv-virt/FreeRTOSConfig.h",
       "sha256": "a8c802a1230879c19727c237da475934beccc123684a525e2938cdca615413a0",
       "bytes": 4223,
       "license_expression": "MIT",
@@ -1540,7 +1540,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp",
+      "path": "platforms/riscv-virt/FreeRTOS_riscv_hooks.cpp",
       "sha256": "2c12287ef3020555062811c411fe7b0e7bae3f90fa07db482e2ff367829aacb7",
       "bytes": 1247,
       "license_expression": "MIT",
@@ -1556,7 +1556,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/console.cpp",
+      "path": "platforms/riscv-virt/console.cpp",
       "sha256": "0af7834c8b3a440555b29bdf7964425123fdc9603f7d2f25b3ef4715d0760d53",
       "bytes": 1641,
       "license_expression": "MIT",
@@ -1572,7 +1572,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/console.h",
+      "path": "platforms/riscv-virt/console.h",
       "sha256": "28ae965bc10ca41b01b877c1799020cee6097efe6ec115f31ab58507f842062a",
       "bytes": 1418,
       "license_expression": "MIT",
@@ -1588,7 +1588,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/linker.ld",
+      "path": "platforms/riscv-virt/linker.ld",
       "sha256": "cbc8f5bb45644265c2561e48b7d19a12a81b3eefcd6bb251403093602e5ce9ee",
       "bytes": 1741,
       "license_expression": "MIT",
@@ -1604,7 +1604,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/main.cpp",
+      "path": "tests/support/legacy_riscv_runner.cpp",
       "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6",
       "bytes": 2778,
       "license_expression": "MIT",
@@ -1620,7 +1620,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/riscv-reg.h",
+      "path": "platforms/riscv-virt/riscv-reg.h",
       "sha256": "b64189d5efcc418a73400fbdf609ea664faaa7e99042c3e4cec439082947bfc8",
       "bytes": 1562,
       "license_expression": "MIT",
@@ -1636,7 +1636,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/riscv-virt.h",
+      "path": "platforms/riscv-virt/riscv-virt.h",
       "sha256": "4fe417c2ceaa4f9295ccbafa66c7455a05b2405311e11ef09ba14617ad7215bc",
       "bytes": 1713,
       "license_expression": "MIT",
@@ -1652,7 +1652,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/startup_riscv.S",
+      "path": "platforms/riscv-virt/startup_riscv.S",
       "sha256": "f7acec165e92ddfefa1fa90a412033844a7a7bb8f7a39230c2f29e238fb4e7af",
       "bytes": 2078,
       "license_expression": "MIT",
@@ -1668,7 +1668,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "lib_test_RISC-V/startup_riscv.cpp",
+      "path": "platforms/riscv-virt/startup_riscv.cpp",
       "sha256": "217325b6b49be2ab1104398c95f53b3e7e57818ad2e426b9fe970287d8b182d7",
       "bytes": 3012,
       "license_expression": "MIT",
@@ -1684,7 +1684,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "sys_common/FreeRTOS_hooks.cpp",
+      "path": "tests/support/freertos/FreeRTOS_hooks.cpp",
       "sha256": "c79b890e7a1a103d8a40e3bc6dd62a856f74704cce8e276d1be25855961329b7",
       "bytes": 2169,
       "license_expression": "MIT",
@@ -1700,7 +1700,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "sys_common/FreeRTOS_memory.cpp",
+      "path": "tests/support/freertos/FreeRTOS_memory.cpp",
       "sha256": "85a968fedfbd19a13fa9d5e78d6508734f2fa3e0bd06e44756568e81121ff6d0",
       "bytes": 1570,
       "license_expression": "MIT",
@@ -1716,7 +1716,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "sys_common/sys.cpp",
+      "path": "tests/support/freertos/sys.cpp",
       "sha256": "ecbf70191dafe13b52ceee1d431fbae2510d0137d2d258e297e454fba9330dab",
       "bytes": 3239,
       "license_expression": "MIT",
@@ -1732,7 +1732,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_atomic.h",
+      "path": "tests/conformance/legacy/test_atomic.h",
       "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd",
       "bytes": 1629,
       "license_expression": "MIT",
@@ -1748,7 +1748,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_cv.h",
+      "path": "tests/conformance/legacy/test_cv.h",
       "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da",
       "bytes": 4454,
       "license_expression": "MIT",
@@ -1764,7 +1764,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_future.h",
+      "path": "tests/conformance/legacy/test_future.h",
       "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3",
       "bytes": 3106,
       "license_expression": "MIT",
@@ -1780,7 +1780,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_helpers.h",
+      "path": "tests/support/test_helpers.h",
       "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436",
       "bytes": 2640,
       "license_expression": "MIT",
@@ -1796,7 +1796,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_mutex.h",
+      "path": "tests/conformance/legacy/test_mutex.h",
       "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c",
       "bytes": 2269,
       "license_expression": "MIT",
@@ -1812,7 +1812,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_once.h",
+      "path": "tests/conformance/legacy/test_once.h",
       "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e",
       "bytes": 1842,
       "license_expression": "MIT",
@@ -1828,7 +1828,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_semaphore_latch_barrier.h",
+      "path": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
       "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e",
       "bytes": 2742,
       "license_expression": "MIT",
@@ -1844,7 +1844,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "test/test_thread.h",
+      "path": "tests/conformance/legacy/test_thread.h",
       "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46",
       "bytes": 3987,
       "license_expression": "MIT",
@@ -1860,7 +1860,7 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "tests/lifecycle_regression.cpp",
+      "path": "tests/regression/lifecycle_regression.cpp",
       "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753",
       "bytes": 2939,
       "license_expression": "MIT",
@@ -1876,7 +1876,7 @@
       "modified_since_original_upstream": true
     },
     {
-      "path": "tests/lifecycle_regression.h",
+      "path": "tests/regression/lifecycle_regression.h",
       "sha256": "fc0895d721fd9d46322f0caabd7a71dc598c2544c08e58ce27964e060d4730cd",
       "bytes": 265,
       "license_expression": "MIT",
@@ -2796,5 +2796,115 @@
     "disposition": "Retired; not compiled by qualified STM32 profile"
   },
   "project_repository": "https://github.com/stevenoonan/rtos-stdcpp",
-  "maintenance_branch": "rtos-stdcpp"
+  "maintenance_branch": "rtos-stdcpp",
+  "layout_migration": {
+    "from_commit": "2d06f494cb3ed0ea261f65b322302e451ec174f9",
+    "moves": {
+      "lib_test_RISC-V/FreeRTOSConfig.h": "platforms/riscv-virt/FreeRTOSConfig.h",
+      "lib_test_RISC-V/console.h": "platforms/riscv-virt/console.h",
+      "lib_test_RISC-V/startup_riscv.S": "platforms/riscv-virt/startup_riscv.S",
+      "lib_test_RISC-V/main.cpp": "tests/support/legacy_riscv_runner.cpp",
+      "lib_test_RISC-V/riscv-reg.h": "platforms/riscv-virt/riscv-reg.h",
+      "lib_test_RISC-V/linker.ld": "platforms/riscv-virt/linker.ld",
+      "lib_test_RISC-V/startup_riscv.cpp": "platforms/riscv-virt/startup_riscv.cpp",
+      "lib_test_RISC-V/riscv-virt.h": "platforms/riscv-virt/riscv-virt.h",
+      "lib_test_RISC-V/FreeRTOS_riscv_hooks.cpp": "platforms/riscv-virt/FreeRTOS_riscv_hooks.cpp",
+      "lib_test_RISC-V/console.cpp": "platforms/riscv-virt/console.cpp",
+      "sys_common/sys.cpp": "tests/support/freertos/sys.cpp",
+      "sys_common/FreeRTOS_hooks.cpp": "tests/support/freertos/FreeRTOS_hooks.cpp",
+      "sys_common/FreeRTOS_memory.cpp": "tests/support/freertos/FreeRTOS_memory.cpp",
+      "tests/lifecycle_regression.h": "tests/regression/lifecycle_regression.h",
+      "tests/lifecycle_regression.cpp": "tests/regression/lifecycle_regression.cpp",
+      "lib_test_CA9/ca9_global_timer.h": "platforms/qemu-vexpress-a9/ca9_global_timer.h",
+      "lib_test_CA9/system_ARMCA9.c": "platforms/qemu-vexpress-a9/system_ARMCA9.c",
+      "lib_test_CA9/FreeRTOSConfig.h": "platforms/qemu-vexpress-a9/FreeRTOSConfig.h",
+      "lib_test_CA9/ca9_global_timer.c": "platforms/qemu-vexpress-a9/ca9_global_timer.c",
+      "lib_test_CA9/console.h": "platforms/qemu-vexpress-a9/console.h",
+      "lib_test_CA9/README.md": "platforms/qemu-vexpress-a9/README.md",
+      "lib_test_CA9/FreeRTOS_ca9_hooks.c": "platforms/qemu-vexpress-a9/FreeRTOS_ca9_hooks.c",
+      "lib_test_CA9/main.cpp": "tests/support/legacy_ca9_runner.cpp",
+      "lib_test_CA9/linker.ld": "platforms/qemu-vexpress-a9/linker.ld",
+      "lib_test_CA9/startup_ARMCA9.cpp": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
+      "lib_test_CA9/mem_ARMCA9.h": "platforms/qemu-vexpress-a9/mem_ARMCA9.h",
+      "lib_test_CA9/console.cpp": "platforms/qemu-vexpress-a9/console.cpp",
+      "lib_test_CA9/system_ARMCA9.h": "platforms/qemu-vexpress-a9/system_ARMCA9.h",
+      "test/test_semaphore_latch_barrier.h": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
+      "test/test_atomic.h": "tests/conformance/legacy/test_atomic.h",
+      "test/test_thread.h": "tests/conformance/legacy/test_thread.h",
+      "test/test_future.h": "tests/conformance/legacy/test_future.h",
+      "test/test_once.h": "tests/conformance/legacy/test_once.h",
+      "test/test_helpers.h": "tests/support/test_helpers.h",
+      "test/test_cv.h": "tests/conformance/legacy/test_cv.h",
+      "test/test_mutex.h": "tests/conformance/legacy/test_mutex.h",
+      "FreeRTOS/License/license.txt": "third_party/freertos-kernel/LICENSE",
+      "FreeRTOS/Source/event_groups.c": "third_party/freertos-kernel/event_groups.c",
+      "FreeRTOS/Source/queue.c": "third_party/freertos-kernel/queue.c",
+      "FreeRTOS/Source/timers.c": "third_party/freertos-kernel/timers.c",
+      "FreeRTOS/Source/stream_buffer.c": "third_party/freertos-kernel/stream_buffer.c",
+      "FreeRTOS/Source/croutine.c": "third_party/freertos-kernel/croutine.c",
+      "FreeRTOS/Source/list.c": "third_party/freertos-kernel/list.c",
+      "FreeRTOS/Source/tasks.c": "third_party/freertos-kernel/tasks.c",
+      "FreeRTOS/cpp11_gcc/freertos_thread_attributes.h": "include/rtos_stdcpp/freertos_thread_attributes.h",
+      "FreeRTOS/cpp11_gcc/thread_gthread.h": "src/backends/freertos/thread_gthread.h",
+      "FreeRTOS/cpp11_gcc/thread.cpp": "src/backends/freertos/thread.cpp",
+      "FreeRTOS/cpp11_gcc/critical_section.h": "src/backends/freertos/critical_section.h",
+      "FreeRTOS/cpp11_gcc/gthr_key.cpp": "src/backends/freertos/gthr_key.cpp",
+      "FreeRTOS/cpp11_gcc/gthr_key.h": "src/backends/freertos/gthr_key.h",
+      "FreeRTOS/cpp11_gcc/gthr_key_type.h": "src/backends/freertos/gthr_key_type.h",
+      "FreeRTOS/cpp11_gcc/thread_with_attributes.h": "include/rtos_stdcpp/thread_with_attributes.h",
+      "FreeRTOS/cpp11_gcc/freertos_time.h": "include/rtos_stdcpp/freertos_time.h",
+      "FreeRTOS/cpp11_gcc/condition_variable.h": "src/backends/freertos/condition_variable.h",
+      "FreeRTOS/cpp11_gcc/freertos_time.cpp": "src/backends/freertos/freertos_time.cpp",
+      "FreeRTOS/cpp11_gcc/backend_time.h": "src/backends/freertos/backend_time.h",
+      "FreeRTOS/Source/include/projdefs.h": "third_party/freertos-kernel/include/projdefs.h",
+      "FreeRTOS/Source/include/portable.h": "third_party/freertos-kernel/include/portable.h",
+      "FreeRTOS/Source/include/FreeRTOS.h": "third_party/freertos-kernel/include/FreeRTOS.h",
+      "FreeRTOS/Source/include/event_groups.h": "third_party/freertos-kernel/include/event_groups.h",
+      "FreeRTOS/Source/include/stack_macros.h": "third_party/freertos-kernel/include/stack_macros.h",
+      "FreeRTOS/Source/include/list.h": "third_party/freertos-kernel/include/list.h",
+      "FreeRTOS/Source/include/atomic.h": "third_party/freertos-kernel/include/atomic.h",
+      "FreeRTOS/Source/include/stream_buffer.h": "third_party/freertos-kernel/include/stream_buffer.h",
+      "FreeRTOS/Source/include/deprecated_definitions.h": "third_party/freertos-kernel/include/deprecated_definitions.h",
+      "FreeRTOS/Source/include/stdint.readme": "third_party/freertos-kernel/include/stdint.readme",
+      "FreeRTOS/Source/include/croutine.h": "third_party/freertos-kernel/include/croutine.h",
+      "FreeRTOS/Source/include/queue.h": "third_party/freertos-kernel/include/queue.h",
+      "FreeRTOS/Source/include/StackMacros.h": "third_party/freertos-kernel/include/StackMacros.h",
+      "FreeRTOS/Source/include/mpu_wrappers.h": "third_party/freertos-kernel/include/mpu_wrappers.h",
+      "FreeRTOS/Source/include/message_buffer.h": "third_party/freertos-kernel/include/message_buffer.h",
+      "FreeRTOS/Source/include/task.h": "third_party/freertos-kernel/include/task.h",
+      "FreeRTOS/Source/include/mpu_prototypes.h": "third_party/freertos-kernel/include/mpu_prototypes.h",
+      "FreeRTOS/Source/include/timers.h": "third_party/freertos-kernel/include/timers.h",
+      "FreeRTOS/Source/include/semphr.h": "third_party/freertos-kernel/include/semphr.h",
+      "FreeRTOS/Source/portable/MemMang/ReadMe.url": "third_party/freertos-kernel/portable/MemMang/ReadMe.url",
+      "FreeRTOS/Source/portable/MemMang/heap_2.c": "third_party/freertos-kernel/portable/MemMang/heap_2.c",
+      "FreeRTOS/Source/portable/MemMang/heap_1.c": "third_party/freertos-kernel/portable/MemMang/heap_1.c",
+      "FreeRTOS/Source/portable/MemMang/heap_4.c": "third_party/freertos-kernel/portable/MemMang/heap_4.c",
+      "FreeRTOS/Source/portable/MemMang/heap_3.c": "third_party/freertos-kernel/portable/MemMang/heap_3.c",
+      "FreeRTOS/Source/portable/MemMang/heap_5.c": "third_party/freertos-kernel/portable/MemMang/heap_5.c",
+      "FreeRTOS/Source/portable/GCC/RISC-V/portASM.S": "third_party/freertos-kernel/portable/GCC/RISC-V/portASM.S",
+      "FreeRTOS/Source/portable/GCC/RISC-V/port.c": "third_party/freertos-kernel/portable/GCC/RISC-V/port.c",
+      "FreeRTOS/Source/portable/GCC/RISC-V/readme.txt": "third_party/freertos-kernel/portable/GCC/RISC-V/readme.txt",
+      "FreeRTOS/Source/portable/GCC/RISC-V/portmacro.h": "third_party/freertos-kernel/portable/GCC/RISC-V/portmacro.h",
+      "FreeRTOS/Source/portable/GCC/RISC-V/Documentation.url": "third_party/freertos-kernel/portable/GCC/RISC-V/Documentation.url",
+      "FreeRTOS/Source/portable/GCC/ARM_CM3/port.c": "third_party/freertos-kernel/portable/GCC/ARM_CM3/port.c",
+      "FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h": "third_party/freertos-kernel/portable/GCC/ARM_CM3/portmacro.h",
+      "FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c": "third_party/freertos-kernel/portable/GCC/ARM_CM4F/port.c",
+      "FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h": "third_party/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h",
+      "FreeRTOS/Source/portable/GCC/ARM_CA9/portASM.S": "third_party/freertos-kernel/portable/GCC/ARM_CA9/portASM.S",
+      "FreeRTOS/Source/portable/GCC/ARM_CA9/port.c": "third_party/freertos-kernel/portable/GCC/ARM_CA9/port.c",
+      "FreeRTOS/Source/portable/GCC/ARM_CA9/portmacro.h": "third_party/freertos-kernel/portable/GCC/ARM_CA9/portmacro.h",
+      "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/readme.txt": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/readme.txt",
+      "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/Pulpino_Vega_RV32M1RM/freertos_risc_v_chip_specific_extensions.h",
+      "FreeRTOS/Source/portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h": "third_party/freertos-kernel/portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions/freertos_risc_v_chip_specific_extensions.h",
+      "FreeRTOS/cpp11_gcc/bits/gthr-default.h": "src/toolchains/gcc/bits/gthr-default.h",
+      "lib_test_CA9/cmsis/core_ca.h": "platforms/qemu-vexpress-a9/cmsis/core_ca.h",
+      "lib_test_CA9/cmsis/cmsis_compiler.h": "platforms/qemu-vexpress-a9/cmsis/cmsis_compiler.h",
+      "lib_test_CA9/cmsis/irq_ctrl_gic.c": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl_gic.c",
+      "lib_test_CA9/cmsis/cmsis_gcc.h": "platforms/qemu-vexpress-a9/cmsis/cmsis_gcc.h",
+      "lib_test_CA9/cmsis/irq_ctrl.h": "platforms/qemu-vexpress-a9/cmsis/irq_ctrl.h",
+      "lib_test_CA9/cmsis/ARMCA9.h": "platforms/qemu-vexpress-a9/cmsis/ARMCA9.h",
+      "lib_test_CA9/cmsis/cmsis_cp15.h": "platforms/qemu-vexpress-a9/cmsis/cmsis_cp15.h"
+    },
+    "implementation_bytes_changed": false
+  }
 }
