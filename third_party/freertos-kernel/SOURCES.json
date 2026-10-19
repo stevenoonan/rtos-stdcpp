@@ -4,7 +4,7 @@
   "source_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
   "source_path": "FreeRTOS/Source",
   "upstream_kernel_commit": "Not established by inherited import; do not infer from version label",
-  "status": "Preserved inherited dependency only; not selected by the maintained profile. Replace only after standalone platform qualification.",
+  "status": "Inherited pinned test dependency selected by the qualified standalone A9 profile. Integrating applications supply their own qualified kernel/port; no upstream commit is inferred from the version label.",
   "files": [
     {
       "path": "LICENSE",

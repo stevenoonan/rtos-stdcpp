@@ -1,41 +1,107 @@
-# Layout and ownership
+# Architecture and ownership
+
+```mermaid
+flowchart TD
+    app[Application: standard C++ APIs] --> std[libstdc++ headers and selected runtime sources]
+    std --> hooks[GCC gthread and clock hooks]
+    hooks --> backend[FreeRTOS backend]
+    backend --> kernel[Selected FreeRTOS kernel and port]
+    app --> policy[Application runtime and platform policy]
+    policy --> kernel
+```
+
+The library supplies the connection between libstdc++ and FreeRTOS. It is neither
+a complete standard library nor a POSIX implementation. Functions with pthread
+names serve the selected GCC clock-wait header paths; they do not provide a
+public pthread layer. No general backend framework or ThreadX backend exists.
+
+## Source responsibilities
 
 | Location | Responsibility |
 |---|---|
-| `include/rtos_stdcpp` | Application extensions; existing C++ symbols retained |
-| `src/backends/freertos` | Task lifetime, native synchronization, TLS keys and clock implementation |
-| `src/toolchains/gcc` | GCC hook-header override and common C++ ABI configuration |
-| `cmake/profiles` | Exact audited compiler, headers, multilib and runtime selection |
-| `third_party/libstdcxx/stm32-gcc-14.3.1-cxx17` | Sole authoritative selection of two unmodified GCC runtime sources, their licenses and manifest |
-| `tests/catalog.json` | Single case/requirement/skip registry; generates C++ descriptors |
-| `tests/deferred` | Future/async, unsupported atomic and C++20 sources, excluded from the supported suite |
-| `tests/unit` | Standalone host arithmetic oracle and minimal type-only kernel stubs |
-| `tests/regression` | Reliable scheduled-task lifecycle regression shared with integrations |
-| `tests/conformance` | Shared standard API cases and Release-safe inherited replacements |
-| `tests/support` | Shared assertions/reports, process controls, platform interfaces and explicitly unselected legacy allocation/syscall support |
-| `platforms` | Inherited A9 and RISC-V startup, console and configuration material; no active emulator build |
-| `third_party/freertos-kernel` | Unmodified inherited 10.4.3 dependency snapshot; source pin/hashes in SOURCES.json |
+| `include/rtos_stdcpp` | Public attributes/thread factory and wall-clock extensions |
+| `src/backends/freertos` | Thread/completion lifetime, CV waiters, one exit key and clocks |
+| `src/toolchains/gcc` | `bits/gthr-default.h` override and common ABI configuration |
+| `cmake/profiles` | Embedded compiler/header/multilib and dependency identities; supported host majors |
+| `third_party/libstdcxx/stm32-gcc-14.3.1-cxx17` | Two selected, unmodified GCC runtime sources and their source/license manifest |
+| `tests/catalog.json` | Stable case IDs, requirements and explicit skip reasons |
+| `tests/conformance`, `tests/regression` | Shared standard API and lifecycle/identity cases |
+| `tests/unit` | Actual backend arithmetic checked with type-only kernel stubs |
+| `tests/support` | Release-safe assertions/reports, platform interface, process controls and unselected legacy helpers |
+| `tests/deferred` | Unqualified future/atomic/C++20 sources, excluded from the supported suite |
+| `platforms/qemu-vexpress-a9` | Qualified standalone test startup, runner and runtime policy |
+| `platforms/riscv-virt` | Historical unsupported platform material |
+| `third_party/freertos-kernel` | Inherited 10.4.3 snapshot selected by A9, never automatically by an application |
 
-The old `FreeRTOS/cpp11_gcc`, `test`, `sys_common` and `lib_test_*` trees are
-replaced by these responsibilities. The inherited kernel is not silently
-upgraded or selected by the maintained build. It remains pinned to the original
-import until a standalone platform and replacement dependency are qualified.
-No exact upstream kernel commit is inferred from its version label.
+The bundled kernel version label is not proof of a particular upstream commit.
+Its inherited import and selected bytes are recorded in dependency manifests.
+Legacy allocation/syscall helpers remain unselected; their presence does not make
+them production policy. See [migration](migration.md) for old-to-current paths.
 
-The primary CMake target is an object library to preserve explicit provider
-linking. It owns three backend translation units and the selected GCC mutex/CV
-implementations. An independent configuration interface carries native-type and
-newlib ABI requirements without pulling objects back into kernel targets.
-Applications retain kernel/port/heap ownership and runtime memory/failure policy.
-There is no general backend framework, automatic kernel fetch, or default demo.
+## GCC and native ABI
 
-Legacy syscall stubs and allocation wrappers have been split by responsibility.
-Legacy new/delete overrides remain separate and optional by explicit source
-selection only. None is linked by the maintained target or qualified application.
-They are historical test policies, not supported production allocation contracts.
-Inventory records preserve all inherited notices and the original file provenance.
+The toolchain's `bits/gthr.h` includes `bits/gthr-default.h`. Include precedence
+selects this library's override, which maps native thread, mutex and CV operations
+to FreeRTOS. The native representations appear in libstdc++ public classes;
+all affected translation units must see the same headers and feature settings.
+The profile's forced header enables GCC 14's clock-selecting mutex/CV paths.
+Mixing stock/older gthread objects with these objects is an ABI error.
 
-The optional `rtos-stdcpp::test-support` object target supplies shared cases and
-reports without imposing a platform runner on applications. Host reference
-runs and embedded integrations use the same case bodies. Board/runtime policy
-and high-resolution cycle observations remain integration-owned.
+`rtos-stdcpp::rtos-stdcpp` is an object library containing backend `thread.cpp`,
+`gthr_key.cpp`, `freertos_time.cpp` and the selected GCC `mutex.cc` and
+`condition_variable.cc`. Direct linkage preserves the intended providers instead
+of allowing stock archive members to satisfy them. The independent
+`rtos-stdcpp::config` interface propagates ABI requirements without injecting
+objects or a circular kernel dependency. Final-image verification must still
+check provider selection and exactly one kernel/port/heap.
+
+## Managed thread lifetime
+
+Creation allocates a stable completion block and event group. The owner and
+worker each hold one reference; moving a `std::thread` does not move the block.
+The worker owns and destroys the callable/arguments, runs the registered exit
+callback, publishes completion, releases its reference and deletes itself.
+Join waits for completion and releases the owner reference; detach releases the
+owner without waiting. The last release frees the completion/event resources.
+The kernel's idle task later reclaims the self-deleted TCB/stack.
+
+Native thread identity is one canonical `uintptr_t` word. Managed IDs identify
+the completion block; non-managed task IDs use a tagged TCB address. Copies do
+not own resources. Equality and GCC's raw-byte ID hash therefore agree. IDs and
+native handles are backend-specific, not permanent identifiers; allocator reuse
+can reuse old identities after their lifetime. No join/detach path inspects a
+reclaimed TCB. External deletion of a managed worker bypasses this contract.
+
+The existing gthread-key registry supports one registered exit key, used by exit
+notification. Its publication is atomic, and callbacks run on managed worker
+return. It is not general TLS or a guarantee for native-task deletion callbacks.
+
+## Synchronization and time
+
+Mutex hooks use FreeRTOS mutex/recursive-mutex semaphores. CVs keep intrusive
+waiters under a short critical section, release/reacquire the caller's mutex,
+and use task notification index 0 for wakeups. Timeout/notification cleanup must
+agree on waiter ownership. User code still waits in a predicate loop and keeps
+mutex/CV/data alive until all users finish.
+
+`steady_clock` extends the kernel's atomically sampled 32-bit tick/overflow pair.
+`system_clock` adds a separately serialized wall offset. Setting wall time leaves
+monotonic time unchanged. Duration conversion rounds deadlines up and bounds
+large waits; sleep loops recheck monotonic time. Resolution is the configured RTOS
+tick, not an independent high-resolution hardware clock. Interrupt masking and
+scheduler suspension have distinct roles; neither permits ISR use of this API.
+
+## Platform boundary
+
+The integrating application owns its kernel/port/configuration, startup,
+interrupts/FPU/cache/security state, memory map, newlib reentrancy/locks, C++
+guards, allocation arenas, syscalls, fatal policy and hardware qualification.
+RTOS heap objects and C++/newlib allocations may use separate arenas; recovery
+checks must account for both and allow idle cleanup. The A9 test platform supplies
+its own implementations of these policies, with separate fixed arenas.
+
+Optional `rtos-stdcpp::test-support` supplies shared cases/reports; a platform
+supplies timing, attributes, stack/resource observations, idle opportunities,
+fatal handling and transport. Host reference runs use the host runtime. Emulator
+runs exercise the actual backend; board runs additionally establish physical
+interrupt/FPU/cache/timing behavior. See [testing](testing.md).

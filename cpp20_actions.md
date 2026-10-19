@@ -1,4 +1,12 @@
-# Porting to C++2a
+# Historical C++20 checklist
+
+This inherited checklist is preserved as design history. Its tool versions,
+completion marks and proposed matrix do not describe maintained support. C++20
+work is deferred until the C++17 reorganization, testing and documentation
+milestones are complete. See [current support](docs/support-matrix.md) and
+[testing](docs/testing.md) for active instructions.
+
+## Original checklist
 
 [] Write tests for std::jthread  
 [] Write tests for std::stop_token  

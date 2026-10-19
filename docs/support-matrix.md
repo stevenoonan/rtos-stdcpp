@@ -1,49 +1,83 @@
-# Qualified C++17 matrix
+# Qualified C++17 support
 
-The Step 6 matrix has executed evidence in Debug and Release. C++17 is the
-minimum. Requiring a newer language mode does not qualify its concurrency APIs.
-Exact byte locks are in `cmake/profiles`; version numbers alone are insufficient.
+C++17 is the minimum and the qualified language mode. C++11/C++14 compatibility
+is not maintained. A newer language mode does not qualify newer concurrency APIs.
+Both embedded profiles disable exceptions and RTTI and use newlib-nano.
 
-| Environment | Exact compiler/runtime and dependencies | Evidence and status |
+## Executed and build-only profiles
+
+| Environment | Compiler, runtime and dependencies | Evidence |
 |---|---|---|
-| Linux x86_64 GCC | Ubuntu GCC 13 (patch updates allowed), system libstdc++, C++17, UBSan; maintained distro patches allowed | Executed Debug/Release: real helper arithmetic at 100/1000 Hz, portable reference cases and strict runner controls |
-| Linux x86_64 Clang | Ubuntu Clang 18 (patch updates allowed), same system libstdc++, C++17, UBSan; host reference profile | Executed Debug/Release with the same cases; host reference only |
-| STM32N6570-DK | `stm32-gcc-14.3.1-cxx17`; exact ST GCC 14.3.1, Cortex-M55 hard float, newlib-nano; FreeRTOS 11.2.0 from X-CUBE-FREERTOS 1.6.0 | Executed Debug/Release by the integrating application: final image provenance, shared cases, sustained resource/stack/timing checks, failures/resets and real tick wrap. Board tooling/evidence remain application-owned |
-| Standalone M55 compile fixture | Same exact embedded compiler; externally supplied kernel/port headers | Build-only: public API and all five providers compile. No scheduler or linked-image claim from this fixture |
-| QEMU vexpress-a9, one Cortex-A9 | `qemu-a9-gcc-14.3.1-cxx17`; same compiler distribution, separate `thumb/v7-a+fp/hard` multilib; bundled pinned 10.4.3 kernel/ARM_CA9 port; QEMU 8.2.2 Ubuntu package profile | Executed Debug/Release, normal/near-wrap tick start: scheduler cases, lifecycle regression, startup/clocks/notification isolation, repeated recovery and isolated fatal runs; final provider checks |
-| Additional GCC release, embedded Clang, libc++, RISC-V, SMP | No qualified runtime/kernel/port selection | Unsupported; historical source is not build or execution evidence |
-| C++20 concurrency, future/async, shared_mutex, atomic wait/unsupported-width fallback | Require separate implementation/runtime qualification | Deferred; four explicit C++17 suite skips, no passing support claim |
+| Ubuntu 24.04 x86_64 GCC | GCC 13, system libstdc++, UBSan; distro patch updates permitted | Debug/Release host arithmetic, standard-library reference cases and runner controls |
+| Ubuntu 24.04 x86_64 Clang | Clang 18 with GCC 13's C++ headers/libstdc++, UBSan; distro patch updates permitted | Same host checks; no embedded Clang claim |
+| Cortex-M55 board integration | `stm32-gcc-14.3.1-cxx17`, ST GCC 14.3.1, hard float, `thumb/v8-m.main+dp/hard`; FreeRTOS 11.2.0 / X-CUBE-FREERTOS 1.6.0 | Application-owned Debug/Release final-image and sustained physical-board qualification, real wrap and failure/reset tests |
+| Standalone M55 compile fixture | Same compiler/multilib with externally supplied matching kernel/port headers | Public APIs and five provider objects compile; no scheduler execution or final executable |
+| QEMU vexpress-a9, one Cortex-A9 | `qemu-a9-gcc-14.3.1-cxx17`, same ST compiler distribution, `thumb/v7-a+fp/hard` selected with ARM/VFPv3 flags; bundled 10.4.3 kernel/ARM_CA9 port; selected QEMU 8.2.2 packages | Debug/Release, ordinary and near-wrap starts; shared cases, lifecycle/platform suites, isolated failures and final-image provenance |
 
-The shared C++17 suite requires **11 passes and 4 approved skips**. It covers
-thread ownership, moved callable/arguments and IDs/hashes; mutex contention,
-recursive/timed locks; predicate notification/timeout races, explicit predicate
-rechecks, condition_variable_any; call_once, local statics and exit notification.
-Exit-notification resources stay alive through a join; detached lifetimes are
-covered separately by lifecycle cases. The FreeRTOS regression requires one
-identity/TCB-reuse pass. Each arithmetic run requires two passes. The A9 platform
-suite requires four more passes, with 64 shared stress rounds after warm-up and
-64 allocation/thread recovery cycles, no permitted resource drift, at least 128
-free stack words, bounded waits and a real wrap variant. The timer observations
-are scheduler/virtual-machine gates, not physical-board timing guarantees.
+The exact embedded compiler identity is GNU Tools for STM32
+`14.3.rel1.20251027-0700`, GCC `14.3.1 20250623`. Header/archive/compiler identities
+and CPU flags are in the [M55](../cmake/profiles/stm32-gcc-14.3.1-cxx17.json) and
+[A9](../cmake/profiles/qemu-a9-gcc-14.3.1-cxx17.json) profiles. Both select the same
+two unmodified [GCC runtime sources](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json).
+QEMU's binary/packages and selected kernel bytes are pinned separately. The
+inherited kernel's exact upstream commit is not established by its version label.
 
-No exceptions or RTTI are enabled for either embedded profile. The A9 image
-explicitly supplies recoverable nothrow/aligned allocation and terminating
-throwing-new, joinable-destructor, kernel-OOM and recursive-guard policy. Failure
-policy and its providers remain application/platform responsibilities.
+The hosted [qualification run for `6677ce1`](https://github.com/stevenoonan/rtos-stdcpp/actions/runs/39318872918)
+passed the 52-entry host/A9 CTest matrix and aggregate CI check. Board-specific
+commands, measurements and reports belong to the integrating application; they
+are not prerequisites of a standalone host/A9 checkout. CI branch enforcement
+remains explicitly deferred; see [CI](ci.md).
 
-Language thread_local, additional gthread keys, ISR thread operations, external
-deletion of managed tasks, and reuse of reserved TLS slot 0 or notification index
-0 remain outside the contract. Run thread services after scheduler startup and
-allow idle reclamation. Startup is single threaded; the A9 startup probe checks
-allocation/static initialization, not concurrent startup operations.
+## Feature boundary
 
-`tools/run_matrix.py` verifies the exact prepared host/toolchain/QEMU inputs and
-writes commands, Git commit/dirty state, compiler versions, JUnit output,
-per-image reports and final ELF hashes. Routine runs are offline. Other QEMU
-versions, multilibs or host package revisions require a reviewed profile update
-and new execution evidence. Host std::thread and Clang use the host runtime;
-neither qualifies the FreeRTOS backend or embedded Clang.
+| Facility | Qualified behavior or limit |
+|---|---|
+| `std::thread` / attributes | Callable/argument ownership, moves, join/detach before/after completion, IDs/hashes; worker attributes observed on embedded platforms |
+| Mutexes | Ordinary, recursive, timed and recursive-timed operations, contention and standard lock wrappers |
+| Condition variables | Predicate wait/notify-one/all, timed races, explicit predicate rechecks, `condition_variable_any`; index 0 reserved |
+| Once and local statics | Concurrent `call_once`; thread-safe function-local static initialization with platform guard provider |
+| Thread exit notification | Existing single gthread key/callback path on managed workers; referenced objects must outlive notification |
+| Clocks and sleep | Separate monotonic/wall clocks, duration/deadline rounding, zero/negative sleeps, kernel tick wrap |
+| Atomic facilities | Only individually exercised lock-free operations; no broad atomic-library support claim |
+| Future/async, shared mutexes, unsupported atomics, C++20 synchronization | Deferred registry cases/sources; not qualified by compiling their headers |
 
-The hosted [CI workflow](ci.md) uses these same profiles and commands, including
-explicit package setup. Server-side
-merge enforcement remains pending by the owner's explicit choice.
+The shared C++17 suite requires **11 passes and 4 approved skips**. The skip
+reasons are authoritative in [the catalog](../tests/catalog.json). The FreeRTOS
+lifecycle suite requires one named regression pass; each arithmetic run requires
+two passes. These suite counts are distinct from the number of CTest entries.
+The A9 platform suite requires four passes, including 64 shared stress rounds
+and 64 allocation/thread recovery cycles after warm-up, exact resource recovery,
+at least 128 free stack words and a real kernel-overflow observation in the wrap
+variant. Emulator timing is not a physical-board latency guarantee.
+
+## Context, failures and exclusions
+
+Threading/synchronization operations require running task context. Startup is
+single threaded; a platform may support allocation/static initialization there,
+but not concurrent RTOS-backed constructors or blocking operations. Language
+`thread_local`, arbitrary extra gthread keys, native-task exit callbacks, ISR
+thread operations, external deletion of managed tasks, and reuse of TLS pointer
+slot 0 or notification index 0 are unsupported. Idle must receive CPU time.
+Attributes-helper callable copy/move constructors must not block or yield.
+
+Under the no-exceptions profiles, errors on throwing paths terminate through the
+platform policy. Returning null for explicit nothrow/aligned allocation requires
+the platform's qualified provider; it does not promise recoverable `std::thread`
+construction failure. A9 resets separately for throwing-new, kernel-OOM,
+joinable-thread destruction and recursive-static-guard failures. Exact armed
+markers/statuses distinguish expected failures from arbitrary crashes.
+
+Additional GCC versions, new kernel/port combinations, embedded Clang, libc++,
+RISC-V, SMP and C++20 require separate qualification. Historical source and a
+successful host or compile-only check do not establish embedded support.
+
+## Changing or adding a profile
+
+Review compiler configuration, native layouts, header feature paths, multilib,
+newlib ABI, selected runtime symbols and kernel/port behavior. Record source and
+license provenance and update only the affected dependency manifests. Rebuild all
+affected objects, verify final providers, and execute Debug/Release shared,
+platform, failure and wrap tests before claiming support. Board profiles also
+need physical timing/resource/FPU/interrupt qualification. Host distro patch
+updates at the supported majors do not require refreshing binary hashes; their
+actual versions are recorded by [the matrix runner](testing.md).

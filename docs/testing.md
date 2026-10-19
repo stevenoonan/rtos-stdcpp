@@ -7,13 +7,24 @@ Release-safe assertion/report support on the host and embedded targets.
 
 ## Native host checks
 
-With CMake 3.22+, Ninja, Python 3 and GNU host C++ with UBSan:
+The supported host environment is Ubuntu 24.04 x86_64, CMake 3.22+, Ninja,
+Python 3 and GCC 13 / Clang 18 with libstdc++ and UBSan. Explicit setup (network
+and package-manager privileges required) is:
 
 ```sh
-cmake --preset host-debug
+sudo apt-get update
+sudo apt-get install -y gcc-13 g++-13 clang-18 libclang-rt-18-dev cmake ninja-build qemu-system-arm
+```
+
+The system QEMU package supplies maintained shared dependencies; A9 runs use the
+separately prepared checksum-selected QEMU binary. After setup, run commands from
+the library root. For the quick native checks:
+
+```sh
+cmake --preset host-debug -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_CXX_COMPILER=g++-13
 cmake --build --preset host-debug
 ctest --preset host-debug --no-tests=error
-cmake --preset host-release
+cmake --preset host-release -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_CXX_COMPILER=g++-13
 cmake --build --preset host-release
 ctest --preset host-release --no-tests=error
 ```
@@ -53,6 +64,7 @@ cmake -S examples/compile-check -B ../build/rtos-stdcpp/compile-check -G Ninja \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DFREERTOS_KERNEL_ROOT=/absolute/path/to/kernel \
   -DFREERTOS_PORT_INCLUDE=/absolute/path/to/kernel/portable/GCC/ARM_CM55_NTZ/non_secure
+cmake --build ../build/rtos-stdcpp/compile-check
 ctest --test-dir ../build/rtos-stdcpp/compile-check -L compile_link --output-on-failure --no-tests=error
 ```
 
@@ -94,6 +106,18 @@ and completion. A final `OK` string, a good report followed by a fault, or a zer
 exit with incomplete output fails. It kills the process group on timeout. The
 same validator accepts the fixed uint32_t memory layout from a debugger.
 Successful output includes pass/fail/skip counts, requirements and skip reasons.
+For example, after the host Debug build:
+
+```sh
+python3 tools/run_tests.py --suite cxx17 --layer host --timeout 20 \
+  --output ../build/rtos-stdcpp/host-reference.json \
+  -- ../build/rtos-stdcpp/host-debug/tests/cxx17_reference
+```
+
+The shared C++17 report requires 11 passes and 4 catalog-approved skips. Those
+feature skips are not missing CTest jobs. A9 expected-failure images instead use
+`tools/run_qemu.py --failure` and require both the armed marker and exact status;
+an arbitrary nonzero exit is a failure, not an expected success.
 
 The `--layer` value records `host`, `compile_link`, `emulator` or `hardware`;
 it identifies the transport/evidence layer, not an automatic support claim.
@@ -102,27 +126,36 @@ native-health checks and timeout. Board transports belong to their integrations.
 
 ## Qualified host and A9 matrix
 
-Use Python 3, CMake >=3.22, Ninja, the exact compiler distribution in the embedded
-profile, and GCC 13 / Clang 18 with the Ubuntu 24.04 host runtime. Clang is optional
-unless --clang is selected; embedded Clang is unsupported. Setup QEMU explicitly
-on Ubuntu 24.04 compatible x86_64 Linux (curl/network access is unnecessary during
-ordinary matrix runs):
+Use the prerequisites above and prepare the exact embedded tools explicitly.
+Choose tool and empty result directories outside the source tree; these example
+paths must be replaced by local absolute paths:
 
 ```sh
-python3 tools/setup_qemu.py --destination /absolute/path/to/prepared/qemu
+python3 tools/setup_ci.py --kind a9 --destination /absolute/path/to/prepared
 python3 tools/run_matrix.py \
-  --toolchain-root /absolute/path/to/audited/toolchain \
+  --toolchain-root /absolute/path/to/prepared/toolchain \
   --qemu-root /absolute/path/to/prepared/qemu --clang \
   --output /absolute/path/to/new-matrix-results
 ```
 
-Setup downloads SHA256-pinned Ubuntu packages and extracts them without sudo.
-The wrapper uses the extracted libraries; remaining system shared dependencies
-must be available. The matrix verifies the QEMU binary/version and records the Git revision
-and host compiler versions. Prepared packages can be cached and setup repeated offline.
-Downloads, builds and reports must stay outside the audited library source tree.
-Changing the embedded compiler or selected QEMU identity requires a reviewed
-profile update and new execution evidence. Host distro patch updates are allowed.
+Setup downloads the official checksum-pinned ST bundle and selected QEMU Ubuntu
+packages, preserving compiler permissions/symlinks and licenses. It extracts
+without sudo; remaining system dependencies must already be installed. Cached
+archive/package bytes are verified again on repeat setup. Do not substitute a
+nearby compiler distribution. The optional ST IDE descriptor bundle is not needed.
+
+To select only host jobs, use `--environment host --host-compiler both` with
+`--output` and omit embedded tool paths. For A9 only use `--environment a9` with
+the prepared paths. `--config Debug` or `--config Release` selects one build mode.
+If the exact compiler is already installed, `tools/setup_qemu.py --destination
+/absolute/path/to/prepared/qemu` prepares only QEMU, and `--toolchain-root` can
+refer to the existing compiler. Embedded Clang is unsupported.
+
+The matrix records the Git commit/dirty state, actual host compiler versions,
+commands/logs, JUnit and per-image results. It verifies embedded dependency
+identities and the QEMU binary/version; it does not hash every project source or
+system shared library. Ordinary runs are offline. Embedded dependency updates
+require review and qualification; host distro patch updates are permitted.
 
 With --clang, this runs four host compiler/configuration combinations (five CTest
 entries each) and four A9 combinations (Debug/Release, normal/wrap; eight CTest
@@ -131,8 +164,8 @@ missing prepared tools and every required test failure. It never downloads
 inputs. Each configuration records its command logs and JUnit report. A9 has
 three success images (shared conformance, lifecycle regression, platform
 qualification), four separately reset failure images, and one link-provenance
-check. Each process has a 25-second deadline and CTest has an outer 35-second
-limit. Expected failures require an armed marker and the exact status, including
+check. Each emulator process has a 25-second deadline and its CTest entry has an
+outer 35-second limit. Expected failures require an armed marker and the exact status, including
 OOM, joinable-thread destruction and recursive static initialization.
 
 To build/run one A9 configuration directly:
@@ -164,3 +197,16 @@ runner. A compile-only fixture or successful host run does not qualify a schedul
 
 The [CI contract](ci.md) documents hosted jobs, explicit dependency setup, merge
 enforcement and physical-board obligations.
+
+## Physical-board qualification
+
+The library does not assume a particular board/probe or consumer checkout.
+An integrating application documents its build/flash/reset commands and board
+runner. Enable the shared test-support target only in acceptance firmware and
+validate its stopped reports with `tools/test_protocol.py`, alongside native
+health observations. Qualify Debug/Release sustained resource recovery, idle
+reclamation, measured stack headroom, independent timing, FPU/preemption,
+interrupt/cache configuration, real tick wrap and isolated failure/reset paths.
+Restore and smoke-test ordinary firmware afterward. A host or emulator pass does
+not replace these physical checks. The C++17 release-baseline milestone repeats
+full board acceptance; documentation-only edits do not require a new endurance run.

@@ -14,8 +14,8 @@ Preserve individual copyright and permission notices when distributing sources.
 | Component | Location | Applicable terms and provenance |
 |---|---|---|
 | Adapter, attributes, clocks, test/helper code and build scripts | `include/`, `src/`, `tests/`, build files and project-authored platform files | MIT. Piotr Grygorczuk's per-file notices include 2018–2025; retain their exact years/text. The original root notice is preserved in [LICENSES/FreeRTOS_cpp11-original.txt](LICENSES/FreeRTOS_cpp11-original.txt). |
-| Bundled FreeRTOS 10.4.3 | `third_party/freertos-kernel/` | MIT, Copyright (C) 2020 Amazon.com, Inc. or its affiliates. Keep [kernel LICENSE](third_party/freertos-kernel/LICENSE) and source notices. This is historical standalone-test material; integrating applications supply their own qualified kernel/port. |
-| Arm CMSIS and Cortex-A9 startup/system support | `platforms/qemu-vexpress-a9/cmsis/` and its Arm startup/system/memory support files | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). The A9 profile is qualified; see docs/support-matrix.md. |
+| Bundled FreeRTOS 10.4.3 | `third_party/freertos-kernel/` | MIT, Copyright (C) 2020 Amazon.com, Inc. or its affiliates. Keep [kernel LICENSE](third_party/freertos-kernel/LICENSE) and source notices. Selected by the qualified standalone A9 tests; integrating applications supply their own qualified kernel/port. |
+| Arm CMSIS and Cortex-A9 startup/system support | `platforms/qemu-vexpress-a9/cmsis/` and its Arm startup/system/memory support files | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). The A9 profile is qualified; see [support matrix](docs/support-matrix.md). |
 
 [LICENSES/inventory.json](LICENSES/inventory.json) indexes component licenses,
 source revisions and authoritative dependency manifests. Git tracks changes to
@@ -30,7 +30,7 @@ specific CMSIS package tag that the inherited import did not record.
 
 ## Runtime selection and ownership
 
-The currently qualified profile is STM32 GCC 14.3.1 / C++17. The library delivers the selected runtime sources, full license texts and
+Both qualified embedded profiles use ST GCC 14.3.1 / C++17 and share the selected runtime sources, full license texts and
 [authoritative source manifest](third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json):
 
 - Source repository: `https://github.com/STMicroelectronics/gnu-tools-for-stm32`.
@@ -51,14 +51,13 @@ a file sits beside COPYING.RUNTIME. See the
 
 The library owns reusable adapter changes. Each integrating application owns its selected
 kernel/port, board configuration, newlib locks, ARM guards, arenas, failure policy,
-and build/flash/debug checks until a separately reviewed extraction. The qualified standalone A9 profile is documented in docs/support-matrix.md. Future profiles require exact
+and build/flash/debug checks until a separately reviewed extraction. The qualified standalone A9 profile is documented in [support-matrix.md](docs/support-matrix.md). Future profiles require exact
 versions, source/license manifests, and executed qualification; there is no
 fallback assigning arbitrary GCC versions to a nearby snapshot.
 
 Application-specific names, checkout layouts, build targets, and hardware-runner
 details belong in the integrating application's repository. Library integration
-documentation describes configurable requirements and interfaces. Transition
-notes must be replaced by the standalone delivery contract before release.
+documentation describes configurable requirements and interfaces. See [integration](docs/integration.md) for that standalone delivery contract.
 
 ## Retired components and libatomic provenance
 
@@ -92,3 +91,7 @@ sample had a BSD-3-Clause startup file but generated Code Red/NXP linker scripts
 with copyright statements and no license grant in the retained import. Those
 files are not covered by a new MIT declaration. They were retired with their
 unsupported consumers; historical copies retain their original notices.
+
+See [licensing and dependency updates](docs/licensing.md) for the maintained
+component records and update procedure. Historical file audits remain in Git;
+ordinary project edits do not require checksum-inventory updates.
