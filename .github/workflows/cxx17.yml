@@ -10,21 +10,10 @@ concurrency:
   group: cxx17-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 env:
-  RTOS_STDCPP_FORBIDDEN_TOKENS_B64: ${{ vars.RTOS_STDCPP_FORBIDDEN_TOKENS_B64 }}
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
-  source:
-    name: Source delivery
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          persist-credentials: false
-      - run: python3 tools/check_delivery.py --path . --inventory --output "$RUNNER_TEMP/source-policy.json"
   host:
     name: Host ${{ matrix.compiler }} ${{ matrix.config }}
-    needs: source
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
@@ -47,22 +36,16 @@ jobs:
           python3 tools/run_matrix.py --environment host --host-compiler '${{ matrix.compiler }}'
           --config '${{ matrix.config }}' --host-root "$RUNNER_TEMP/prepared/host"
           --output "$RUNNER_TEMP/results"
-      - name: Check publishable files
-        id: delivery
-        if: always()
-        run: python3 tools/check_delivery.py --path "$RUNNER_TEMP/results" --output "$RUNNER_TEMP/artifact-policy.json"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always() && steps.delivery.outcome == 'success'
+        if: always()
         with:
           name: host-${{ matrix.compiler }}-${{ matrix.config }}-${{ github.sha }}
           path: |
             ${{ runner.temp }}/results
-            ${{ runner.temp }}/artifact-policy.json
           if-no-files-found: error
           retention-days: 7
   a9:
     name: A9 ${{ matrix.config }}
-    needs: source
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
@@ -86,29 +69,23 @@ jobs:
           python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}'
           --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
           --output "$RUNNER_TEMP/results"
-      - name: Check publishable files
-        id: delivery
-        if: always()
-        run: python3 tools/check_delivery.py --path "$RUNNER_TEMP/results" --output "$RUNNER_TEMP/artifact-policy.json"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always() && steps.delivery.outcome == 'success'
+        if: always()
         with:
           name: a9-${{ matrix.config }}-${{ github.sha }}
           path: |
             ${{ runner.temp }}/results
-            ${{ runner.temp }}/artifact-policy.json
           if-no-files-found: error
           retention-days: 7
   required:
     name: Required C++17 checks
-    needs: [source, host, a9]
+    needs: [host, a9]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Require every profile to succeed
         env:
-          SOURCE_RESULT: ${{ needs.source.result }}
           HOST_RESULT: ${{ needs.host.result }}
           A9_RESULT: ${{ needs.a9.result }}
-        run: test "$SOURCE_RESULT" = success && test "$HOST_RESULT" = success && test "$A9_RESULT" = success
+        run: test "$HOST_RESULT" = success && test "$A9_RESULT" = success

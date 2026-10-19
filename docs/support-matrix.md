@@ -45,5 +45,5 @@ and new execution evidence. Host std::thread and Clang use the host runtime;
 neither qualifies the FreeRTOS backend or embedded Clang.
 
 The hosted [CI workflow](ci.md) uses these same profiles and commands, including
-explicit package setup and consumer-independent source/artifact gates. Server-side
+explicit package setup. Server-side
 merge enforcement remains pending by the owner's explicit choice.

@@ -45,8 +45,5 @@ if(RTOS_STDCPP_BUILD_HOST_TESTS)
     add_test(NAME runner_negative_controls_optimized COMMAND "${Python3_EXECUTABLE}" -O "${CMAKE_CURRENT_SOURCE_DIR}/support/check_runner.py"
         --fixture $<TARGET_FILE:runner_fixture>)
     set_tests_properties(runner_negative_controls runner_negative_controls_optimized PROPERTIES LABELS "host;harness" TIMEOUT 20)
-    add_test(NAME delivery_negative_controls COMMAND "${Python3_EXECUTABLE}"
-        "${CMAKE_CURRENT_SOURCE_DIR}/support/check_delivery.py")
-    set_tests_properties(delivery_negative_controls PROPERTIES LABELS "host;delivery" TIMEOUT 30)
     add_subdirectory(unit)
 endif()

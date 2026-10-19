@@ -29,9 +29,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 7 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "9980a96c45c83647aeee30132e782beb97e5357298e417383cf68c3f5c1a02ac",
-      "bytes": 4743
+      "local_modifications": [
+        "Remove automated consumer-name source/artifact checks and associated tests at owner request"
+      ],
+      "sha256": "31a34a62ae2b010cc91b0a95dda0e57a3be8655c92a6d3f8429f1eee37af0144",
+      "bytes": 3612
     },
     {
       "path": ".gitignore",
@@ -352,10 +354,11 @@
         "origin": "rtos-stdcpp Step 7 project contribution"
       },
       "local_modifications": [
-        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged"
+        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged",
+        "Remove automated consumer-name source/artifact checks and associated tests at owner request"
       ],
-      "sha256": "bfd961a38f4dac752a91679db2b68c5b0082e68d83a47f2c6a02a5e09e690f4e",
-      "bytes": 5524
+      "sha256": "a4c846402487604e812a20679f5a091129d99f382a26dfd5f4670ee19e5be618",
+      "bytes": 4505
     },
     {
       "path": "docs/integration.md",
@@ -381,10 +384,11 @@
       "local_modifications": [
         "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
         "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained",
-        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged"
+        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged",
+        "Remove automated consumer-name source/artifact checks and associated tests at owner request"
       ],
-      "sha256": "aae2404fc7aab1d8f29f3a45b0b5d42cf14a5701cceda6993f8c067f6b778bdb",
-      "bytes": 4404
+      "sha256": "3be538c16eb9971af3d7edd83a9019f03a8ba88e104f7513a108da5142fa4cd2",
+      "bytes": 4357
     },
     {
       "path": "docs/testing.md",
@@ -397,10 +401,11 @@
         "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
         "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
         "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained",
-        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged"
+        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged",
+        "Remove automated consumer-name source/artifact checks and associated tests at owner request"
       ],
-      "sha256": "bdac5570c73cfafa5873fe1aa78c291dccce0bb1221bc28135cc01a4a7779804",
-      "bytes": 9340
+      "sha256": "20fa7b9f272df61c1c5fd0aa70478fba7e7d68b21fe49db9ef402b62233aa697",
+      "bytes": 9297
     },
     {
       "path": "examples/compile-check/CMakeLists.txt",
@@ -1223,10 +1228,11 @@
       "local_modifications": [
         "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged",
         "Step 6: exact A9/host profiles, platform repairs, expanded C++17 qualification and current documentation; inherited notices retained",
-        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged"
+        "Step 7: hosted CI, explicit verified dependency setup, generic delivery gates and current documentation; implementation bytes unchanged",
+        "Remove automated consumer-name source/artifact checks and associated tests at owner request"
       ],
-      "sha256": "765465596291a46fd91f1087b25a2144f02ae5827b4a730216de243cb276f0da",
-      "bytes": 3591
+      "sha256": "73f1d28cc20fcb935a17c2dd556d115410313f5827152c7d1fa7d7184d8e5e86",
+      "bytes": 3351
     },
     {
       "path": "tests/catalog.json",
@@ -1443,17 +1449,6 @@
       },
       "local_modifications": [],
       "modified_since_original_upstream": true
-    },
-    {
-      "path": "tests/support/check_delivery.py",
-      "license_expression": "MIT",
-      "license_evidence": "Project-authored Step 7 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
-      "source": {
-        "origin": "rtos-stdcpp Step 7 project contribution"
-      },
-      "local_modifications": [],
-      "sha256": "0e09ab5a866df0519b766816d9bda8a8612f0e2c2e24971a66816c8f40a6eecf",
-      "bytes": 2984
     },
     {
       "path": "tests/support/check_runner.py",
@@ -2547,17 +2542,6 @@
       "local_modifications": [],
       "sha256": "d32c0f691d973752defff1cdea45681b92c4f21aebd502d8ed7fecbc56f19891",
       "bytes": 3561
-    },
-    {
-      "path": "tools/check_delivery.py",
-      "license_expression": "MIT",
-      "license_evidence": "Project-authored Step 7 test/build/platform code or metadata; SPDX MIT and project root LICENSE",
-      "source": {
-        "origin": "rtos-stdcpp Step 7 project contribution"
-      },
-      "local_modifications": [],
-      "sha256": "96159ecc2ea73fc8dbfb009d92ec47417897224d8a63434dccf1e14a3602d4d4",
-      "bytes": 4449
     },
     {
       "path": "tools/check_profile.py",

@@ -1,17 +1,16 @@
 # C++17 continuous integration
 
 **Rollout status (2026-10-19):** implementation and local validation are ready.
-The owner requested keeping these changes local. No hosted run or remote policy
-configuration is claimed. Hosted execution is required before Step 7 can be
+The owner requested keeping these changes local. No hosted run or remote configuration is claimed. Hosted execution is required before Step 7 can be
 marked fully complete; server-side merge enforcement is separately pending by
 the owner's explicit choice.
 
 The library's `C++17 qualification` workflow uses only GitHub-hosted Ubuntu 24.04
-x86_64 runners. Pushes, pull requests and manual dispatch execute source policy,
+x86_64 runners. Pushes, pull requests and manual dispatch execute
 four host jobs (GCC/Clang, Debug/Release), two A9 jobs (Debug/Release, both ordinary
 and real tick-wrap variants), then the aggregate `Required C++17 checks` job.
 Every required dependency must succeed; failed, skipped, cancelled or missing
-profiles fail the aggregate. There are 56 CTest entries across the matrix.
+profiles fail the aggregate. There are 52 CTest entries across the matrix.
 
 Actions are pinned to reviewed commit IDs, repository permissions are read-only,
 and checkout credentials are not persisted. No untrusted library PR executes on
@@ -49,29 +48,14 @@ C++ headers/runtime and sanitizer packages; the surrounding Ubuntu system is not
 claimed to be hermetic. CMake/Ninja and system dependencies must be available.
 Reports retain compiler/source/dependency identities and the tested Git commit.
 
-## External source/artifact policy
-
-Set repository variable `RTOS_STDCPP_FORBIDDEN_TOKENS_B64` to the base64 encoding
-of a nonempty JSON list of externally selected identifiers. This keeps the
-consumer policy abstract in source and avoids printing the plain identifiers in
-job environment logs. Encoding is transport, not encryption or a credential.
-Missing or malformed policy fails the required source job. The equivalent plain
-JSON environment variable `RTOS_STDCPP_FORBIDDEN_TOKENS` is available for local
-use. Keep actual consumer identifiers outside this library.
-
-`tools/check_delivery.py --path . --inventory --output /absolute/path/to/source-policy.json`
-verifies the full source/license inventory and scans names/content. Before
-publishing artifacts, the same tool scans the output directory, including ZIP,
-tar and nested archive entries. Violations are redacted in the policy report;
-rejected files are not uploaded. Host CTest includes executable negative controls
-for missing policy, modified source, case-insensitive references, filenames,
-compressed/nested archives and unavailable artifacts.
+## Reports and artifacts
 
 Artifacts contain command logs, JUnit/CTest results, structured reports, compile
-commands, final image/provider evidence and failed build output. They are kept
-for seven days and named by profile/configuration/commit. Policy passes are
-required before upload, including on failed test jobs. Setup/source failures
-remain observable in the job console even when no publishable output exists.
+commands, final image/provider evidence and failed build output. They are uploaded
+on successful and failed runs, retained for seven days, and named by
+profile/configuration/commit. Missing result files fail the upload step. Setup
+failures remain observable in the job console even when no result directory exists.
+No repository name-policy variable or source/artifact name scanning is required.
 
 ## Merge and physical-board obligations
 
