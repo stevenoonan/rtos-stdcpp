@@ -1,4 +1,5 @@
 /// Copyright 2018-2023 Piotr Grygorczuk <grygorek@gmail.com>
+/// Copyright 2023 by NXP. All rights reserved.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,40 +19,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef __CALL_ONCE_TEST_H__
-#define __CALL_ONCE_TEST_H__
-
-#include <mutex>
+#pragma once
+#include "test_helpers.h"
 #include <thread>
-#include <cassert>
-
-inline void TestCallOnce()
+#include <stop_token>
+#include <chrono>
+#if defined(__cpp_lib_jthread) && __cpp_lib_jthread >= 201911L
+inline void TestJThread()
 {
-  auto cnt{0};
-  std::once_flag f;
-  std::mutex mtx;
+  using namespace std::chrono_literals;
 
-  auto once{
-      [&] {
-        std::call_once(f, [&cnt, &mtx] {
-          // If call_once works this guard is not needed.
-          // If it does not work, make sure cnt is incremented atomicaly.
-          std::lock_guard<std::mutex> lg{mtx};
-          cnt++;
-        });
-      }};
+  std::jthread t{ [](std::stop_token stop){
+    while( !stop.stop_requested() )
+      std::this_thread::sleep_for(1ms);
+  }};
 
-  std::thread t0{once};
-  std::thread t1{once};
-  std::thread t2{once};
-  std::thread t3{once};
-
-  t0.join();
-  t1.join();
-  t2.join();
-  t3.join();
-
-  assert(cnt == 1);
+  std::this_thread::sleep_for(20ms);
+  t.request_stop();
 }
-
-#endif // __CALL_ONCE_TEST_H__
+#endif

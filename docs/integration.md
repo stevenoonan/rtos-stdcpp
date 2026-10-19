@@ -59,3 +59,9 @@ The reusable [compile example](../examples/compile-check/CMakeLists.txt) needs
 only this checkout, the audited compiler, and externally supplied kernel/port
 headers. Its configuration is a compile-only fixture, not an executable platform.
 Normal configure/build operations verify local hashes and never fetch dependencies.
+
+For optional shared cases, set `RTOS_STDCPP_BUILD_TEST_SUPPORT=ON` before
+`add_subdirectory`, directly link `rtos-stdcpp::test-support`, and supply the
+platform hooks described in [testing](testing.md). Production builds leave it off.
+The object-free production configuration interface remains separate from test
+objects; tests do not enter ordinary firmware through that interface.

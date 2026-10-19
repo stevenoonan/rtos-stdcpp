@@ -237,4 +237,6 @@ extern "C" void _exit(int exit_code)
   constexpr int ADP_Stopped_ApplicationExit = 0x20026u;
   volatile int ret[2] = {ADP_Stopped_ApplicationExit, exit_code};
   sys_semihost(SYS_EXIT_EXTENDED, ret);
+  // If semihosting is absent or returns, the outer test deadline must fail.
+  for (;;) __asm volatile("wfi");
 }

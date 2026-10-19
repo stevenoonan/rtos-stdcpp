@@ -18,58 +18,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#ifndef TEST_HELPERS_H__
-#define TEST_HELPERS_H__
-
-#include <string>
-#include "console.h"
-
-template <typename F>
-void tst_call(const char *name, F fun)
-{
-  using namespace std::string_literals;
-  print(("Running ---- "s + name + " -----\n").c_str());
-  fun();
-  print("Done\n\n");
-}
-
-#define TEST_F(function_) tst_call(#function_, function_)
-
-template <typename T, typename U>
-void tst_equal(const char *func, const char *file, int line, T exp, U rcv)
-{
-  using namespace std::string_literals;
-  if (exp == rcv)
-  {
-    auto pass = "\tPASS - "s + func + ":" + std::to_string(line) + "\n"s;
-    print(pass.c_str());
-  }
-  else
-  {
-    auto fail = "  FAILED - "s + func + "\n\t in file - ";
-    fail += file + ":"s + std::to_string(line) + "\n\t\texpected(" + std::to_string(exp) + ") != received(" + std::to_string(rcv) + ")" + "\n"s;
-    print(fail.c_str());
-  }
-}
-
-#define TEST_EQ(expected_, received_) tst_equal(__func__, __FILE__, __LINE__, expected_, received_)
-
-static inline void tst_assert(const char *func, const char *file, int line, bool cond)
-{
-  using namespace std::string_literals;
-  if (cond)
-  {
-    auto pass = "\tPASS - "s + func + ":" + std::to_string(line) + "\n"s;
-    print(pass.c_str());
-  }
-  else
-  {
-    auto fail = "  FAILED assertion "s + func + "\n\t in file - ";
-    fail += file + ":"s + std::to_string(line) + "\n"s;
-    print(fail.c_str());
-  }
-}
-
-#define TEST_ASSERT(cond_) tst_assert(__func__, __FILE__, __LINE__, cond_)
-
-#endif // TEST_HELPERS_H__
+#pragma once
+#include "runner.h"
+// Each case is registered and delimited by the shared runner.
+#define TEST_F(function_) function_()

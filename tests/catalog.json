@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "time.deadline_rounding",
+      "suite": "arithmetic",
+      "requirements": [
+        "cxx17",
+        "type_only_kernel_stubs"
+      ]
+    },
+    {
+      "id": "time.tick_extension",
+      "suite": "arithmetic",
+      "requirements": [
+        "cxx17",
+        "type_only_kernel_stubs"
+      ]
+    },
+    {
+      "id": "thread.lifecycle",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "mutex.contention",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.notification_timeout",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "thread.exit_notification",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "mutex.recursive_timed",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.any",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "once.concurrent",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "thread.move_stack_workload",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "future.async",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Matching future runtime has not been qualified"
+    },
+    {
+      "id": "mutex.shared",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Shared mutex support has not been qualified"
+    },
+    {
+      "id": "atomic.unsupported",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Atomic wait and unsupported-width fallback require separate qualification"
+    },
+    {
+      "id": "cxx20.synchronization",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "C++20 work is deferred"
+    },
+    {
+      "id": "lifecycle.identity",
+      "suite": "regression",
+      "requirements": [
+        "cxx17",
+        "freertos_gthreads",
+        "idle_cleanup"
+      ]
+    },
+    {
+      "id": "harness.assertions",
+      "suite": "fixture",
+      "requirements": [
+        "cxx17"
+      ]
+    }
+  ]
+}

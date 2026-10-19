@@ -27,7 +27,7 @@
 #include <thread>
 #include <array>
 #include <vector>
-#include <cassert>
+#include "test_helpers.h"
 #include <string>
 
 inline void TestSemaphore()
@@ -42,7 +42,7 @@ inline void TestSemaphore()
 
   sem.acquire();
 
-  assert(5 == test);
+  TEST_ASSERT(5 == test);
 }
 
 inline void TestLatch()
@@ -63,7 +63,7 @@ inline void TestLatch()
   work_done.wait();
 
   for (auto &t : test)
-    assert(t == 1);
+    TEST_ASSERT(t == 1);
 }
 
 inline void TestBarrier()
@@ -75,11 +75,11 @@ inline void TestBarrier()
                     {
                       if (cnt == 0)
                         for (auto &i : test)
-                          assert(i == 1);
+                          TEST_ASSERT(i == 1);
 
                       if (cnt == 1)
                         for (auto &i : test)
-                          assert(i == 2);
+                          TEST_ASSERT(i == 2);
 
                       ++cnt;
                     }};
@@ -99,7 +99,7 @@ inline void TestBarrier()
   for (auto &w : workers)
     w.join();
 
-  assert(cnt == 2);
+  TEST_ASSERT(cnt == 2);
 }
 
 #endif // SEMAPHORE_LATCH_BARRIER_TEST_H__

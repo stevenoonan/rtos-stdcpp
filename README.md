@@ -10,6 +10,8 @@ existing public extension symbols remain unchanged.
 Start with [integration](docs/integration.md), [layout and ownership](docs/architecture.md),
 [the current support boundary](docs/support-matrix.md), and [local checks](docs/testing.md).
 The exact audited GCC runtime sources and their licenses are included in this checkout.
+Shared tests now use stable case IDs, Release-safe checks, explicit skips and
+a strict result/process gate; see [testing](docs/testing.md).
 A standalone host build uses `cmake --preset host-debug`,
 `cmake --build --preset host-debug`, and `ctest --preset host-debug`.
 

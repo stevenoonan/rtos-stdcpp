@@ -1,3 +1,8 @@
+> **Current test handoff:** the old print-only runner is removed. The shared
+> report/exit runner and outer timeout command are documented in
+> [testing](../../docs/testing.md). An actual A9 image and its dependencies
+> still require separate qualification; commands below are historical.
+
 > **Licensing transition (2026-10-19):** inherited standalone sample builds,
 > GCC v10/v11/v13 runtime copies, and unqualified sample workflows have been
 > retired. The maintained library target now supplies its exact audited runtime

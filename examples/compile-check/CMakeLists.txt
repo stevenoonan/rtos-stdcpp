@@ -18,3 +18,7 @@ add_library(public_api_check OBJECT public_api.cpp)
 target_link_libraries(public_api_check PRIVATE rtos-stdcpp::rtos-stdcpp freertos_headers)
 set_target_properties(public_api_check PROPERTIES
     CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+enable_testing()
+add_test(NAME embedded_compile COMMAND "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}"
+    --target public_api_check rtos_stdcpp)
+set_tests_properties(embedded_compile PROPERTIES LABELS compile_link TIMEOUT 90)

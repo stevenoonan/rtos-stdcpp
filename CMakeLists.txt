@@ -24,7 +24,8 @@ cmake_minimum_required(VERSION 3.22)
 project(rtos-stdcpp VERSION 0.1.0 LANGUAGES C CXX)
 
 option(RTOS_STDCPP_BUILD_LIBRARY "Build the embedded adapter" ON)
-option(RTOS_STDCPP_BUILD_HOST_TESTS "Build standalone arithmetic tests" OFF)
+option(RTOS_STDCPP_BUILD_HOST_TESTS "Build standalone host tests and runner controls" OFF)
+option(RTOS_STDCPP_BUILD_TEST_SUPPORT "Build reusable embedded test cases and report support" OFF)
 set(RTOS_STDCPP_PROFILE "" CACHE STRING "Exact qualified compiler/runtime profile")
 set(RTOS_STDCPP_FREERTOS_TARGET "" CACHE STRING "Existing target supplying FreeRTOS configuration/includes")
 
@@ -71,5 +72,7 @@ endif()
 
 if(RTOS_STDCPP_BUILD_HOST_TESTS)
     enable_testing()
-    add_subdirectory(tests/unit)
+endif()
+if(RTOS_STDCPP_BUILD_HOST_TESTS OR RTOS_STDCPP_BUILD_TEST_SUPPORT)
+    add_subdirectory(tests)
 endif()

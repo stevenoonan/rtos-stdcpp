@@ -23,7 +23,7 @@
 
 #include <chrono>
 #include <thread>
-#include <cassert>
+#include "test_helpers.h"
 #include <atomic>
 
 inline void TestAtomicWait()
@@ -39,7 +39,7 @@ inline void TestAtomicWait()
 
   at.wait(6);
 
-  assert(at == 5);
+  TEST_ASSERT(at == 5);
 }
 
 #endif // ATOMIC_WAIT_TEST_H__

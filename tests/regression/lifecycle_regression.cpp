@@ -3,8 +3,8 @@
 #include <thread>
 #include <atomic>
 #include <functional>
-#include "FreeRTOS.h"
-#include "task.h"
+#include "freertos/regression_platform.h"
+using namespace rtos_test::regression_platform;
 
 namespace
 {
@@ -12,18 +12,22 @@ void await(const std::atomic<bool> &flag)
 {
   for (unsigned count = 0; !flag.load(std::memory_order_acquire); ++count)
   {
-    configASSERT(count < 1000);
-    vTaskDelay(1);
+    REGRESSION_CHECK(count < 1000);
+    idle_ticks(1);
   }
 }
 }
 
 uint32_t freertos_cpp11_lifecycle_regression(void)
 {
+#ifdef RTOS_STDCPP_TEST_FREERTOS
+  rtos_test::reset(rtos_test::rtos_stdcpp_regression_report, rtos_test::Suite::regression);
+  rtos_test::begin(rtos_test::rtos_stdcpp_regression_report, rtos_test::Case::lifecycle_identity);
+#endif
   uint32_t passed = 0;
   auto self = __gthread_self();
-  configASSERT(__gthread_equal(self, self) != 0);
-  configASSERT(__gthread_equal(self, __gthread_t{}) == 0);
+  REGRESSION_CHECK(__gthread_equal(self, self) != 0);
+  REGRESSION_CHECK(__gthread_equal(self, __gthread_t{}) == 0);
   passed |= 1;
 
   // A completed owner's identity must stay valid through idle reclamation and
@@ -33,18 +37,18 @@ uint32_t freertos_cpp11_lifecycle_regression(void)
   std::thread finished([&] { done.store(true, std::memory_order_release); });
   auto finished_id = finished.get_id();
   await(done);
-  vTaskDelay(pdMS_TO_TICKS(20));
+  delay_ms(20);
   std::thread survivor([&] {
-    while (!stop.load()) { ++progress; vTaskDelay(1); }
+    while (!stop.load()) { ++progress; idle_ticks(1); }
   });
-  configASSERT(finished_id != survivor.get_id());
+  REGRESSION_CHECK(finished_id != survivor.get_id());
   std::thread moved;
   moved = std::move(finished);
-  configASSERT(!finished.joinable() && moved.get_id() == finished_id);
+  REGRESSION_CHECK(!finished.joinable() && moved.get_id() == finished_id);
   moved.join();
   auto before = progress.load();
-  vTaskDelay(pdMS_TO_TICKS(20));
-  configASSERT(progress.load() > before);
+  delay_ms(20);
+  REGRESSION_CHECK(progress.load() > before);
   stop.store(true);
   survivor.join();
   passed |= 2;
@@ -53,24 +57,24 @@ uint32_t freertos_cpp11_lifecycle_regression(void)
   done.store(false);
   std::thread completed([&] { done.store(true, std::memory_order_release); });
   await(done);
-  vTaskDelay(pdMS_TO_TICKS(20));
+  delay_ms(20);
   std::thread moved_completed(std::move(completed));
   moved_completed.detach();
-  configASSERT(!moved_completed.joinable());
+  REGRESSION_CHECK(!moved_completed.joinable());
   passed |= 4;
 
   // Detach before completion, destroy the owner, then let the worker return.
   done.store(false);
   {
     std::thread detached([&] {
-      vTaskDelay(pdMS_TO_TICKS(10));
+      delay_ms(10);
       done.store(true, std::memory_order_release);
     });
     detached.detach();
-    configASSERT(!detached.joinable());
+    REGRESSION_CHECK(!detached.joinable());
   }
   await(done);
-  vTaskDelay(pdMS_TO_TICKS(20));
+  delay_ms(20);
   passed |= 8;
 
   // The creator can inspect/copy/move an ID before the worker runs. The worker
@@ -80,16 +84,20 @@ uint32_t freertos_cpp11_lifecycle_regression(void)
   std::thread identity([&] {
     worker_id = std::this_thread::get_id();
     worker_hash = std::hash<std::thread::id>{}(worker_id);
-    configASSERT(__gthread_equal(__gthread_self(), __gthread_self()) != 0);
+    REGRESSION_CHECK(__gthread_equal(__gthread_self(), __gthread_self()) != 0);
   });
   auto copied = identity.get_id();
   std::thread relocated(std::move(identity));
   auto expected_hash = std::hash<std::thread::id>{}(copied);
   relocated.join();
-  configASSERT(copied == worker_id && expected_hash == worker_hash);
-  configASSERT(!identity.joinable());
+  REGRESSION_CHECK(copied == worker_id && expected_hash == worker_hash);
+  REGRESSION_CHECK(!identity.joinable());
   passed |= 16;
 
-  vTaskDelay(pdMS_TO_TICKS(20));
+  delay_ms(20);
+#ifdef RTOS_STDCPP_TEST_FREERTOS
+  rtos_test::end(rtos_test::rtos_stdcpp_regression_report, rtos_test::Case::lifecycle_identity);
+  if (!rtos_test::finish(rtos_test::rtos_stdcpp_regression_report)) rtos_test::require_failed(__FILE__, __LINE__);
+#endif
   return passed;
 }

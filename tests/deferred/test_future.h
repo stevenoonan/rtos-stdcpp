@@ -24,7 +24,7 @@
 #include <future>
 #include <thread>
 #include <chrono>
-#include <cassert>
+#include "test_helpers.h"
 #include <cstdint>
 
 inline void TestAsync()
@@ -45,7 +45,7 @@ inline void TestAsync()
       })};
 
   std::int32_t r{result0.get() + result1.get() + result2.get()};
-  assert(2 + 3 + 5 == r);
+  TEST_ASSERT(2 + 3 + 5 == r);
 }
 
 inline void TestSharedFuture()
@@ -69,7 +69,7 @@ inline void TestSharedFuture()
   go.set_value();
 
   std::int32_t r{result1.get() + result2.get()};
-  assert(5 + 10 == r);
+  TEST_ASSERT(5 + 10 == r);
 }
 
 inline void TestSetValueAtExit()
@@ -96,7 +96,7 @@ inline void TestSetValueAtExit()
       }}
       .detach();
 
-  assert(6 == f0.fut.get() && 7 == f1.fut.get());
+  TEST_ASSERT(6 == f0.fut.get() && 7 == f1.fut.get());
 }
 
 inline void TestPackagedTask()
@@ -108,7 +108,7 @@ inline void TestPackagedTask()
 
   task(2, 9);
 
-  assert(11 == result.get());
+  TEST_ASSERT(11 == result.get());
 }
 
 inline void TestFuture()

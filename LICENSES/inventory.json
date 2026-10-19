@@ -42,8 +42,8 @@
     },
     {
       "path": "CMakeLists.txt",
-      "sha256": "b8e9fdf522a5db8df25a7a607d4927d87b66c6e389eec6376f8857da9c9a4fb3",
-      "bytes": 4176,
+      "sha256": "f759942c50924ca6dcabdf250aa8c567c9bc3629886f8a64c8e4c53717fbebed",
+      "bytes": 4359,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -57,7 +57,8 @@
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
         "Consumer-independent wording; no implementation or original license text changed",
         "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
-        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
       ],
       "modified_since_original_upstream": false
     },
@@ -144,8 +145,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "2f10a90002bc8c42dd62949a22d60ade320657a0d45a9eb311030fb5c4b125af",
-      "bytes": 48544,
+      "sha256": "0796871e4316fe9bef903506bfc88c6d1576a83406bd673c47e311b7d640d513",
+      "bytes": 48684,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -159,7 +160,8 @@
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
         "Consumer-independent wording; no implementation or original license text changed",
         "Step 3: maintained repository/project/branch naming; original provenance and public API retained",
-        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
       ],
       "modified_since_original_upstream": true
     },
@@ -234,9 +236,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "19b19f6e95d7425897cf461f68923cbf933698e577b8c63a39593ceb466cc0c7",
-      "bytes": 2454
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "731a6ae62cd0b6a31db4e3d2cade6ba7ed410977a6d3db7e3c3a903ac6c50ead",
+      "bytes": 2977
     },
     {
       "path": "docs/integration.md",
@@ -245,9 +249,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "c6cd9a713b3fb00ac843741e719bc4c42eda1f34460e72386dbb93012e6dbbbf",
-      "bytes": 3880
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "22209188252379285ed85aee71ddeeb864cfa703f3f4b5011cdf2865012a21d5",
+      "bytes": 4264
     },
     {
       "path": "docs/support-matrix.md",
@@ -256,9 +262,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "afad738e425dd2be31c5c3595690e8082c1d9bb7ac7663cca37c3116bae664f7",
-      "bytes": 1481
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "03fc264803041550105b7a9474325dd71a67eb6262e5b452ba018c458532129d",
+      "bytes": 1933
     },
     {
       "path": "docs/testing.md",
@@ -268,10 +276,11 @@
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
       "local_modifications": [
-        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
       ],
-      "sha256": "21383f89f825860ca5c59f586f31900bc9c3d5ee32d57033c4ae3c867f460d97",
-      "bytes": 2014
+      "sha256": "576f0f21b509ddb1b9e05814bacda64f69caaaedb71a7fa645a15e46efc8890e",
+      "bytes": 6564
     },
     {
       "path": "examples/compile-check/CMakeLists.txt",
@@ -280,9 +289,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "e5e24fd132690e0af55db439fd692b01a97ac0f8a18374ea40cfff690c712833",
-      "bytes": 1170
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "c2a3f09c9c62ff615d0af7abbe08763829f0052ba0cd0afca19797f8c90ac275",
+      "bytes": 1399
     },
     {
       "path": "examples/compile-check/FreeRTOSConfig.h",
@@ -388,8 +399,8 @@
     },
     {
       "path": "platforms/qemu-vexpress-a9/README.md",
-      "sha256": "46fac6bbf11572bcd3b4b8d6be9070d31c985fef46558e60cd5320a2288743f4",
-      "bytes": 1919,
+      "sha256": "f747b4c871ef954fe13e5a084e47bada4f33185b7e57e3b4e61f5bf66f4f4708",
+      "bytes": 2209,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -402,7 +413,8 @@
       "local_modifications": [
         "Step 2: license scope/index or explicit sample-build retirement notice; implementation unchanged",
         "Consumer-independent wording; no implementation or original license text changed",
-        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change"
+        "Step 4: build interface, source ownership or current-layout documentation; no backend behavior change",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
       ],
       "modified_since_original_upstream": false
     },
@@ -616,8 +628,8 @@
     },
     {
       "path": "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
-      "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9",
-      "bytes": 8998,
+      "sha256": "62069b08ee4968f850542aac5bc9af5c15659eafd6502bcad3b7d204b61dbbbf",
+      "bytes": 9109,
       "license_expression": "Apache-2.0",
       "license_evidence": "Explicit file header",
       "source": {
@@ -627,7 +639,9 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/startup_ARMCA9.cpp",
         "sha256": "4bb78d788941106a2a487a764b68304b850f87d4b6cd78280d064e9e461751a9"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": false
     },
     {
@@ -661,6 +675,17 @@
       },
       "local_modifications": [],
       "modified_since_original_upstream": false
+    },
+    {
+      "path": "platforms/qemu-vexpress-a9/test_platform.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "e4f1ca428b0a817e0f6c016ce74d415838c2876e16f0213835f4a69326e8fe9c",
+      "bytes": 886
     },
     {
       "path": "platforms/riscv-virt/FreeRTOSConfig.h",
@@ -978,9 +1003,89 @@
       "bytes": 415
     },
     {
-      "path": "tests/conformance/legacy/test_atomic.h",
-      "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd",
-      "bytes": 1629,
+      "path": "tests/CMakeLists.txt",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "9ab25a5d2a1d166f5117cda6c48c7ce52bba021523e3e36ea9c073ceff64fb0f",
+      "bytes": 3299
+    },
+    {
+      "path": "tests/catalog.json",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "ab17c448fd1c0ccf76cc44e2415a11d508674b1b2de477ea976faf9aef06fd06",
+      "bytes": 2850
+    },
+    {
+      "path": "tests/conformance/inherited.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "Inherited MIT thread/mutex/CV/once behaviors replaced by Release-safe portable cases",
+        "inputs": [
+          {
+            "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+            "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+            "path": "test/test_thread.h",
+            "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_thread.h",
+            "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46"
+          },
+          {
+            "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+            "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+            "path": "test/test_mutex.h",
+            "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_mutex.h",
+            "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c"
+          },
+          {
+            "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+            "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+            "path": "test/test_cv.h",
+            "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_cv.h",
+            "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da"
+          },
+          {
+            "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+            "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+            "path": "test/test_once.h",
+            "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_once.h",
+            "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e"
+          }
+        ]
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "f960ba3515753614366a5649761e4a40eee3a6a37526d7dd313bd238b316b1a7",
+      "bytes": 4230
+    },
+    {
+      "path": "tests/conformance/standard.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "Reusable C++17 cases transferred from the integrating application; platform policy remains external"
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "bea7f74e460f2bc9d45df61b0b3b3b4fd9e0bff34ef383c7768372508286bfc0",
+      "bytes": 5994
+    },
+    {
+      "path": "tests/deferred/test_atomic.h",
+      "sha256": "4f7e6738e9260771fb738def83e87a4bc83636d0b033a7b02dc28d65011ebd3d",
+      "bytes": 1641,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -990,29 +1095,16 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_atomic.h",
         "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: deferred case retained separately; replace disabled standard assert with shared Release-safe checks",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": false
     },
     {
-      "path": "tests/conformance/legacy/test_cv.h",
-      "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da",
-      "bytes": 4454,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_cv.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_cv.h",
-        "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_future.h",
-      "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3",
-      "bytes": 3106,
+      "path": "tests/deferred/test_future.h",
+      "sha256": "5e11c6f28a8d466487e31bb182419fcab85f7441fc845a7d96ba8900e8671b09",
+      "bytes": 3133,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -1022,61 +1114,16 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_future.h",
         "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: deferred case retained separately; replace disabled standard assert with shared Release-safe checks",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": false
     },
     {
-      "path": "tests/conformance/legacy/test_mutex.h",
-      "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c",
-      "bytes": 2269,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_mutex.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_mutex.h",
-        "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_once.h",
-      "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e",
-      "bytes": 1842,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_once.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_once.h",
-        "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
-      "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e",
-      "bytes": 2742,
-      "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
-      "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "test/test_semaphore_latch_barrier.h",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_semaphore_latch_barrier.h",
-        "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e"
-      },
-      "local_modifications": [],
-      "modified_since_original_upstream": false
-    },
-    {
-      "path": "tests/conformance/legacy/test_thread.h",
-      "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46",
-      "bytes": 3987,
+      "path": "tests/deferred/test_jthread.h",
+      "sha256": "5947a3b81113caaa35328adeb8289960bd249b4eb58677ae02897d50ea0641a8",
+      "bytes": 1626,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -1086,13 +1133,57 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_thread.h",
         "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: extract only the deferred C++20 case, preserving original author notices",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": false
     },
     {
+      "path": "tests/deferred/test_semaphore_latch_barrier.h",
+      "sha256": "98e5936fca483381fea09e99fb5bea4825e1957052da82416870a913a316b350",
+      "bytes": 2774,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_semaphore_latch_barrier.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_semaphore_latch_barrier.h",
+        "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e"
+      },
+      "local_modifications": [
+        "Step 5: deferred case retained separately; replace disabled standard assert with shared Release-safe checks",
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "modified_since_original_upstream": false
+    },
+    {
+      "path": "tests/host/main.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "2bbf96eb6912c3fa0768abe90e0a6db063ac4f65595afef42b502f3e0035869b",
+      "bytes": 306
+    },
+    {
+      "path": "tests/host/platform.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "854e291e07e11195666c717b4ef36ac476c148a5052435696dfabcd88b046a87",
+      "bytes": 605
+    },
+    {
       "path": "tests/regression/lifecycle_regression.cpp",
-      "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753",
-      "bytes": 2939,
+      "sha256": "1b18c6ac2ac3d77722fc105f0a0a25013d25f46cecf86f5c7c040b48e34c1f28",
+      "bytes": 3414,
       "license_expression": "MIT",
       "license_evidence": "Original repository MIT notice; no different file notice or identified vendor origin in retained file",
       "source": {
@@ -1102,7 +1193,9 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/tests/lifecycle_regression.cpp",
         "sha256": "3ce06b392bfe711e5c03a52a750586ab1bc05e7b67221ea1140d4a52f4b28753"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": true
     },
     {
@@ -1120,6 +1213,43 @@
       },
       "local_modifications": [],
       "modified_since_original_upstream": true
+    },
+    {
+      "path": "tests/support/check_runner.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "631fd50cb81448cf4b8a4d9f9fd82681b0c9258fad374ad9896e75f8e3d72663",
+      "bytes": 4560
+    },
+    {
+      "path": "tests/support/embedded_main.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "89bfa75b5ce08fb5ce2aa74b0fefa5c32596c0284a2c8f9301a722b24755a538",
+      "bytes": 504
+    },
+    {
+      "path": "tests/support/fixture.cpp",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "a58775c40aa205ae349beaae3aae60ac8debad3daf0f7fdbfdbf55332312e923",
+      "bytes": 1613
     },
     {
       "path": "tests/support/freertos/FreeRTOS_hooks.cpp",
@@ -1173,6 +1303,17 @@
       "modified_since_original_upstream": false
     },
     {
+      "path": "tests/support/freertos/regression_platform.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "7cf6eb3eabd4f3c953ebe48e37d7f2e949291bb53ba6f350691980c695fdffaa",
+      "bytes": 451
+    },
+    {
       "path": "tests/support/freertos/syscalls.cpp",
       "sha256": "e1e6f59a337d2af5b0b201f6528dcfcf829baa398a60c1e742e8f31d1bc6ff2f",
       "bytes": 2007,
@@ -1192,41 +1333,55 @@
       "modified_since_original_upstream": false
     },
     {
-      "path": "tests/support/legacy_ca9_runner.cpp",
-      "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4",
-      "bytes": 2872,
+      "path": "tests/support/platform.h",
       "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
       "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_CA9/main.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/main.cpp",
-        "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4"
+        "origin": "rtos-stdcpp Step 5 project contribution"
       },
       "local_modifications": [],
-      "modified_since_original_upstream": false
+      "sha256": "f562ef197d8a33bf7258ae2d1462345ec40c52ac13d42a41339984563f32e622",
+      "bytes": 865
     },
     {
-      "path": "tests/support/legacy_riscv_runner.cpp",
-      "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6",
-      "bytes": 2778,
+      "path": "tests/support/runner.cpp",
       "license_expression": "MIT",
-      "license_evidence": "Explicit file header",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
       "source": {
-        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
-        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-        "path": "lib_test_RISC-V/main.cpp",
-        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/main.cpp",
-        "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6"
+        "origin": "rtos-stdcpp Step 5 project contribution"
       },
       "local_modifications": [],
-      "modified_since_original_upstream": false
+      "sha256": "5bf0dc75019d123c3ec86aa0fb7d7247a24d2653c779452f59a920f67f0f68eb",
+      "bytes": 3460
+    },
+    {
+      "path": "tests/support/runner.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "3204a41370fbc63dd7f61e9c365281ec94c29f9304fce20293cf2fd15ad452cd",
+      "bytes": 1267
+    },
+    {
+      "path": "tests/support/suite.h",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "9d6d8504a53a3fa96633c9de82511048a9cec6abd9d80ed8171488f755ebe604",
+      "bytes": 520
     },
     {
       "path": "tests/support/test_helpers.h",
-      "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436",
-      "bytes": 2640,
+      "sha256": "4385e737fc261f713c1c08aa2515e695577372da740b60806c7f2dcbc74e3c69",
+      "bytes": 1290,
       "license_expression": "MIT",
       "license_evidence": "Explicit file header",
       "source": {
@@ -1236,7 +1391,9 @@
         "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_helpers.h",
         "sha256": "ac509026bf353f2c087d54b801a040067d6dbb37529765ad6afd7e335f586436"
       },
-      "local_modifications": [],
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
       "modified_since_original_upstream": false
     },
     {
@@ -1246,9 +1403,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "9c295ac95d3537973109cd9d2005e085c0c1f6f6f204e1f3f3a6e9e11105643b",
-      "bytes": 859
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "f722ae2d43eae7379fa9bb8222204c20153ebe5fe15c65c702565831dd2c0331",
+      "bytes": 1113
     },
     {
       "path": "tests/unit/stubs/FreeRTOS.h",
@@ -1279,9 +1438,11 @@
       "source": {
         "origin": "rtos-stdcpp Step 4 project contribution"
       },
-      "local_modifications": [],
-      "sha256": "3a9aa5bfea8ab63517823e373bdd1038d6909aa3735eeae81c7f98bc25566b32",
-      "bytes": 1550
+      "local_modifications": [
+        "Step 5: shared Release-safe cases, reliable reports, test transports or current testing documentation; production backend behavior unchanged"
+      ],
+      "sha256": "7b4eb2abaf16e5b539b374b7721b093a9877d51143ad68dfe3fbfcec389c9cec",
+      "bytes": 2209
     },
     {
       "path": "third_party/freertos-kernel/LICENSE",
@@ -2143,6 +2304,39 @@
       "local_modifications": [],
       "sha256": "3e08b42dc693a17c70b4b8d841304d7972ce080dcedcf6647082db33ca9a07a6",
       "bytes": 2363
+    },
+    {
+      "path": "tools/generate_test_catalog.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "352962712d2e77c9a1fb41d5cfe1e808d65ffe3a7d26e95949d2309090e2ee5f",
+      "bytes": 1280
+    },
+    {
+      "path": "tools/run_tests.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "8068297e96b668cb3022949ed1faf9e763671f0a0d6497223f26ea1407adee77",
+      "bytes": 2192
+    },
+    {
+      "path": "tools/test_protocol.py",
+      "license_expression": "MIT",
+      "license_evidence": "Project-authored Step 5 test/build/transport code and metadata; root MIT license; inherited notices preserved where applicable",
+      "source": {
+        "origin": "rtos-stdcpp Step 5 project contribution"
+      },
+      "local_modifications": [],
+      "sha256": "d83a9c3169da4cb4c1a0bc3c5c46cd77c3ca47d00d92f8d0ff1fcfeecbee0aae",
+      "bytes": 3835
     }
   ],
   "retired_files": [
@@ -3104,6 +3298,159 @@
       "local_modifications": [],
       "modified_since_original_upstream": false,
       "reason": "Step 4: replaced obsolete build entry point or split support source"
+    },
+    {
+      "path": "tests/conformance/legacy/test_atomic.h",
+      "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd",
+      "bytes": 1629,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_atomic.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_atomic.h",
+        "sha256": "d01e3ceb1fd48594c81a21d0cf8a19c21cc8df5e806af4c00d12a55c9bd804bd"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_cv.h",
+      "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da",
+      "bytes": 4454,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_cv.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_cv.h",
+        "sha256": "2a2b1d5a6c976ba4b8b7019acfff2a24fe7eb5be3a0636bdd8404d9c9cb1f5da"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_future.h",
+      "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3",
+      "bytes": 3106,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_future.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_future.h",
+        "sha256": "c27a4fe60fc121a60404796790a55fd33392686aae9b14f30d55cece5167a5a3"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_mutex.h",
+      "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c",
+      "bytes": 2269,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_mutex.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_mutex.h",
+        "sha256": "786f935ddbd28be554d3565074e4646d3451ee8829dead7474d79e8f14bc190c"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_once.h",
+      "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e",
+      "bytes": 1842,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_once.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_once.h",
+        "sha256": "57d63b479ea0effc0b7a47e7d16fdf1fbe24db9259972ea74619146e6e77db0e"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_semaphore_latch_barrier.h",
+      "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e",
+      "bytes": 2742,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_semaphore_latch_barrier.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_semaphore_latch_barrier.h",
+        "sha256": "ddd2720701d7ce1f9d56e6dce6869afcf7615d0473a66d62c9786021d1cebd9e"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/conformance/legacy/test_thread.h",
+      "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46",
+      "bytes": 3987,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "test/test_thread.h",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/test/test_thread.h",
+        "sha256": "11722a8791361544bd7ba95cce7aaa8c991cf24a8416be03becb64e3f57fce46"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/support/legacy_ca9_runner.cpp",
+      "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4",
+      "bytes": 2872,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_CA9/main.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_CA9/main.cpp",
+        "sha256": "026e2f5dd5263bea82ef0231973e627b03685918a72886269b36ac1dcce7ceb4"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
+    },
+    {
+      "path": "tests/support/legacy_riscv_runner.cpp",
+      "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6",
+      "bytes": 2778,
+      "license_expression": "MIT",
+      "license_evidence": "Explicit file header",
+      "source": {
+        "repository": "https://github.com/stevenoonan/FreeRTOS_cpp11",
+        "commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+        "path": "lib_test_RISC-V/main.cpp",
+        "url": "https://raw.githubusercontent.com/stevenoonan/FreeRTOS_cpp11/0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba/lib_test_RISC-V/main.cpp",
+        "sha256": "c1d9955e4b624799fb191a807609fb405ee0f4e5767225a8a42faee76520d1b6"
+      },
+      "local_modifications": [],
+      "modified_since_original_upstream": false,
+      "reason": "Step 5: superseded by shared behavior cases/runner or moved outside the supported suite"
     }
   ],
   "libatomic_audit": {
