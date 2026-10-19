@@ -1,9 +1,7 @@
 # C++17 continuous integration
 
-**Rollout status (2026-10-19):** implementation and local validation are ready.
-The owner requested keeping these changes local. No hosted run or remote configuration is claimed. Hosted execution is required before Step 7 can be
-marked fully complete; server-side merge enforcement is separately pending by
-the owner's explicit choice.
+Server-side merge enforcement remains pending by the owner's explicit choice.
+The workflow provides a stable aggregate check for future branch rules.
 
 The library's `C++17 qualification` workflow uses only GitHub-hosted Ubuntu 24.04
 x86_64 runners. Pushes, pull requests and manual dispatch execute
@@ -20,21 +18,25 @@ There is no pull_request_target workflow or required job path filter.
 
 ## Explicit setup and local reproduction
 
-`tools/setup_ci.py` prepares checksum-pinned Ubuntu GCC/Clang/sanitizer packages
-or the exact ST GCC bundle and QEMU packages. It extracts into a selected directory
-without sudo and retains the compiler bundle's license notices. The official ST
-bundle is checked against the existing embedded byte lock after extraction.
-IDE descriptor bundles are unnecessary for command-line compiler execution.
-Package download URLs/hashes are recorded in `cmake/profiles`; no moving release
-or branch tip is fetched by a build. CI caches only downloaded package bytes and
-verifies them again on every setup. A bad/stale cache fails verification.
+Host CI installs supported GCC 13, Clang 18 and UBSan packages from Ubuntu
+24.04 repositories. Distro patch updates are allowed; executable and system
+library hashes are not locked. Clang selects GCC 13's C++ headers/runtime.
+Reports record compiler versions and the Git commit/working-tree state.
 
-Run the same commands locally, with all tools/results outside the source tree:
+For A9, `tools/setup_ci.py` extracts the exact checksum-verified ST GCC bundle and
+QEMU packages outside the source tree. It preserves bundle permissions, symlinks
+and license texts, then validates the ABI-sensitive embedded profile. CI caches
+only downloaded archives/packages and verifies them again during setup. The ST
+IDE descriptor bundle is unnecessary. System runtime dependencies use maintained
+Ubuntu packages rather than individual shared-library byte locks.
+
+On Ubuntu 24.04, install prerequisites explicitly, then use the same runner as CI:
 
 ```sh
-python3 tools/setup_ci.py --kind host --destination /absolute/path/to/host-tools
+sudo apt-get update
+sudo apt-get install -y gcc-13 g++-13 clang-18 libclang-rt-18-dev cmake ninja-build qemu-system-arm
 python3 tools/run_matrix.py --environment host --host-compiler both \
-  --host-root /absolute/path/to/host-tools/host --output /absolute/path/to/host-results
+  --output /absolute/path/to/host-results
 python3 tools/setup_ci.py --kind a9 --destination /absolute/path/to/a9-tools
 python3 tools/run_matrix.py --environment a9 \
   --toolchain-root /absolute/path/to/a9-tools/toolchain \
@@ -42,11 +44,10 @@ python3 tools/run_matrix.py --environment a9 \
 ```
 
 `--config Debug` or `--config Release` selects one configuration; host compiler
-selection accepts gcc, clang or both. Omitting selectors retains the full Step 6
-matrix interface. Prepared runs use no network. The host prefix fixes compiler,
-C++ headers/runtime and sanitizer packages; the surrounding Ubuntu system is not
-claimed to be hermetic. CMake/Ninja and system dependencies must be available.
-Reports retain compiler/source/dependency identities and the tested Git commit.
+selection accepts gcc, clang or both. Omitting environment selectors retains the
+full host/A9 interface (`--clang` also includes Clang). Tool/result directories
+must stay outside the source tree. After explicit dependency preparation, matrix
+execution uses no network. The Ubuntu environment is not a hermetic OS image.
 
 ## Reports and artifacts
 
@@ -55,7 +56,6 @@ commands, final image/provider evidence and failed build output. They are upload
 on successful and failed runs, retained for seven days, and named by
 profile/configuration/commit. Missing result files fail the upload step. Setup
 failures remain observable in the job console even when no result directory exists.
-No repository name-policy variable or source/artifact name scanning is required.
 
 ## Merge and physical-board obligations
 

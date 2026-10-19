@@ -15,15 +15,14 @@ Preserve individual copyright and permission notices when distributing sources.
 |---|---|---|
 | Adapter, attributes, clocks, test/helper code and build scripts | `include/`, `src/`, `tests/`, build files and project-authored platform files | MIT. Piotr Grygorczuk's per-file notices include 2018–2025; retain their exact years/text. The original root notice is preserved in [LICENSES/FreeRTOS_cpp11-original.txt](LICENSES/FreeRTOS_cpp11-original.txt). |
 | Bundled FreeRTOS 10.4.3 | `third_party/freertos-kernel/` | MIT, Copyright (C) 2020 Amazon.com, Inc. or its affiliates. Keep [kernel LICENSE](third_party/freertos-kernel/LICENSE) and source notices. This is historical standalone-test material; integrating applications supply their own qualified kernel/port. |
-| Arm CMSIS and Cortex-A9 startup/system support | `platforms/qemu-vexpress-a9/cmsis/` and its Arm startup/system/memory support files | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). These retained source files are not currently qualified standalone builds. |
+| Arm CMSIS and Cortex-A9 startup/system support | `platforms/qemu-vexpress-a9/cmsis/` and its Arm startup/system/memory support files | Apache-2.0. Arm Limited copyright years vary from 2009–2019; preserve each file's notice. Full text: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt). The A9 profile is qualified; see docs/support-matrix.md. |
 
-[LICENSES/inventory.json](LICENSES/inventory.json) identifies retained files,
-hashes, license expressions, source revisions/URLs, and local changes. Files
-without their own header use the original repository MIT notice where no
-third-party origin/notice overrides it; this does not extend to the removed NXP
-or Luminary inputs. New Step 2 documentation and audit metadata are MIT-licensed,
-Copyright (c) 2026 rtos-stdcpp contributors. Full license-document copies retain
-the copying terms printed in those documents.
+[LICENSES/inventory.json](LICENSES/inventory.json) indexes component licenses,
+source revisions and authoritative dependency manifests. Git tracks changes to
+project-owned files; ordinary edits do not require updating file hashes. The
+complete Step 2 file audit and Step 4 move map remain recoverable at the historical
+commit recorded in that index. Per-file third-party notices take precedence over
+the project MIT default. Full license-document copies retain their printed terms.
 
 No separate upstream NOTICE file was found in the inherited Arm source subset.
 This index preserves the notices actually supplied; it does not assert a
@@ -52,8 +51,7 @@ a file sits beside COPYING.RUNTIME. See the
 
 The library owns reusable adapter changes. Each integrating application owns its selected
 kernel/port, board configuration, newlib locks, ARM guards, arenas, failure policy,
-and build/flash/debug checks until a separately reviewed extraction. There is no
-qualified standalone kernel/toolchain profile yet. Future profiles require exact
+and build/flash/debug checks until a separately reviewed extraction. The qualified standalone A9 profile is documented in docs/support-matrix.md. Future profiles require exact
 versions, source/license manifests, and executed qualification; there is no
 fallback assigning arbitrary GCC versions to a nearby snapshot.
 
@@ -66,12 +64,11 @@ notes must be replaced by the standalone delivery contract before release.
 
 The Step 2 audit retired `libstdc++_gcc/v10`, `v11`, and `v13`, their four sample
 build scripts, and the inherited compiler workflows. The reusable root build selects only the exact audited runtime profile. The unsupported
-K64F and LM3S811 samples were also removed. Retained A9/RISC-V platform source material
-can inform later maintained platforms, but has no active standalone build.
+K64F and LM3S811 samples were also removed. A9 is now qualified; retained RISC-V material remains unsupported.
 
 All removed files remain recoverable at commit
 `0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba`. Their immutable URLs, original byte
-hashes, and removal reasons are in inventory.json; removal does not change the
+hashes, and removal reasons are in the historical inventory revision; removal does not change the
 terms of historical copies.
 
 The two retired libatomic.c files had the following verified chain:

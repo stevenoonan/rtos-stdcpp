@@ -103,7 +103,7 @@ native-health checks and timeout. Board transports belong to their integrations.
 ## Qualified host and A9 matrix
 
 Use Python 3, CMake >=3.22, Ninja, the exact compiler distribution in the embedded
-profile, and the Linux host compilers/runtime in the host lock. Clang is optional
+profile, and GCC 13 / Clang 18 with the Ubuntu 24.04 host runtime. Clang is optional
 unless --clang is selected; embedded Clang is unsupported. Setup QEMU explicitly
 on Ubuntu 24.04 compatible x86_64 Linux (curl/network access is unnecessary during
 ordinary matrix runs):
@@ -118,11 +118,11 @@ python3 tools/run_matrix.py \
 
 Setup downloads SHA256-pinned Ubuntu packages and extracts them without sudo.
 The wrapper uses the extracted libraries; remaining system shared dependencies
-must be available. The matrix records their actual hashes and verifies the QEMU
-binary/version. Prepared packages can be cached and setup repeated offline.
+must be available. The matrix verifies the QEMU binary/version and records the Git revision
+and host compiler versions. Prepared packages can be cached and setup repeated offline.
 Downloads, builds and reports must stay outside the audited library source tree.
-Changing a package/compiler identity requires a reviewed lock update and new
-execution evidence; never update hashes merely to bypass verification.
+Changing the embedded compiler or selected QEMU identity requires a reviewed
+profile update and new execution evidence. Host distro patch updates are allowed.
 
 With --clang, this runs four host compiler/configuration combinations (five CTest
 entries each) and four A9 combinations (Debug/Release, normal/wrap; eight CTest
@@ -162,5 +162,5 @@ See the [A9 platform contract](../platforms/qemu-vexpress-a9/README.md) and
 [support matrix](support-matrix.md). RISC-V has historical sources and no active
 runner. A compile-only fixture or successful host run does not qualify a scheduler.
 
-The [CI contract](ci.md) documents hosted jobs, pinned userspace setup, merge
+The [CI contract](ci.md) documents hosted jobs, explicit dependency setup, merge
 enforcement and physical-board obligations.
