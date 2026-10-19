@@ -45,7 +45,8 @@ The shared C++17 suite requires **11 passes and 4 approved skips**. The skip
 reasons are authoritative in [the catalog](../tests/catalog.json). The FreeRTOS
 lifecycle suite requires one named regression pass; each arithmetic run requires
 two passes. These suite counts are distinct from the number of CTest entries.
-The A9 platform suite requires four passes, including 64 shared stress rounds
+The A9 platform suite requires four passes, including a tick-interrupt masking
+probe across three hardware timer periods, 64 shared stress rounds
 and 64 allocation/thread recovery cycles after warm-up, exact resource recovery,
 at least 128 free stack words and a real kernel-overflow observation in the wrap
 variant. Emulator timing is not a physical-board latency guarantee.

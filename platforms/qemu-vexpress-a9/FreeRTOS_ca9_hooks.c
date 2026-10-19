@@ -46,6 +46,12 @@ void vSetupTickInterrupt(void)
 {
   void FreeRTOS_Tick_Handler(void);
   IRQ_SetHandler(GlobalTimer_IRQn, FreeRTOS_Tick_Handler);
+  // The tick handler must be masked by FreeRTOS critical sections. CMSIS
+  // initializes PPIs above the API threshold; leaving that default permits
+  // timer preemption while ready lists/priority bitmaps are being modified.
+  const uint32_t priority = portLOWEST_USABLE_INTERRUPT_PRIORITY << portPRIORITY_SHIFT;
+  IRQ_SetPriority(GlobalTimer_IRQn, priority);
+  configASSERT(IRQ_GetPriority(GlobalTimer_IRQn) == priority);
   IRQ_Enable(GlobalTimer_IRQn);
 
   // Selected QEMU A9 global-timer model: 10 ns counter period (100 MHz).

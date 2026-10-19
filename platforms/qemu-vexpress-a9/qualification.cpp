@@ -2,6 +2,7 @@
 #include "suite.h"
 #include "platform.h"
 #include "console.h"
+#include "ca9_global_timer.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "freertos_time.h"
@@ -27,6 +28,14 @@ int main() {
     using namespace rtos_test;
     TimeOut_t initial; vTaskSetTimeOutState(&initial);
     auto initial_steady = std::chrono::steady_clock::now();
+    // Measure with the independent hardware counter: the RTOS tick must not
+    // advance inside a critical section even across several timer periods.
+    taskENTER_CRITICAL();
+    auto masked_tick = xTaskGetTickCount();
+    auto timer_start = GlobTimer_Counter();
+    while (GlobTimer_Counter() - timer_start < 3 * (100000000ULL / configTICK_RATE_HZ)) {}
+    const bool tick_stayed_masked = xTaskGetTickCount() == masked_tick;
+    taskEXIT_CRITICAL();
     Report warm; reset(warm, Suite::cxx17); Metrics metrics;
     for (unsigned i = 0; i < 4; ++i) run_shared_round(warm, metrics);
     run_inherited_cases(warm);
@@ -44,6 +53,7 @@ int main() {
     // Warm-up is validated independently as part of the resource gate.
     Report report; reset(report, Suite::a9);
     begin(report, Case::runtime_startup);
+    TEST_REQUIRE(tick_stayed_masked);
     TEST_REQUIRE(pass && startup.value == 42 && startup.allocation);
     TEST_REQUIRE(startup_value() == 42 && xTaskGetSchedulerState() == taskSCHEDULER_RUNNING);
     end(report, Case::runtime_startup);

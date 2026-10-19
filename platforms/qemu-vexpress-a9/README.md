@@ -32,7 +32,14 @@ and [board map](https://github.com/qemu/qemu/blob/v8.2.2/hw/arm/vexpress.c)
 are the platform references. The
 [global timer model](https://github.com/qemu/qemu/blob/v8.2.2/hw/timer/a9gtimer.c)
 uses a 10 ns counter period with prescaler zero, so the platform programs 100 MHz
-and a 1000 Hz RTOS tick. All tasks preserve a full FPU context. The pinned port
+and a 1000 Hz RTOS tick. The tick PPI is explicitly assigned the port's lowest
+usable priority (logical 30, GIC byte 0xf0), below the API-call threshold
+(logical 18, 0x90). The CMSIS default priority is too urgent and can preempt
+kernel critical sections, corrupting scheduler ready-list state. The startup
+qualification uses the independent global timer to prove the RTOS tick stays
+unchanged across three timer periods inside a critical section. This check also
+fails with the inherited default priority; it does not rely on a lucky scheduler
+stress run. All tasks preserve a full FPU context. The pinned port
 omits the memset declaration in that configuration; its C translation unit
 force-includes string.h, preserving the dependency source bytes.
 
