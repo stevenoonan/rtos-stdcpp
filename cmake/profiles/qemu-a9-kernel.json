@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version_label": "10.4.3",
-  "source": "Inherited pinned snapshot from FreeRTOS_cpp11 import commit 0dc4317; exact upstream kernel commit is not established",
+  "source": "FreeRTOS 10.4.3 source snapshot; exact upstream kernel commit is not established",
   "files": [
     {
       "path": "LICENSE",
@@ -9,7 +9,7 @@
     },
     {
       "path": "SOURCES.json",
-      "sha256": "4d0dbcb2f2b41efe2766768b26a28a4101ea6f20e5bc0c1283a8e9ed2cee458c"
+      "sha256": "a595595e5e4b6ddb8bf0282ee7a91faf146ee8730a36f0734d3d0d76fdc23820"
     },
     {
       "path": "croutine.c",

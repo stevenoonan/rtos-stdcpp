@@ -38,7 +38,7 @@ int main() {
     taskEXIT_CRITICAL();
     Report warm; reset(warm, Suite::cxx17); Metrics metrics;
     for (unsigned i = 0; i < 4; ++i) run_shared_round(warm, metrics);
-    run_inherited_cases(warm);
+    run_facility_cases(warm);
     vTaskDelay(3);
     const auto kernel_after_warmup = xPortGetFreeHeapSize();
     const auto cpp_after_warmup = mallinfo().uordblks;

@@ -1,42 +1,6 @@
 {
+  "schema_version": 1,
   "project": "rtos-stdcpp",
-  "project_repository": "https://github.com/stevenoonan/rtos-stdcpp",
-  "maintenance_branch": "rtos-stdcpp",
-  "base_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
-  "upstream_base": "4805aaf62744926d7e6200e5ff1852ce27841383",
-  "qualified_runtime_profile": {
-    "id": "stm32-gcc-14.3.1-cxx17",
-    "source_commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
-    "source_files": [
-      "libstdc++-v3/src/c++11/mutex.cc",
-      "libstdc++-v3/src/c++11/condition_variable.cc"
-    ],
-    "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
-    "local_modifications": [],
-    "authoritative_manifest": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json",
-    "owner": "rtos-stdcpp"
-  },
-  "qualified_embedded_profiles": [
-    "stm32-gcc-14.3.1-cxx17",
-    "qemu-a9-gcc-14.3.1-cxx17"
-  ],
-  "libatomic_audit": {
-    "v11_introduction": "b9ad2e6281d42c7e534c510fc139581a30620a41",
-    "v13_introduction": "ba5245429a998df8581332c4459d86a5640e4145",
-    "v11_changed_since_import": false,
-    "v13_delta": "Only diagnostic push, ignored -Winfinite-recursion, diagnostic pop",
-    "original_gcc_revision": "Not established by inherited import; do not infer from directory version",
-    "license_expression": "GPL-3.0-or-later",
-    "runtime_exception_granted_by_file": false,
-    "disposition": "Retired; not compiled by qualified STM32 profile"
-  },
-  "schema_version": 3,
-  "scope": "Component license/provenance index, not an exhaustive file or byte inventory. Preserve per-file notices; update this index when dependencies change.",
-  "historical_audit": {
-    "commit": "f8ba1a1",
-    "path": "LICENSES/inventory.json",
-    "description": "Step 2 detailed retained/retired file audit and Step 4 move map. Historical evidence, not a development gate."
-  },
   "components": [
     {
       "name": "rtos-stdcpp adapter, tests, tooling and project-authored platform support",
@@ -72,7 +36,7 @@
       ],
       "license_expression": "MIT",
       "notice": "third_party/freertos-kernel/LICENSE",
-      "origin": "FreeRTOS 10.4.3; inherited source import"
+      "origin": "FreeRTOS 10.4.3"
     },
     {
       "name": "Arm CMSIS and Cortex-A9 startup/system support",
@@ -84,7 +48,7 @@
       ],
       "license_expression": "Apache-2.0",
       "notice": "LICENSES/Apache-2.0.txt",
-      "origin": "Inherited Arm source subset; exact package tag not recorded; preserve individual notices."
+      "origin": "Arm CMSIS/A9 source subset; preserve per-file notices."
     },
     {
       "name": "Selected GCC runtime",

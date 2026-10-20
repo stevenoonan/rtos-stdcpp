@@ -148,7 +148,7 @@ each start from defaults; fill one `attributes` object when setting several.
 
 `<rtos_stdcpp/freertos_time.h>` declares `SetSystemClockTime(time_point)` for
 `system_clock`. It changes wall time without changing `steady_clock` deadlines.
-The compatibility flat header spellings and existing C++ symbols remain; use the
+The flat header spellings and existing C++ symbols remain; use the
 prefixed public includes in new code. Backend/GCC headers are internal interfaces.
 
 For optional shared cases, enable test support before `add_subdirectory`, link

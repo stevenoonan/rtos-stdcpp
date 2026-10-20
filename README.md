@@ -1,38 +1,16 @@
 # rtos-stdcpp
 
-rtos-stdcpp began as a fork of Piotr Grygorczuk's
-[FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11) and is now maintained
-independently. It integrates standard C++ threading facilities with FreeRTOS
-through GCC/libstdc++ and requires **C++17 or later**.
+rtos-stdcpp connects standard C++ threading APIs to FreeRTOS through GCC/libstdc++.
+**C++17 is required.** It is independently maintained and based on Piotr
+Grygorczuk's [FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11).
 
-C++17 is the qualified baseline. Selecting C++20 does not establish support for
-its concurrency features; that work is deferred. Applications use `<thread>`,
-`<mutex>`, `<condition_variable>` and `<chrono>`. Optional project extensions
-configure worker attributes and wall-clock time.
+Applications use `<thread>`, `<mutex>`, `<condition_variable>` and `<chrono>`.
+Extensions configure thread attributes and wall-clock time. The embedded profiles
+use ST GCC 14.3.1 and newlib-nano with exceptions and RTTI disabled.
 
-## Supported configurations
+## Build and test
 
-| Configuration | Status |
-|---|---|
-| ST GCC 14.3.1, Cortex-M55, newlib-nano, FreeRTOS 11.2.0 | Executed Debug/Release through a separate board integration; the application supplies its kernel, startup and runtime policy |
-| ST GCC 14.3.1, QEMU vexpress-a9, bundled FreeRTOS 10.4.3 snapshot | Standalone scheduler tests, Debug/Release and real tick-wrap variants |
-| Ubuntu 24.04 x86_64, GCC 13 or Clang 18, system libstdc++ | Host reference/arithmetic tests with UBSan; does not execute the FreeRTOS adapter |
-
-The [support matrix](docs/support-matrix.md) defines exact embedded profiles,
-features and evidence. Supported cases cover thread lifecycle/identity, ordinary
-and recursive/timed mutexes, condition variables, once/local-static initialization,
-exit notification, monotonic clocks and sleeps. Exceptions and RTTI are disabled
-in the embedded profiles.
-
-Language `thread_local`, extra gthread keys, future/async, shared mutexes, C++20
-concurrency, unsupported atomic fallbacks, embedded Clang/libc++, RISC-V and SMP
-are outside this baseline. Threading operations require task context after
-scheduler startup. TLS pointer slot 0 and task notification index 0 are reserved;
-managed tasks must return normally and idle must run to reclaim deleted tasks.
-
-## Quick start
-
-The maintained repository is private; obtain read access before cloning:
+The repository is private; authorized read access is required.
 
 ```sh
 git clone --branch rtos-stdcpp https://github.com/stevenoonan/rtos-stdcpp.git
@@ -42,42 +20,32 @@ cmake --build --preset host-debug
 ctest --preset host-debug --no-tests=error
 ```
 
-Install CMake 3.22+, Ninja, Python 3 and the supported host compiler first;
-[testing](docs/testing.md) gives Ubuntu prerequisites and the complete matrix.
-These five host CTest entries check reference behavior, actual time helpers and
-the test harness. For embedded execution use the documented
-[A9 setup and run commands](docs/testing.md#qualified-host-and-a9-matrix).
+Install CMake 3.22+, Ninja, Python 3 and GCC 13 first. These are host reference
+and arithmetic tests. [Testing](docs/testing.md) describes Clang, embedded
+compile checks and the standalone QEMU A9 suite.
 
-An application integrates the library with CMake `add_subdirectory`, an existing
-FreeRTOS provider target and an exact profile. Link `rtos-stdcpp::rtos-stdcpp`
-directly into the final executable and apply `rtos-stdcpp::config` to every
-affected C/C++ target. The library includes the two selected GCC runtime sources;
-it does not inject a kernel, startup code or allocation policy into applications.
-See the [integration guide](docs/integration.md) for a minimal C++17 example and
-the complete runtime/configuration contract.
+For firmware, supply a qualified FreeRTOS target, select an exact profile and
+link `rtos-stdcpp::rtos-stdcpp` directly into the executable. Apply
+`rtos-stdcpp::config` to all affected C/C++ targets. See [integration](docs/integration.md).
 
-## Documentation
+## Support and limits
 
-See the [0.1.0 C++17 baseline release notes](CHANGELOG.md) for migration scope
-and remaining limits.
+Qualified configurations cover Cortex-M55 application integrations and standalone
+QEMU vexpress-a9. Ubuntu GCC 13 and Clang 18 run host checks. The
+[support matrix](docs/support-matrix.md) defines the exact profiles and facilities.
 
-- [Integration](docs/integration.md): acquiring inputs, CMake, extensions and platform obligations.
-- [Architecture](docs/architecture.md): libstdc++/GCC hooks, native ABI, lifetime, clocks and ownership.
-- [Support matrix](docs/support-matrix.md): tested profiles, feature limits and failure behavior.
-- [Testing](docs/testing.md) and [CI](docs/ci.md): host, compile-only, emulator and hardware evidence.
-- [Licensing and dependency updates](docs/licensing.md) and [component notices](THIRD_PARTY_NOTICES.md).
-- [Migration](docs/migration.md): renamed checkout, targets, headers and required clean rebuilds.
+Threading operations require running task context. TLS pointer slot 0 and
+notification index 0 are reserved; idle must run to reclaim deleted tasks.
+Language `thread_local`, extra gthread keys, ISR thread operations, external
+deletion of managed tasks, future/async, shared mutexes and C++20 concurrency are
+unsupported.
 
-The inherited implementation article is preserved in Git at commit `6677ce1`
-(`README.md`, “Historical implementation guide”). It describes older layouts and
-unqualified features; use the maintained guides above for current integration.
-The inherited [C++20 checklist](cpp20_actions.md) is historical, not qualification.
-
-## Attribution and licenses
+- [Integration](docs/integration.md): targets, configuration, examples and runtime obligations.
+- [Architecture](docs/architecture.md): hooks, ownership, synchronization and clocks.
+- [Testing](docs/testing.md) and [CI](docs/ci.md): commands, reports and hardware responsibilities.
+- [Licensing](docs/licensing.md) and [component notices](THIRD_PARTY_NOTICES.md).
 
 Retain Piotr Grygorczuk's original notices and the
-[original project license](LICENSES/FreeRTOS_cpp11-original.txt). Credit to Jakub
-Sosnovec for the original custom-stack solution that inspired thread attributes.
-The [root MIT license](LICENSE) covers project code; FreeRTOS, Arm support and
-selected GCC runtime sources retain their separate licenses. See
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for component scope.
+[original license](LICENSES/FreeRTOS_cpp11-original.txt). Credit to Jakub Sosnovec
+for the custom-stack solution that inspired thread attributes. The root
+[MIT license](LICENSE) covers project code; vendor components keep their own terms.

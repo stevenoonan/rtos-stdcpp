@@ -20,13 +20,10 @@ and CPU flags are in the [M55](../cmake/profiles/stm32-gcc-14.3.1-cxx17.json) an
 [A9](../cmake/profiles/qemu-a9-gcc-14.3.1-cxx17.json) profiles. Both select the same
 two unmodified [GCC runtime sources](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json).
 QEMU's binary/packages and selected kernel bytes are pinned separately. The
-inherited kernel's exact upstream commit is not established by its version label.
+kernel's exact upstream commit is not established by its version label.
 
-The hosted [qualification run for `6677ce1`](https://github.com/stevenoonan/rtos-stdcpp/actions/runs/39318872918)
-passed the 52-entry host/A9 CTest matrix and aggregate CI check. Board-specific
-commands, measurements and reports belong to the integrating application; they
-are not prerequisites of a standalone host/A9 checkout. CI branch enforcement
-remains explicitly deferred; see [CI](ci.md).
+The [CI matrix](ci.md) runs 52 CTest entries across host and A9 profiles. Board
+commands and physical measurements belong to the integrating application.
 
 ## Feature boundary
 
@@ -69,8 +66,7 @@ joinable-thread destruction and recursive-static-guard failures. Exact armed
 markers/statuses distinguish expected failures from arbitrary crashes.
 
 Additional GCC versions, new kernel/port combinations, embedded Clang, libc++,
-RISC-V, SMP and C++20 require separate qualification. Historical source and a
-successful host or compile-only check do not establish embedded support.
+RISC-V, SMP and C++20 require separate qualification. A host or compile-only check does not establish embedded support.
 
 ## Changing or adding a profile
 

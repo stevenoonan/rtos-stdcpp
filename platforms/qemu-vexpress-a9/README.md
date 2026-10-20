@@ -13,7 +13,7 @@ implementation sources are shared with the existing exact-release runtime
 selection; no second implementation copy is maintained.
 
 The bundled kernel has a 10.4.3 version label. Its complete 49-file snapshot is
-pinned in `cmake/profiles/qemu-a9-kernel.json` to the inherited import bytes.
+pinned in `cmake/profiles/qemu-a9-kernel.json` to the selected source bytes.
 The exact upstream kernel commit is not established. No dependency is fetched
 by configure/build/test. Do not substitute another kernel, port or compiler
 without reviewing and executing a new profile.
@@ -34,18 +34,13 @@ are the platform references. The
 uses a 10 ns counter period with prescaler zero, so the platform programs 100 MHz
 and a 1000 Hz RTOS tick. The tick PPI is explicitly assigned the port's lowest
 usable priority (logical 30, GIC byte 0xf0), below the API-call threshold
-(logical 18, 0x90). The CMSIS default priority is too urgent and can preempt
-kernel critical sections, corrupting scheduler ready-list state. The startup
-qualification uses the independent global timer to prove the RTOS tick stays
-unchanged across three timer periods inside a critical section. This check also
-fails with the inherited default priority; it does not rely on a lucky scheduler
-stress run. All tasks preserve a full FPU context. The pinned port
+(logical 18, 0x90). The startup qualification verifies that the tick stays masked across three
+hardware timer periods inside a critical section. All tasks preserve a full FPU context. The pinned port
 omits the memset declaration in that configuration; its C translation unit
 force-includes string.h, preserving the dependency source bytes.
 
 Reset sets CPU modes/stacks and branches to an ordinary C++ function before
-performing runtime initialization. This avoids mixing compiler-generated C++
-with a naked function. The inherited Arm/Piotr notices remain in those sources.
+performing runtime initialization. This keeps runtime initialization in an ordinary C++ context.
 SYS_EXIT_EXTENDED carries the process status. A missing exit, exception loop,
 crash, malformed report or missing required case fails the outer deadline/gate.
 Expected failures require both the pre-fault marker and the exact exit status;

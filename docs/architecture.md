@@ -27,16 +27,14 @@ public pthread layer. No general backend framework or ThreadX backend exists.
 | `tests/catalog.json` | Stable case IDs, requirements and explicit skip reasons |
 | `tests/conformance`, `tests/regression` | Shared standard API and lifecycle/identity cases |
 | `tests/unit` | Actual backend arithmetic checked with type-only kernel stubs |
-| `tests/support` | Release-safe assertions/reports, platform interface, process controls and unselected legacy helpers |
+| `tests/support` | Release-safe assertions/reports, platform interface, process controls and transport hooks |
 | `tests/deferred` | Unqualified future/atomic/C++20 sources, excluded from the supported suite |
 | `platforms/qemu-vexpress-a9` | Qualified standalone test startup, runner and runtime policy |
-| `platforms/riscv-virt` | Historical unsupported platform material |
-| `third_party/freertos-kernel` | Inherited 10.4.3 snapshot selected by A9, never automatically by an application |
+| `platforms/riscv-virt` | Unsupported platform code |
+| `third_party/freertos-kernel` | FreeRTOS 10.4.3 snapshot selected by A9, never automatically by an application |
 
-The bundled kernel version label is not proof of a particular upstream commit.
-Its inherited import and selected bytes are recorded in dependency manifests.
-Legacy allocation/syscall helpers remain unselected; their presence does not make
-them production policy. See [migration](migration.md) for old-to-current paths.
+Kernel source identities are recorded in dependency manifests. Applications
+select their own kernel/port and runtime policy.
 
 ## GCC and native ABI
 

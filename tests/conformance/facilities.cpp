@@ -19,7 +19,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-// Release-safe replacements for inherited mutex/CV/once/attribute cases.
+// Mutex/CV/once/attribute conformance cases.
 #include "suite.h"
 #include "platform.h"
 #include <atomic>
@@ -84,7 +84,7 @@ void attributes() {
     TEST_EQ(12U * 32640U, checksum.load());
 }
 }
-void run_inherited_cases(Report &report) {
+void run_facility_cases(Report &report) {
     begin(report, Case::mutex_recursive_timed); recursive_timed(); end(report, Case::mutex_recursive_timed);
     begin(report, Case::condition_any); condition_any(); end(report, Case::condition_any);
     begin(report, Case::once_concurrent); call_once(); end(report, Case::once_concurrent);
