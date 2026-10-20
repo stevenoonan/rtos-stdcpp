@@ -1,0 +1,19 @@
+{
+  "profile": "stm32-gcc-14.3.1-cxx20",
+  "source": "GNU Tools for STM32 14.3.rel1.20251027-0700 installed libstdc++ header",
+  "url": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+  "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+  "files": [
+    {
+      "path": "stop_token",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/include/std/stop_token",
+      "source_sha256": "a5274f4b6e1d74e4ddfd1b0909beeff61d53f5f44b47e2a78392c17f86584f63",
+      "sha256": "2fc4171bd92d9b27cae67e21908a4f1deac89dd60a8dcc5265a3cd1ac408741e",
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "local_modifications": [
+        "Include FreeRTOS task declarations and use vTaskDelay(1) for stop-state contention backoff.",
+        "Optional RTOS_STDCPP_TEST_STOP_LOCK callbacks expose acquisition/contention to embedded qualification only."
+      ]
+    }
+  ]
+}

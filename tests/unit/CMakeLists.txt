@@ -9,7 +9,7 @@ foreach(rate IN ITEMS 100 1000)
         -Wall -Wextra -Werror -fsanitize=undefined -fno-sanitize-recover=all)
     target_link_options(time_algorithms_${rate} PRIVATE -fsanitize=undefined)
     set_target_properties(time_algorithms_${rate} PROPERTIES
-        CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+        CXX_STANDARD ${RTOS_STDCPP_CXX_STANDARD} CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
     add_test(NAME time_algorithms_${rate} COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tools/run_tests.py"
         --suite arithmetic --layer host --timeout 20 -- $<TARGET_FILE:time_algorithms_${rate}>)
     set_tests_properties(time_algorithms_${rate} PROPERTIES LABELS "host;arithmetic" TIMEOUT 25)

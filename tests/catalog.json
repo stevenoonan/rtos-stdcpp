@@ -111,7 +111,7 @@
       "requirements": [
         "separate_qualification"
       ],
-      "skip_reason": "Atomic wait and unsupported-width fallback require separate qualification"
+      "skip_reason": "Non-lock-free atomic fallbacks are not supported"
     },
     {
       "id": "cxx20.synchronization",
@@ -119,7 +119,7 @@
       "requirements": [
         "separate_qualification"
       ],
-      "skip_reason": "C++20 work is deferred"
+      "skip_reason": "Requires the C++20 suite"
     },
     {
       "id": "lifecycle.identity",
@@ -198,6 +198,78 @@
         "qemu_a9",
         "freertos_gthreads",
         "platform_runtime"
+      ]
+    },
+    {
+      "id": "jthread.lifecycle",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "stop.callbacks",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "stop.priority_progress",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.stop_wait",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "atomic.wait_notify",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "semaphore.operations",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "latch.operations",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "barrier.phases",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
       ]
     }
   ]

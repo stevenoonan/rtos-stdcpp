@@ -1,7 +1,7 @@
-# Qualified C++17 support
+# Supported language modes and platforms
 
-C++17 is the minimum and the qualified language mode. C++11/C++14 compatibility
-is not maintained. A newer language mode does not qualify newer concurrency APIs.
+C++17 is the minimum. C++17 and C++20 are tested separately; C++11/C++14
+compatibility is not maintained.
 Both embedded profiles disable exceptions and RTTI and use newlib-nano.
 
 ## Executed and build-only profiles
@@ -22,7 +22,10 @@ two unmodified [GCC runtime sources](../third_party/libstdcxx/stm32-gcc-14.3.1-c
 QEMU's binary/packages and selected kernel bytes are pinned separately. The
 kernel's exact upstream commit is not established by its version label.
 
-The [CI matrix](ci.md) runs 52 CTest entries across host and A9 profiles. Board
+C++20 selects `stm32-gcc-14.3.1-cxx20` or `qemu-a9-gcc-14.3.1-cxx20`. These
+reuse the C++17 profiles' compiler/runtime identities and select the
+[stop-token override](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx20/SOURCES.json).
+The [CI matrix](ci.md) runs both language modes across host and A9 profiles. Board
 commands and physical measurements belong to the integrating application.
 
 ## Feature boundary
@@ -35,10 +38,13 @@ commands and physical measurements belong to the integrating application.
 | Once and local statics | Concurrent `call_once`; thread-safe function-local static initialization with platform guard provider |
 | Thread exit notification | Existing single gthread key/callback path on managed workers; referenced objects must outlive notification |
 | Clocks and sleep | Separate monotonic/wall clocks, duration/deadline rounding, zero/negative sleeps, kernel tick wrap |
-| Atomic facilities | Only individually exercised lock-free operations; no broad atomic-library support claim |
-| Future/async, shared mutexes, unsupported atomics, C++20 synchronization | Deferred registry cases/sources; not qualified by compiling their headers |
+| Atomic facilities | Lock-free integral/pointer wait/notify and `atomic_flag`; non-lock-free fallbacks excluded |
+| C++20 threads | `jthread`, stop-source/token/callback ownership, moves, cancellation, stop-and-join destruction and attributes |
+| C++20 synchronization | Stop-aware `condition_variable_any`, binary/counting semaphores, latch and multi-phase barrier with completion/drop |
+| Future/async and shared mutexes | Not qualified |
 
-The shared C++17 suite requires **11 passes and 4 approved skips**. The skip
+The C++20 suite requires **8 passes without skips**. The shared C++17 suite
+requires **11 passes and 4 approved skips**. The skip
 reasons are authoritative in [the catalog](../tests/catalog.json). The FreeRTOS
 lifecycle suite requires one named regression pass; each arithmetic run requires
 two passes. These suite counts are distinct from the number of CTest entries.
@@ -66,7 +72,7 @@ joinable-thread destruction and recursive-static-guard failures. Exact armed
 markers/statuses distinguish expected failures from arbitrary crashes.
 
 Additional GCC versions, new kernel/port combinations, embedded Clang, libc++,
-RISC-V, SMP and C++20 require separate qualification. A host or compile-only check does not establish embedded support.
+RISC-V, SMP and additional C++20 facilities require separate qualification. A host or compile-only check does not establish embedded support.
 
 ## Changing or adding a profile
 

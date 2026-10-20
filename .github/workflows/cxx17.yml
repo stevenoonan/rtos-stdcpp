@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-name: C++17 qualification
+name: C++ concurrency qualification
 on:
   push:
   pull_request:
@@ -7,13 +7,13 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: cxx17-${{ github.workflow }}-${{ github.ref }}
+  group: concurrency-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 jobs:
   host:
-    name: Host ${{ matrix.compiler }} ${{ matrix.config }}
+    name: Host C++${{ matrix.standard }} ${{ matrix.compiler }} ${{ matrix.config }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
@@ -21,6 +21,7 @@ jobs:
       matrix:
         compiler: [gcc, clang]
         config: [Debug, Release]
+        standard: [17, 20]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -29,27 +30,28 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-13 g++-13 clang-18 libclang-rt-18-dev cmake ninja-build
-      - name: Execute C++17 host tests with UBSan
+      - name: Execute C++ host tests with UBSan
         run: >-
           python3 tools/run_matrix.py --environment host --host-compiler '${{ matrix.compiler }}'
-          --config '${{ matrix.config }}'
+          --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
           --output "$RUNNER_TEMP/results"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
-          name: host-${{ matrix.compiler }}-${{ matrix.config }}-${{ github.sha }}
+          name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ github.sha }}
           path: |
             ${{ runner.temp }}/results
           if-no-files-found: error
           retention-days: 7
   a9:
-    name: A9 ${{ matrix.config }}
+    name: A9 C++${{ matrix.standard }} ${{ matrix.config }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         config: [Debug, Release]
+        standard: [17, 20]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -66,21 +68,21 @@ jobs:
           sudo apt-get install -y qemu-system-arm cmake ninja-build
       - name: Prepare exact compiler and emulator
         run: python3 tools/setup_ci.py --kind a9 --destination "$RUNNER_TEMP/prepared"
-      - name: Execute C++17 A9 tests and real tick-wrap variants
+      - name: Execute C++ A9 tests and real tick-wrap variants
         run: >-
-          python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}'
+          python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
           --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
           --output "$RUNNER_TEMP/results"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
-          name: a9-${{ matrix.config }}-${{ github.sha }}
+          name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
           path: |
             ${{ runner.temp }}/results
           if-no-files-found: error
           retention-days: 7
   required:
-    name: Required C++17 checks
+    name: Required C++ checks
     needs: [host, a9]
     if: always()
     runs-on: ubuntu-24.04

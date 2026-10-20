@@ -1,0 +1,5 @@
+{
+  "extends": "stm32-gcc-14.3.1-cxx17",
+  "language_standard": 20,
+  "header_override": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx20"
+}

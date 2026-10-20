@@ -10,6 +10,7 @@ copyright notices when distributing sources. The GCC exception's terms are in
 Source provenance belongs in the dependency manifests:
 
 - [Selected GCC runtime](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json).
+- [Modified C++20 stop-token header](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx20/SOURCES.json), under GPLv3 with GCC Runtime Library Exception; preserve its modification record.
 - [Bundled kernel](../third_party/freertos-kernel/SOURCES.json) and
   [A9 kernel selection](../cmake/profiles/qemu-a9-kernel.json).
 - [ST compiler archive](../cmake/profiles/st-gcc-14.3.1-download.json) and

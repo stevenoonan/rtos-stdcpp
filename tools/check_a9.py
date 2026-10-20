@@ -22,6 +22,8 @@ def main():
     if not args.build:
         return
     commands = json.loads((args.build / 'compile_commands.json').read_text())
+    cache = (args.build / 'CMakeCache.txt').read_text()
+    standard = 20 if 'RTOS_STDCPP_CXX_STANDARD:STRING=20' in cache else 17
     files = [Path(x['file']).name for x in commands]
     for name in ['tasks.c', 'queue.c', 'list.c', 'event_groups.c', 'heap_4.c', 'port.c', 'portASM.S', 'thread.cpp', 'gthr_key.cpp', 'freertos_time.cpp', 'mutex.cc', 'condition_variable.cc']:
         if files.count(name) != 1:
@@ -29,7 +31,7 @@ def main():
     for item in commands:
         command = item['command']
         if Path(item['file']).suffix in ['.cpp', '.cc']:
-            if '-std=c++17' not in command or 'gcc_threading_config.h' not in command or '-D_GLIBCXX_HAS_GTHREADS=1' not in command:
+            if f'-std=c++{standard}' not in command or 'gcc_threading_config.h' not in command or '-D_GLIBCXX_HAS_GTHREADS=1' not in command:
                 raise RuntimeError('Inconsistent C++ ABI/configuration: ' + item['file'])
         for flag in ['-mcpu=cortex-a9', '-mfpu=vfpv3', '-mfloat-abi=hard', '-marm']:
             if flag not in command:
@@ -53,7 +55,7 @@ def main():
                 if names.count(name) != 1:
                     raise RuntimeError('Guard provider missing')
         images[elf.name] = hashlib.sha256(elf.read_bytes()).hexdigest()
-    if len(images) != 7:
+    if len(images) != (8 if standard == 20 else 7):
         raise RuntimeError('Missing required images')
     report = {'status': 'passed', 'layer': 'compile_link', 'kernel_manifest_sha256': hashlib.sha256((ROOT / 'cmake/profiles/qemu-a9-kernel.json').read_bytes()).hexdigest(),
               'single_kernel_port_heap': True, 'no_stock_thread_guard_clock_lock_fallback': True, 'images_sha256': images}

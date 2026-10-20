@@ -1,13 +1,13 @@
 # Continuous integration
 
-Pushes, pull requests and manual dispatch run the C++17 matrix on GitHub-hosted
+Pushes, pull requests and manual dispatch run the C++17/C++20 matrix on GitHub-hosted
 Ubuntu 24.04:
 
 - GCC 13 and Clang 18, each in Debug and Release.
 - QEMU A9 Debug and Release, each with ordinary and tick-wrap configurations.
-- `Required C++17 checks`, which succeeds only when all profiles succeed.
+- `Required C++ checks`, which succeeds only when all profiles succeed.
 
-There are 52 CTest entries. Failed, skipped or cancelled required jobs fail the
+Each language mode has separate jobs and artifacts. Failed, skipped or cancelled required jobs fail the
 aggregate. Server-side merge enforcement is not configured.
 
 Host jobs install maintained Ubuntu compiler/sanitizer packages. A9 setup verifies

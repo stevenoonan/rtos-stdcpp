@@ -67,6 +67,14 @@
       ],
       "license_expression": "LicenseRef-Verbatim-License-Document",
       "origin": "Copying terms printed in each document; not a relicensing of source code."
+    },
+    {
+      "name": "GCC C++20 stop-token override",
+      "paths": [
+        "third_party/libstdcxx/stm32-gcc-14.3.1-cxx20"
+      ],
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "manifest": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx20/SOURCES.json"
     }
   ]
 }

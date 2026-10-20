@@ -18,7 +18,7 @@ def main():
     parser.add_argument('--qemu', required=True)
     parser.add_argument('--image', required=True)
     kind = parser.add_mutually_exclusive_group(required=True)
-    kind.add_argument('--suite', choices=['cxx17', 'a9', 'regression'])
+    kind.add_argument('--suite', choices=['cxx17', 'cxx20', 'a9', 'regression'])
     kind.add_argument('--failure', choices=FAILURES)
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()

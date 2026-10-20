@@ -54,6 +54,10 @@ public:
   cv_task_list &operator=(const cv_task_list &) = delete;
   ~cv_task_list() { configASSERT(head == nullptr); }
   void signal(bool all) {
+    // Some ports can switch tasks inside a critical section on notification.
+    // Defer scheduling until this batch is complete: a woken high-priority
+    // waiter must not rejoin the list while notify_all is still draining it.
+    scheduler_section scheduling;
     critical_section guard;
     while (head) {
       auto *p = head;

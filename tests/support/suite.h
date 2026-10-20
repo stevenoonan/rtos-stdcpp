@@ -9,6 +9,10 @@ struct Metrics {
 void run_shared_round(Report &, Metrics &);
 void run_facility_cases(Report &);
 void run_extended_cases(Report &);
+#if __cplusplus >= 202002L
+void run_cxx20_round(Report &);
+bool run_cxx20_suite(Report &);
+#endif
 inline bool run_suite(Report &report) {
     reset(report, Suite::cxx17);
     Metrics metrics;

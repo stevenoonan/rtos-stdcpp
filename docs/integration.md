@@ -11,7 +11,7 @@ are tracked files; recursive demo-submodule initialization is unnecessary.
 
 Install the exact ST GNU compiler distribution in the selected
 [profile](support-matrix.md). On Ubuntu 24.04, the explicit setup in
-[testing](testing.md#qualified-host-and-a9-matrix) can acquire the official ST
+[testing](testing.md#host-and-qemu-matrix) can acquire the official ST
 bundle. Put that distribution's `bin` directory on PATH for a custom toolchain.
 CMake 3.22+, Ninja and Python 3 are required. Ordinary configure/build/test commands
 verify local dependencies and use no network. See [licensing](licensing.md) before
@@ -19,7 +19,9 @@ changing a dependency or distributing its sources.
 
 The reusable Cortex-M55 profile is `stm32-gcc-14.3.1-cxx17`, hard float and
 newlib-nano. The standalone A9 platform uses `qemu-a9-gcc-14.3.1-cxx17`, with its
-own multilib/kernel/port. Do not substitute a nearby GCC version or mix these
+own multilib/kernel/port. Replace `cxx17` with `cxx20` for C++20; the selected
+profile sets the language mode for adapter objects and affected targets.
+Do not substitute a nearby GCC version or mix these
 profiles. The bundled kernel is selected only by the A9 platform; an application
 supplies its own qualified kernel/port/configuration.
 
@@ -52,6 +54,7 @@ objects after changing these settings or native types.
 | `rtos-stdcpp::config` | Object-free ABI/include/compile requirements; no dependency back onto the kernel provider |
 | `RTOS_STDCPP_BUILD_LIBRARY` | ON by default; embedded library needs an exact profile and existing provider |
 | `RTOS_STDCPP_BUILD_HOST_TESTS` | OFF by default; host tests use `BUILD_LIBRARY=OFF` |
+| `RTOS_STDCPP_CXX_STANDARD` | Host language mode, 17 (default) or 20; embedded mode derives from the profile and rejects a conflicting explicit value |
 | `RTOS_STDCPP_BUILD_TEST_SUPPORT` | OFF by default; enables optional `rtos-stdcpp::test-support` objects |
 
 Link the primary object target directly into the final executable so all five
@@ -64,7 +67,7 @@ package. No global compiler/linker flags are replaced.
 The profile propagates CPU/multilib flags, compile-time `--specs=nano.specs`,
 GCC hook precedence, `_GLIBCXX_HAS_GTHREADS=1`, forced
 `gcc_threading_config.h`, thread-safe statics, disabled exceptions/RTTI and the
-C++17 minimum. The application also selects the matching nano libraries at link
+selected C++17 or C++20 language mode. The application also selects the matching nano libraries at link
 time, its linker script, startup and one kernel/port/heap. It owns newlib locks,
 C++ static guards, allocation bounds, syscalls, fatal handling, interrupt/FPU/cache
 configuration and any security/memory-map requirements. The

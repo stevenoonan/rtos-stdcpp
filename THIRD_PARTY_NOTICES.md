@@ -17,8 +17,10 @@ precedence over the project MIT default; the repository is not uniformly MIT.
 The two selected runtime files are `mutex.cc` and `condition_variable.cc`, from
 ST source commit `b8cdff71b827478c8510c70b3a15d2b50c759255`, without local changes.
 Their [source manifest](third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json)
-contains immutable URLs, checksums and licenses. Both embedded profiles use this
-selection.
+contains immutable URLs, checksums and licenses. Both language modes use this
+selection. C++20 also selects the [stop-token override](third_party/libstdcxx/stm32-gcc-14.3.1-cxx20/SOURCES.json),
+under the same GCC terms. Its manifest records the FreeRTOS backoff and optional
+qualification hooks.
 
 The bundled kernel's [manifest](third_party/freertos-kernel/SOURCES.json) identifies
 its source snapshot. The exact upstream kernel commit and CMSIS package tag are

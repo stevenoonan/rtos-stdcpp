@@ -15,6 +15,7 @@ static_assert(sizeof(Report) == (8 + 3 * case_count) * sizeof(uint32_t), "Test t
 extern "C" {
 extern Report rtos_stdcpp_conformance_report;
 extern Report rtos_stdcpp_regression_report;
+extern Report rtos_stdcpp_cxx20_report;
 }
 void reset(Report &, Suite);
 void begin(Report &, Case);

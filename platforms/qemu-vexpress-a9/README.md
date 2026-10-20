@@ -1,6 +1,6 @@
 # Qualified standalone A9 test platform
 
-This image runs the shared C++17 cases against the actual FreeRTOS adapter on
+The selected image runs the shared C++17 and C++20 cases against the actual FreeRTOS adapter on
 QEMU `vexpress-a9`, one Cortex-A9 CPU, 128 MiB RAM. Debug and Release, including
 an accelerated real kernel tick-wrap configuration, are qualified. See
 [testing](../../docs/testing.md) for setup and commands and the
@@ -8,7 +8,8 @@ an accelerated real kernel tick-wrap configuration, are qualified. See
 
 The selected ST GCC 14.3.1 distribution supplies the separate A9
 `thumb/v7-a+fp/hard` multilib. A9 code uses ARM instructions, VFPv3 and hard float;
-its compiler/header/archive hashes are in the A9 profile. The two libstdc++
+its compiler/header/archive hashes are in the A9 profile.
+Set `RTOS_STDCPP_CXX_STANDARD=17` (default) or `20` at configure time. The two libstdc++
 implementation sources are shared with the existing exact-release runtime
 selection; no second implementation copy is maintained.
 
@@ -22,7 +23,7 @@ This platform owns its startup, linker script, allocator arenas, failure policy,
 newlib scheduler locks, static guards and semihost exit. These are optional test
 platform choices, not providers injected into applications by the library target.
 The kernel heap is 512 KiB; the bounded C++ arena is 256 KiB. Main has 4096 stack
-words, default workers 512, and the stack workload 1536. Every observed worker
+words, default workers 512, C++20 test workers 1024, and the stack workload 1536. Every observed worker
 and main stack must retain at least 128 words. Resource gates require exact
 recovery after idle opportunities; this is a single-core profile.
 

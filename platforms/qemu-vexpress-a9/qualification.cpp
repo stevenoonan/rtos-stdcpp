@@ -39,12 +39,20 @@ int main() {
     Report warm; reset(warm, Suite::cxx17); Metrics metrics;
     for (unsigned i = 0; i < 4; ++i) run_shared_round(warm, metrics);
     run_facility_cases(warm);
+#if __cplusplus >= 202002L
+    auto &cxx20 = rtos_stdcpp_cxx20_report;
+    if (!run_cxx20_suite(cxx20)) platform::fatal(__FILE__,__LINE__);
+#endif
     vTaskDelay(3);
     const auto kernel_after_warmup = xPortGetFreeHeapSize();
     const auto cpp_after_warmup = mallinfo().uordblks;
     bool recovered = true;
     for (unsigned round = 0; round < 64; ++round) {
         run_shared_round(warm, metrics);
+#if __cplusplus >= 202002L
+        run_cxx20_round(cxx20);
+        if (!finish(cxx20)) platform::fatal(__FILE__,__LINE__);
+#endif
         vTaskDelay(3);
         recovered = recovered && xPortGetFreeHeapSize() == kernel_after_warmup
             && mallinfo().uordblks == cpp_after_warmup;

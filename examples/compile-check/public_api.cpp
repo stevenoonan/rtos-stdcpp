@@ -3,7 +3,22 @@
 #include <rtos_stdcpp/freertos_time.h>
 #include <condition_variable>
 #include <mutex>
-static_assert(__cplusplus == 201703L, "Qualification uses explicit C++17");
+static_assert(__cplusplus == 201703L || __cplusplus == 202002L);
+#if __cplusplus >= 202002L
+#include <stop_token>
+#include <semaphore>
+#include <latch>
+#include <barrier>
+#include <atomic>
+void cxx20_public_api_compile_check() {
+    auto thread = free_rtos_std::std_jthread(free_rtos_std::attr_stack_size(512U), [](std::stop_token) {});
+    thread.request_stop(); thread.join();
+    std::atomic<unsigned> value{1}; value.wait(0); value.notify_all();
+    std::binary_semaphore sem(1); sem.acquire(); sem.release();
+    std::latch latch(1); latch.arrive_and_wait();
+    std::barrier barrier(1); barrier.arrive_and_wait();
+}
+#endif
 void public_api_compile_check() {
     auto thread = free_rtos_std::std_thread(free_rtos_std::attr_stack_size(512U), [] {});
     thread.join();

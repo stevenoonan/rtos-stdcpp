@@ -5,7 +5,7 @@
 #include <cstdio>
 
 namespace rtos_test {
-Report rtos_stdcpp_conformance_report{}, rtos_stdcpp_regression_report{};
+Report rtos_stdcpp_conformance_report{}, rtos_stdcpp_regression_report{}, rtos_stdcpp_cxx20_report{};
 namespace {
 std::atomic<uint32_t> checks{0}, failures{0};
 Report *active_report = nullptr;

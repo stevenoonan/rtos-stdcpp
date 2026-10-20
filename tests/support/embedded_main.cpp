@@ -3,8 +3,13 @@
 #include "console.h"
 #include <cstdlib>
 int main() {
+    #ifdef RTOS_STDCPP_RUN_CXX20
+    auto &report = rtos_test::rtos_stdcpp_cxx20_report;
+    bool pass = rtos_test::run_cxx20_suite(report);
+#else
     auto &report = rtos_test::rtos_stdcpp_conformance_report;
     bool pass = rtos_test::run_suite(report);
+#endif
     rtos_test::write_report(report, [](const char *text) { print(text); });
     // The selected platform implements _exit. On A9 this reaches the
     // SYS_EXIT_EXTENDED semihost call. The outer process deadline covers faults.

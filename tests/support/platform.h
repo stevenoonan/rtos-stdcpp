@@ -11,6 +11,9 @@ namespace rtos_test::platform {
 void idle_opportunity();
 uint32_t millis();
 void observe_stack();
+#if __cplusplus >= 202002L
+template<class F> std::jthread jworker(unsigned tier, F &&function, uint32_t stack_words = 0);
+#endif
 #ifdef RTOS_STDCPP_TEST_FREERTOS
 // The integration selects native priorities, stack units and task names.
 free_rtos_std::attributes worker_attributes(unsigned tier, uint32_t stack_words);
@@ -23,4 +26,14 @@ template<class F> std::thread worker(unsigned tier, F &&function, uint32_t stack
     return std::thread(std::forward<F>(function));
 #endif
 }
+#if __cplusplus >= 202002L
+template<class F> std::jthread jworker(unsigned tier, F &&function, uint32_t stack_words) {
+#ifdef RTOS_STDCPP_TEST_FREERTOS
+    return free_rtos_std::std_jthread(worker_attributes(tier, stack_words), std::forward<F>(function));
+#else
+    (void)tier; (void)stack_words;
+    return std::jthread(std::forward<F>(function));
+#endif
+}
+#endif
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Reproduce the qualified host/A9 C++17 matrix using prepared offline inputs."""
+"""Reproduce the qualified host/A9 C++17/C++20 matrix using prepared offline inputs."""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -20,6 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--toolchain-root', type=Path)
     parser.add_argument('--qemu-root', type=Path, help='Directory produced by setup_qemu.py')
+    parser.add_argument('--standard', choices=['17', '20', 'both'], default='both')
     parser.add_argument('--clang', action='store_true', help='Also require the optional Clang host profile')
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--environment', choices=['all', 'host', 'a9'], default='all')
@@ -28,6 +29,7 @@ def main():
     args = parser.parse_args()
     if args.environment != 'host' and (not args.toolchain_root or not args.qemu_root):
         parser.error('A9 execution requires --toolchain-root and --qemu-root')
+    standards = [17, 20] if args.standard == 'both' else [int(args.standard)]
     configs = ['Debug', 'Release'] if args.config == 'both' else [args.config]
     selected_host = args.host_compiler or ('both' if args.clang else 'gcc')
     hosts = ['gcc', 'clang'] if selected_host == 'both' else [selected_host]
@@ -40,7 +42,7 @@ def main():
     if any(output.iterdir()):
         parser.error('Use an empty output directory to preserve earlier evidence')
     report = {'status': 'running', 'started_utc': datetime.now(timezone.utc).isoformat(),
-              'network_operations': False, 'language': 'c++17', 'checks': [], 'host_compilers': {}}
+              'network_operations': False, 'languages': ['c++' + str(x) for x in standards], 'checks': [], 'host_compilers': {}}
     try:
         report['library_commit'] = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
         report['library_status'] = subprocess.check_output(['git', '-C', str(ROOT), 'status', '--short'], text=True)
@@ -73,13 +75,14 @@ def main():
                 compilers[kind] = str(path)
             report['host_compilers'][profile] = subprocess.check_output([compilers['cxx'], '--version'], text=True).splitlines()[0]
             flags = ['--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13'] if profile == 'clang' else []
-            for config in configs:
-                name = profile + '-' + config.lower(); build = output / name
-                run(name + '-configure', ['cmake', '-S', ROOT, '-B', build, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=' + config,
-                    '-DCMAKE_C_COMPILER=' + compilers['cc'], '-DCMAKE_CXX_COMPILER=' + compilers['cxx'], '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
-                    '-DRTOS_STDCPP_BUILD_LIBRARY=OFF', '-DRTOS_STDCPP_BUILD_HOST_TESTS=ON', '-DCMAKE_CXX_FLAGS=' + ' '.join(flags)], 'configuration')
-                run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
-                run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'host')
+            for standard in standards:
+                for config in configs:
+                    name = profile + '-cxx' + str(standard) + '-' + config.lower(); build = output / name
+                    run(name + '-configure', ['cmake', '-S', ROOT, '-B', build, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=' + config,
+                        '-DCMAKE_C_COMPILER=' + compilers['cc'], '-DCMAKE_CXX_COMPILER=' + compilers['cxx'], '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
+                        '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard), '-DRTOS_STDCPP_BUILD_LIBRARY=OFF', '-DRTOS_STDCPP_BUILD_HOST_TESTS=ON', '-DCMAKE_CXX_FLAGS=' + ' '.join(flags)], 'configuration')
+                    run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
+                    run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'host')
         if args.environment != 'host':
             qemu_lock = json.loads((ROOT / 'cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json').read_text())
             qemu = args.qemu_root.resolve() / 'qemu-system-arm'
@@ -87,15 +90,16 @@ def main():
             if sha(binary) != qemu_lock['binary_sha256'] or subprocess.check_output([str(qemu), '--version'], text=True).splitlines()[0] != qemu_lock['version']:
                 raise RuntimeError('QEMU does not match the selected profile')
             report['qemu_binary_sha256'] = sha(binary)
-            for config in configs:
-                for wrap in [False, True]:
-                    name = 'a9-' + config.lower() + ('-wrap' if wrap else ''); build = output / name
-                    run(name + '-configure', ['cmake', '-S', ROOT / 'platforms/qemu-vexpress-a9', '-B', build, '-G', 'Ninja',
-                        '-DCMAKE_BUILD_TYPE=' + config, '-DCMAKE_TOOLCHAIN_FILE=' + str(ROOT / 'cmake/toolchains/qemu-a9.cmake'),
-                        '-DRTOS_STDCPP_TOOLCHAIN_ROOT=' + str(args.toolchain_root.resolve()), '-DRTOS_STDCPP_QEMU=' + str(qemu),
-                        '-DRTOS_STDCPP_A9_TICK_WRAP=' + ('ON' if wrap else 'OFF')], 'configuration')
-                    run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
-                    run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'emulator_and_link')
+            for standard in standards:
+                for config in configs:
+                    for wrap in [False, True]:
+                        name = 'a9-cxx' + str(standard) + '-' + config.lower() + ('-wrap' if wrap else ''); build = output / name
+                        run(name + '-configure', ['cmake', '-S', ROOT / 'platforms/qemu-vexpress-a9', '-B', build, '-G', 'Ninja',
+                            '-DCMAKE_BUILD_TYPE=' + config, '-DCMAKE_TOOLCHAIN_FILE=' + str(ROOT / 'cmake/toolchains/qemu-a9.cmake'),
+                            '-DRTOS_STDCPP_TOOLCHAIN_ROOT=' + str(args.toolchain_root.resolve()), '-DRTOS_STDCPP_QEMU=' + str(qemu),
+                            '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard), '-DRTOS_STDCPP_A9_TICK_WRAP=' + ('ON' if wrap else 'OFF')], 'configuration')
+                        run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
+                        run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'emulator_and_link')
         report['status'] = 'passed'
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         report.update(status='failed', error=str(error)); print(str(error), file=sys.stderr)

@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: MIT
 cmake_minimum_required(VERSION 3.22)
 project(rtos_stdcpp_a9 LANGUAGES C CXX ASM)
-set(CMAKE_CXX_STANDARD 17)
+set(RTOS_STDCPP_CXX_STANDARD 17 CACHE STRING "C++ language mode: 17 or 20")
+set(CMAKE_CXX_STANDARD ${RTOS_STDCPP_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -24,7 +25,7 @@ add_library(freertos OBJECT "${kernel}/tasks.c" "${kernel}/queue.c" "${kernel}/l
 # The pinned 10.4.3 port omits string.h in its full-FPU path.
 set_source_files_properties("${port}/port.c" PROPERTIES COMPILE_OPTIONS "-include;string.h")
 target_include_directories(freertos PUBLIC "${kernel}/include" "${port}" "${CMAKE_CURRENT_SOURCE_DIR}")
-set(RTOS_STDCPP_PROFILE qemu-a9-gcc-14.3.1-cxx17 CACHE STRING "" FORCE)
+set(RTOS_STDCPP_PROFILE qemu-a9-gcc-14.3.1-cxx${RTOS_STDCPP_CXX_STANDARD} CACHE STRING "" FORCE)
 set(RTOS_STDCPP_FREERTOS_TARGET freertos)
 set(RTOS_STDCPP_BUILD_TEST_SUPPORT ON)
 add_subdirectory("${root}" library)
@@ -44,6 +45,10 @@ function(image name)
     set_property(TARGET ${name} APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/linker.ld")
 endfunction()
 image(conformance "${root}/tests/support/embedded_main.cpp")
+if(RTOS_STDCPP_CXX_STANDARD EQUAL 20)
+    image(cxx20 "${root}/tests/support/embedded_main.cpp")
+    target_compile_definitions(cxx20 PRIVATE RTOS_STDCPP_RUN_CXX20=1)
+endif()
 image(qualification qualification.cpp)
 image(regression regression_main.cpp "${root}/tests/regression/lifecycle_regression.cpp")
 target_include_directories(regression PRIVATE "${root}/tests/regression")
@@ -63,6 +68,12 @@ if(RTOS_STDCPP_QEMU)
             --qemu "${RTOS_STDCPP_QEMU}" --image $<TARGET_FILE:${executable}> --suite ${suite}
             --output "${CMAKE_CURRENT_BINARY_DIR}/${executable}.json")
     endforeach()
+    if(RTOS_STDCPP_CXX_STANDARD EQUAL 20)
+        add_test(NAME cxx20 COMMAND "${Python3_EXECUTABLE}" "${root}/tools/run_qemu.py"
+            --qemu "${RTOS_STDCPP_QEMU}" --image $<TARGET_FILE:cxx20> --suite cxx20
+            --output "${CMAKE_CURRENT_BINARY_DIR}/cxx20.json")
+        set_tests_properties(cxx20 PROPERTIES LABELS emulator TIMEOUT 35)
+    endif()
     foreach(mode throwing_new kernel_alloc joinable recursive_guard)
         add_test(NAME fail_${mode} COMMAND "${Python3_EXECUTABLE}" "${root}/tools/run_qemu.py"
             --qemu "${RTOS_STDCPP_QEMU}" --image $<TARGET_FILE:fail_${mode}> --failure ${mode}

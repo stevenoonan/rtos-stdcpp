@@ -29,10 +29,27 @@ option(RTOS_STDCPP_BUILD_TEST_SUPPORT "Build reusable embedded test cases and re
 set(RTOS_STDCPP_PROFILE "" CACHE STRING "Exact qualified compiler/runtime profile")
 set(RTOS_STDCPP_FREERTOS_TARGET "" CACHE STRING "Existing target supplying FreeRTOS configuration/includes")
 
+if(RTOS_STDCPP_BUILD_LIBRARY AND RTOS_STDCPP_PROFILE MATCHES "-cxx(17|20)$")
+    set(profile_standard "${CMAKE_MATCH_1}")
+    if(DEFINED RTOS_STDCPP_CXX_STANDARD AND NOT RTOS_STDCPP_CXX_STANDARD STREQUAL profile_standard)
+        message(FATAL_ERROR "RTOS_STDCPP_CXX_STANDARD conflicts with RTOS_STDCPP_PROFILE")
+    endif()
+    set(RTOS_STDCPP_CXX_STANDARD "${profile_standard}")
+elseif(NOT DEFINED RTOS_STDCPP_CXX_STANDARD)
+    set(RTOS_STDCPP_CXX_STANDARD 17)
+endif()
+if(NOT RTOS_STDCPP_CXX_STANDARD MATCHES "^(17|20)$")
+    message(FATAL_ERROR "RTOS_STDCPP_CXX_STANDARD must be 17 or 20")
+endif()
+set(CMAKE_CXX_STANDARD ${RTOS_STDCPP_CXX_STANDARD})
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS NO)
+
 if(RTOS_STDCPP_BUILD_LIBRARY)
-    set(qualified_profiles stm32-gcc-14.3.1-cxx17 qemu-a9-gcc-14.3.1-cxx17)
+    set(qualified_profiles stm32-gcc-14.3.1-cxx17 qemu-a9-gcc-14.3.1-cxx17
+        stm32-gcc-14.3.1-cxx20 qemu-a9-gcc-14.3.1-cxx20)
     if(NOT RTOS_STDCPP_PROFILE IN_LIST qualified_profiles)
-        message(FATAL_ERROR "Select an exact qualified RTOS_STDCPP_PROFILE (stm32-gcc-14.3.1-cxx17 or qemu-a9-gcc-14.3.1-cxx17)")
+        message(FATAL_ERROR "Select an exact qualified RTOS_STDCPP_PROFILE (${qualified_profiles})")
     endif()
     if(NOT RTOS_STDCPP_FREERTOS_TARGET OR NOT TARGET "${RTOS_STDCPP_FREERTOS_TARGET}")
         message(FATAL_ERROR "RTOS_STDCPP_FREERTOS_TARGET must name an existing target supplying FreeRTOS headers/configuration")
@@ -49,10 +66,19 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
         "${CMAKE_CURRENT_SOURCE_DIR}/src/backends/freertos"
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/rtos_stdcpp")
-    target_compile_features(rtos_stdcpp_config INTERFACE cxx_std_17)
+    target_compile_features(rtos_stdcpp_config INTERFACE cxx_std_${RTOS_STDCPP_CXX_STANDARD})
     target_compile_definitions(rtos_stdcpp_config INTERFACE
         $<$<COMPILE_LANGUAGE:CXX>:_GLIBCXX_HAS_GTHREADS=1>)
-    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/cmake/profiles/${RTOS_STDCPP_PROFILE}.json" profile_json)
+    string(REPLACE "-cxx20" "-cxx17" identity_profile "${RTOS_STDCPP_PROFILE}")
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/cmake/profiles/${identity_profile}.json" profile_json)
+    if(RTOS_STDCPP_CXX_STANDARD EQUAL 20)
+        target_include_directories(rtos_stdcpp_config BEFORE INTERFACE
+            "${CMAKE_CURRENT_SOURCE_DIR}/third_party/libstdcxx/stm32-gcc-14.3.1-cxx20")
+        if(RTOS_STDCPP_BUILD_TEST_SUPPORT)
+            target_compile_definitions(rtos_stdcpp_config INTERFACE
+                $<$<COMPILE_LANGUAGE:CXX>:RTOS_STDCPP_TEST_STOP_LOCK=1>)
+        endif()
+    endif()
     string(JSON flag_count LENGTH "${profile_json}" cpu_flags)
     math(EXPR flag_last "${flag_count} - 1")
     set(cpu_flags)
@@ -76,7 +102,7 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
     target_link_libraries(rtos_stdcpp PUBLIC rtos_stdcpp_config
         PRIVATE "${RTOS_STDCPP_FREERTOS_TARGET}")
     set_target_properties(rtos_stdcpp PROPERTIES
-        CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+        CXX_STANDARD ${RTOS_STDCPP_CXX_STANDARD} CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
 endif()
 
 if(RTOS_STDCPP_BUILD_HOST_TESTS)

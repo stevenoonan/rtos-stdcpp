@@ -1,11 +1,12 @@
 # rtos-stdcpp
 
 rtos-stdcpp connects standard C++ threading APIs to FreeRTOS through GCC/libstdc++.
-**C++17 is required.** It is independently maintained and based on Piotr
+**C++17 is the minimum; C++20 concurrency is supported.** It is independently maintained and based on Piotr
 Grygorczuk's [FreeRTOS_cpp11](https://github.com/grygorek/FreeRTOS_cpp11).
 
 Applications use `<thread>`, `<mutex>`, `<condition_variable>` and `<chrono>`.
-Extensions configure thread attributes and wall-clock time. The embedded profiles
+C++20 adds `jthread`, stop tokens, stop-aware waits, atomic wait/notify,
+semaphores, latch and barrier. Extensions configure thread attributes and wall-clock time. The embedded profiles
 use ST GCC 14.3.1 and newlib-nano with exceptions and RTTI disabled.
 
 ## Build and test
@@ -37,8 +38,8 @@ QEMU vexpress-a9. Ubuntu GCC 13 and Clang 18 run host checks. The
 Threading operations require running task context. TLS pointer slot 0 and
 notification index 0 are reserved; idle must run to reclaim deleted tasks.
 Language `thread_local`, extra gthread keys, ISR thread operations, external
-deletion of managed tasks, future/async, shared mutexes and C++20 concurrency are
-unsupported.
+deletion of managed tasks, future/async, shared mutexes and non-lock-free atomic
+fallbacks are unsupported.
 
 - [Integration](docs/integration.md): targets, configuration, examples and runtime obligations.
 - [Architecture](docs/architecture.md): hooks, ownership, synchronization and clocks.

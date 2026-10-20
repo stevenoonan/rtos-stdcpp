@@ -18,7 +18,9 @@ ctest --preset host-debug --no-tests=error
 ```
 
 Use `host-release` for Release. Build output goes to `../build/rtos-stdcpp`.
-Each configuration has five CTest entries: actual backend arithmetic at two tick
+Set `-DRTOS_STDCPP_CXX_STANDARD=20` for C++20; use a separate build directory
+when keeping both modes. Each C++17 configuration has five CTest entries; C++20
+adds the required concurrency suite: actual backend arithmetic at two tick
 rates, standard-library reference cases, and normal/optimized runner controls.
 Host threads use the host runtime; they do not exercise the FreeRTOS scheduler.
 
@@ -35,6 +37,7 @@ cmake --build ../build/rtos-stdcpp/compile-check
 ctest --test-dir ../build/rtos-stdcpp/compile-check --output-on-failure --no-tests=error
 ```
 
+Select `-DRTOS_STDCPP_PROFILE=stm32-gcc-14.3.1-cxx20` for the C++20 probe.
 This compiles the public API and five provider objects. It does not link or run
 a board image. Applications must check their final ELF/map and kernel providers.
 
@@ -54,8 +57,9 @@ Setup verifies and extracts the exact ST compiler archive and QEMU packages.
 Cached downloads are verified again; matrix execution uses no network. The system
 QEMU package supplies shared dependencies, while runs use the prepared binary.
 
-The full matrix has 52 CTest entries: GCC/Clang Debug/Release and A9 Debug/Release,
-each A9 configuration with ordinary and real tick-wrap starts. Select
+The full matrix tests C++17 and C++20 with GCC/Clang Debug/Release and A9
+Debug/Release, each A9 configuration with ordinary and real tick-wrap starts.
+Select `--standard 17` or `--standard 20` for one mode (default: both). Select
 `--environment host --host-compiler both` for host only, `--environment a9` for A9
 only, or `--config Debug` / `Release` for one configuration. Reports contain the
 tested commit, compiler versions, commands/logs, JUnit and per-image results.
@@ -69,7 +73,7 @@ deadline, with an outer CTest limit. See the [platform contract](../platforms/qe
 
 [The catalog](../tests/catalog.json) defines case IDs, requirements and approved
 skips. The C++17 suite requires 11 passes and 4 feature skips; the lifecycle
-suite requires one pass. Assertions stay active in Release. Every required case
+suite requires one pass. The C++20 suite requires eight passes and no skips. Assertions stay active in Release. Every required case
 must run checks, and failures remain sticky across repeated rounds.
 
 `tools/run_tests.py` requires a zero process exit and one complete, consistent
@@ -86,10 +90,14 @@ For embedded acceptance, enable `RTOS_STDCPP_BUILD_TEST_SUPPORT`, directly link
 `rtos-stdcpp::test-support` and implement [platform.h](../tests/support/platform.h).
 `run_suite` executes all cases once; stress runners can call `run_shared_round`
 repeatedly and `run_facility_cases` once. The runner is serial at case level;
-worker checks must finish before ending a case.
+worker checks must finish before ending a case. In C++20, `run_cxx20_suite`
+executes its own report; endurance runners reset that report to `Suite::cxx20`,
+repeat `run_cxx20_round` and require `finish` success. Its embedded test hooks
+force stop-state lock contention across priority tiers; production builds omit
+those hooks. Warm C++20 resources before taking allocation measurements.
 
 The application owns board startup, timing/resource observations, flash/debug
-transport and deadlines. Read the stopped conformance/regression reports through
+transport and deadlines. Read the stopped conformance/regression/C++20 reports through
 `tools/test_protocol.py` and apply native-health checks too. Full physical
 qualification covers Debug/Release endurance, exact warmed resource recovery,
 stack headroom, FPU/preemption, independent timing, interrupts/cache, real wrap,

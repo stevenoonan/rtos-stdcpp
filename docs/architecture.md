@@ -23,12 +23,12 @@ public pthread layer. No general backend framework or ThreadX backend exists.
 | `src/backends/freertos` | Thread/completion lifetime, CV waiters, one exit key and clocks |
 | `src/toolchains/gcc` | `bits/gthr-default.h` override and common ABI configuration |
 | `cmake/profiles` | Embedded compiler/header/multilib and dependency identities; supported host majors |
-| `third_party/libstdcxx/stm32-gcc-14.3.1-cxx17` | Two selected, unmodified GCC runtime sources and their source/license manifest |
+| `third_party/libstdcxx` | Two unmodified GCC runtime providers and the C++20 stop-token override, with source/license manifests |
 | `tests/catalog.json` | Stable case IDs, requirements and explicit skip reasons |
 | `tests/conformance`, `tests/regression` | Shared standard API and lifecycle/identity cases |
 | `tests/unit` | Actual backend arithmetic checked with type-only kernel stubs |
 | `tests/support` | Release-safe assertions/reports, platform interface, process controls and transport hooks |
-| `tests/deferred` | Unqualified future/atomic/C++20 sources, excluded from the supported suite |
+| `tests/deferred` | Unqualified future sources, excluded from the supported suite |
 | `platforms/qemu-vexpress-a9` | Qualified standalone test startup, runner and runtime policy |
 | `platforms/riscv-virt` | Unsupported platform code |
 | `third_party/freertos-kernel` | FreeRTOS 10.4.3 snapshot selected by A9, never automatically by an application |
@@ -88,6 +88,19 @@ monotonic time unchanged. Duration conversion rounds deadlines up and bounds
 large waits; sleep loops recheck monotonic time. Resolution is the configured RTOS
 tick, not an independent high-resolution hardware clock. Interrupt masking and
 scheduler suspension have distinct roles; neither permits ISR use of this API.
+
+## C++20 waiting and cancellation
+
+GCC's atomic waiter pool uses the existing mutex/CV hooks; semaphores, latch and
+barrier build on those waits. The pool is initialized on first use in task context
+and retains its synchronization resources. Warm it before measuring recovery.
+
+The embedded `stop_token` override changes only contention backoff and optional
+qualification hooks. `vTaskDelay(1)` allows lower-priority lock owners to run;
+ordinary `this_thread::yield()` is unchanged. The override keeps GCC's public API
+and object layout. All affected C++20 objects must select the same header.
+Callbacks run synchronously on the requesting task (or during registration after
+stop); callbacks must follow the ordinary task-context and lifetime rules.
 
 ## Platform boundary
 
