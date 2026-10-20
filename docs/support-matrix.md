@@ -11,14 +11,14 @@ Both embedded profiles disable exceptions and RTTI and use newlib-nano.
 | Ubuntu 24.04 x86_64 GCC | GCC 13, system libstdc++, UBSan; distro patch updates permitted | Debug/Release host arithmetic, standard-library reference cases and runner controls |
 | Ubuntu 24.04 x86_64 Clang | Clang 18 with GCC 13's C++ headers/libstdc++, UBSan; distro patch updates permitted | Same host checks; no embedded Clang claim |
 | Cortex-M55 board integration | `stm32-gcc-14.3.1-cxx17`, ST GCC 14.3.1, hard float, `thumb/v8-m.main+dp/hard`; FreeRTOS 11.2.0 / X-CUBE-FREERTOS 1.6.0 | Application-owned Debug/Release final-image and sustained physical-board qualification, real wrap and failure/reset tests |
-| Standalone M55 compile fixture | Same compiler/multilib with externally supplied matching kernel/port headers | Public APIs and six provider objects compile; no scheduler execution or final executable |
+| Standalone M55 compile fixture | Same compiler/multilib with externally supplied matching kernel/port headers | Public APIs and seven provider objects compile; no scheduler execution or final executable |
 | QEMU vexpress-a9, one Cortex-A9 | `qemu-a9-gcc-14.3.1-cxx17`, same ST compiler distribution, `thumb/v7-a+fp/hard` selected with ARM/VFPv3 flags; bundled 10.4.3 kernel/ARM_CA9 port; selected QEMU 8.2.2 packages | Debug/Release, ordinary and near-wrap starts; shared cases, lifecycle/platform suites, isolated failures and final-image provenance |
 
 The exact embedded compiler identity is GNU Tools for STM32
 `14.3.rel1.20251027-0700`, GCC `14.3.1 20250623`. Header/archive/compiler identities
 and CPU flags are in the [M55](../cmake/profiles/stm32-gcc-14.3.1-cxx17.json) and
 [A9](../cmake/profiles/qemu-a9-gcc-14.3.1-cxx17.json) profiles. Both select the same
-two unmodified [GCC runtime sources](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json).
+three unmodified [GCC runtime sources](../third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json).
 QEMU's binary/packages and selected kernel bytes are pinned separately. The
 kernel's exact upstream commit is not established by its version label.
 
@@ -57,8 +57,11 @@ variant. Emulator timing is not a physical-board latency guarantee.
 
 ## Context, failures and exclusions
 
-Threading/synchronization operations require running task context. Startup is
-single threaded; a platform may support allocation/static initialization there,
+General threading/synchronization operations require running task context. The
+M55 application additionally qualifies ordinary mutex construction and
+uncontended operations during single-threaded startup, followed by task-context
+reuse. Other startup facilities remain application-owned; a platform may
+support allocation/static initialization there,
 but not concurrent RTOS-backed constructors or blocking operations. Language
 TLS access before scheduler startup or in native tasks, native ELF TLS, arbitrary
 extra gthread keys, native-task exit callbacks, ISR thread operations, external

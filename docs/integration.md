@@ -50,7 +50,7 @@ objects after changing these settings or native types.
 
 | Target or option | Meaning |
 |---|---|
-| `rtos-stdcpp::rtos-stdcpp` | Object library: three backend units, GCC TLS provider, and selected GCC `mutex.cc` and `condition_variable.cc` |
+| `rtos-stdcpp::rtos-stdcpp` | Object library: three backend units, GCC TLS provider, and selected GCC `mutex.cc`, `condition_variable.cc` and `future.cc` |
 | `rtos-stdcpp::config` | Object-free ABI/include/compile requirements; no dependency back onto the kernel provider |
 | `RTOS_STDCPP_BUILD_LIBRARY` | ON by default; embedded library needs an exact profile and existing provider |
 | `RTOS_STDCPP_BUILD_HOST_TESTS` | OFF by default; host tests use `BUILD_LIBRARY=OFF` |
@@ -100,6 +100,14 @@ Construct and use RTOS-backed C++ objects in task context after scheduler startu
 Pre-scheduler initialization must stay single threaded; a global constructor is
 not a place to create workers or block. The clock's pre-start return value does
 not make general threading services safe before startup.
+
+The STM32 M55 integration additionally qualifies ordinary `std::mutex`
+construction and uncontended lock/try-lock/unlock/destruction in single-threaded
+startup, before any tasks are created. Its global-constructor probe also verifies
+function-local static initialization and reuse of those mutexes under task
+contention after startup. The integrating application supplies startup-safe heap
+locks and C++ guards. This exception does not permit blocking before startup,
+managed worker creation, language TLS, or arbitrary synchronization facilities.
 
 Reserve TLS pointer slot 0 and notification index 0. CMSIS thread flags and
 stream/message-buffer defaults can also use index 0, so do not mix them with CV
@@ -216,3 +224,13 @@ For optional shared cases, enable test support before `add_subdirectory`, link
 off for production. Allocation/resource failures terminate under the qualified
 no-exceptions policy; explicit nothrow allocation requires the platform's
 recoverable provider. See [support limits](support-matrix.md).
+
+## Promise/future runtime provider
+
+The embedded object target includes the unmodified, matching GCC `future.cc`
+provider alongside mutex/CV providers. Consumers no longer need to supply their
+own future source. Its immutable source URL, checksum and license are recorded
+in the common GCC runtime SOURCES.json, checked by the profile gate. This fixes
+missing threaded result definitions in the installed single-threaded archive;
+it does not qualify arbitrary `std::async` usage. The STM32 shared-library test
+bed exercises promise/future completion, timeouts and concurrent fulfillment.

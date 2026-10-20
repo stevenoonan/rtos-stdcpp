@@ -38,7 +38,7 @@ ctest --test-dir ../build/rtos-stdcpp/compile-check --output-on-failure --no-tes
 ```
 
 Select `-DRTOS_STDCPP_PROFILE=stm32-gcc-14.3.1-cxx20` for the C++20 probe.
-This compiles the public API and six provider objects. It does not link or run
+This compiles the public API and seven provider objects. It does not link or run
 a board image. Applications must check their final ELF/map and kernel providers.
 
 ## Host and QEMU matrix

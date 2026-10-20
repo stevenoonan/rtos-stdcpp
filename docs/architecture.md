@@ -47,7 +47,7 @@ Mixing stock/older gthread objects with these objects is an ABI error.
 
 `rtos-stdcpp::rtos-stdcpp` is an object library containing backend `thread.cpp`,
 `gthr_key.cpp`, `freertos_time.cpp`, the GCC emulated TLS provider and the selected
-GCC `mutex.cc` and `condition_variable.cc`. Direct linkage preserves the intended providers instead
+GCC `mutex.cc`, `condition_variable.cc` and `future.cc`. Direct linkage preserves the intended providers instead
 of allowing stock archive members to satisfy them. The independent
 `rtos-stdcpp::config` interface propagates ABI requirements without injecting
 objects or a circular kernel dependency. Final-image verification must still

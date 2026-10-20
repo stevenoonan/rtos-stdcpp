@@ -25,7 +25,7 @@ def main():
     cache = (args.build / 'CMakeCache.txt').read_text()
     standard = 20 if 'RTOS_STDCPP_CXX_STANDARD:STRING=20' in cache else 17
     files = [Path(x['file']).name for x in commands]
-    for name in ['tasks.c', 'queue.c', 'list.c', 'event_groups.c', 'heap_4.c', 'port.c', 'portASM.S', 'thread.cpp', 'gthr_key.cpp', 'freertos_time.cpp', 'tls.cpp', 'mutex.cc', 'condition_variable.cc']:
+    for name in ['tasks.c', 'queue.c', 'list.c', 'event_groups.c', 'heap_4.c', 'port.c', 'portASM.S', 'thread.cpp', 'gthr_key.cpp', 'freertos_time.cpp', 'tls.cpp', 'mutex.cc', 'condition_variable.cc', 'future.cc']:
         if files.count(name) != 1:
             raise RuntimeError('Provider compiled multiple times or missing: ' + name)
     tls_command = next(x['command'] for x in commands if Path(x['file']).name == 'tls.cpp')

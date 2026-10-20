@@ -22,6 +22,15 @@
       "verification": "Byte-identical to immutable source URL; rechecked 2026-10-19"
     },
     {
+      "path": "libstdc++-v3/src/c++11/future.cc",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/future.cc",
+      "sha256": "e55b5945a4bf2024e22affc8d7d37ea63bd62e5cbb95ac8ed03534cefc642cf3",
+      "bytes": 3664,
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "local_modifications": [],
+      "verification": "Byte-identical to the pinned ST GCC source; moved from the STM32 test bed on 2026-10-20"
+    },
+    {
       "path": "COPYING.RUNTIME",
       "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/COPYING.RUNTIME",
       "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
@@ -48,5 +57,5 @@
   ],
   "compiler_id": "arm-none-eabi-g++ (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623",
   "local_modifications": [],
-  "selection_notes": "Only mutex.cc and condition_variable.cc are built. No future.cc or libatomic.c; no fallback runtime profile."
+  "selection_notes": "mutex.cc, condition_variable.cc and future.cc are built with the matching gthread configuration. No libatomic fallback; general future/async qualification remains separate."
 }

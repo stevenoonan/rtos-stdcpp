@@ -3,6 +3,7 @@
 #include <rtos_stdcpp/freertos_time.h>
 #include <condition_variable>
 #include <mutex>
+#include <future>
 namespace {
 struct TlsObject { unsigned value = 42; ~TlsObject() { value = 0; } };
 }
@@ -32,4 +33,12 @@ void public_api_compile_check() {
     if (mutex.try_lock_for(std::chrono::milliseconds(1))) mutex.unlock();
     std::condition_variable condition;
     condition.notify_one();
+}
+
+void promise_future_compile_check() {
+    std::promise<void> promise;
+    auto completion = promise.get_future();
+    promise.set_value();
+    completion.wait_for(std::chrono::milliseconds(1));
+    completion.get();
 }

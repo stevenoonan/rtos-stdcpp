@@ -99,7 +99,7 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
         src/backends/freertos/gthr_key.cpp
         src/backends/freertos/freertos_time.cpp
         src/toolchains/gcc/tls.cpp
-        "${runtime}/mutex.cc" "${runtime}/condition_variable.cc")
+        "${runtime}/mutex.cc" "${runtime}/condition_variable.cc" "${runtime}/future.cc")
     add_library(rtos-stdcpp::rtos-stdcpp ALIAS rtos_stdcpp)
     target_compile_definitions(rtos_stdcpp PRIVATE
         RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=$<BOOL:${RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR}>)
