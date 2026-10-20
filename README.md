@@ -58,6 +58,9 @@ the complete runtime/configuration contract.
 
 ## Documentation
 
+See the [0.1.0 C++17 baseline release notes](CHANGELOG.md) for migration scope
+and remaining limits.
+
 - [Integration](docs/integration.md): acquiring inputs, CMake, extensions and platform obligations.
 - [Architecture](docs/architecture.md): libstdc++/GCC hooks, native ABI, lifetime, clocks and ownership.
 - [Support matrix](docs/support-matrix.md): tested profiles, feature limits and failure behavior.
