@@ -3,6 +3,9 @@
 #include <rtos_stdcpp/freertos_time.h>
 #include <condition_variable>
 #include <mutex>
+namespace {
+struct TlsObject { unsigned value = 42; ~TlsObject() { value = 0; } };
+}
 static_assert(__cplusplus == 201703L || __cplusplus == 202002L);
 #if __cplusplus >= 202002L
 #include <stop_token>
@@ -20,7 +23,10 @@ void cxx20_public_api_compile_check() {
 }
 #endif
 void public_api_compile_check() {
-    auto thread = free_rtos_std::std_thread(free_rtos_std::attr_stack_size(512U), [] {});
+    auto thread = free_rtos_std::std_thread(free_rtos_std::attr_stack_size(512U), [] {
+        static thread_local TlsObject object;
+        ++object.value;
+    });
     thread.join();
     std::timed_mutex mutex;
     if (mutex.try_lock_for(std::chrono::milliseconds(1))) mutex.unlock();

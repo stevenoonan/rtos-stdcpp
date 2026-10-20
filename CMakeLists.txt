@@ -26,6 +26,7 @@ project(rtos-stdcpp VERSION 0.1.0 LANGUAGES C CXX)
 option(RTOS_STDCPP_BUILD_LIBRARY "Build the embedded adapter" ON)
 option(RTOS_STDCPP_BUILD_HOST_TESTS "Build standalone host tests and runner controls" OFF)
 option(RTOS_STDCPP_BUILD_TEST_SUPPORT "Build reusable embedded test cases and report support" OFF)
+option(RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR "Use application-provided TLS allocation/deallocation hooks" OFF)
 set(RTOS_STDCPP_PROFILE "" CACHE STRING "Exact qualified compiler/runtime profile")
 set(RTOS_STDCPP_FREERTOS_TARGET "" CACHE STRING "Existing target supplying FreeRTOS configuration/includes")
 
@@ -97,8 +98,11 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
         src/backends/freertos/thread.cpp
         src/backends/freertos/gthr_key.cpp
         src/backends/freertos/freertos_time.cpp
+        src/toolchains/gcc/tls.cpp
         "${runtime}/mutex.cc" "${runtime}/condition_variable.cc")
     add_library(rtos-stdcpp::rtos-stdcpp ALIAS rtos_stdcpp)
+    target_compile_definitions(rtos_stdcpp PRIVATE
+        RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=$<BOOL:${RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR}>)
     target_link_libraries(rtos_stdcpp PUBLIC rtos_stdcpp_config
         PRIVATE "${RTOS_STDCPP_FREERTOS_TARGET}")
     set_target_properties(rtos_stdcpp PROPERTIES

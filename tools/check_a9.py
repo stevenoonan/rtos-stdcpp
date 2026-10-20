@@ -25,9 +25,21 @@ def main():
     cache = (args.build / 'CMakeCache.txt').read_text()
     standard = 20 if 'RTOS_STDCPP_CXX_STANDARD:STRING=20' in cache else 17
     files = [Path(x['file']).name for x in commands]
-    for name in ['tasks.c', 'queue.c', 'list.c', 'event_groups.c', 'heap_4.c', 'port.c', 'portASM.S', 'thread.cpp', 'gthr_key.cpp', 'freertos_time.cpp', 'mutex.cc', 'condition_variable.cc']:
+    for name in ['tasks.c', 'queue.c', 'list.c', 'event_groups.c', 'heap_4.c', 'port.c', 'portASM.S', 'thread.cpp', 'gthr_key.cpp', 'freertos_time.cpp', 'tls.cpp', 'mutex.cc', 'condition_variable.cc']:
         if files.count(name) != 1:
             raise RuntimeError('Provider compiled multiple times or missing: ' + name)
+    tls_command = next(x['command'] for x in commands if Path(x['file']).name == 'tls.cpp')
+    custom_tls = '-DRTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=1' in tls_command
+    tls_object = next(args.build.glob('**/rtos_stdcpp.dir/src/toolchains/gcc/tls.cpp.obj'))
+    undefined = subprocess.check_output([str(args.toolchain / 'bin/arm-none-eabi-nm'),
+                                         '--undefined-only', str(tls_object)], text=True)
+    undefined_names = {line.split()[-1] for line in undefined.splitlines() if line.split()}
+    hooks = {'rtos_stdcpp_tls_allocate', 'rtos_stdcpp_tls_deallocate'}
+    if custom_tls:
+        if not hooks <= undefined_names or {'pvPortMalloc', 'vPortFree'} & undefined_names:
+            raise RuntimeError('Custom TLS runtime must use only the paired allocation hooks')
+    elif hooks & undefined_names:
+        raise RuntimeError('Default TLS runtime unexpectedly requires custom allocation hooks')
     for item in commands:
         command = item['command']
         if Path(item['file']).suffix in ['.cpp', '.cc']:
@@ -40,7 +52,7 @@ def main():
     for elf in sorted(args.build.glob('*.elf')):
         content = elf.with_suffix('.map').read_text()
         archive = content.split('Discarded input sections')[0]
-        forbidden = ['thread.o', 'mutex.o', 'condition_variable.o', 'guard.o', 'chrono.o', 'libc_a-lock.o', 'libc_a-mlock.o']
+        forbidden = ['thread.o', 'mutex.o', 'condition_variable.o', 'guard.o', 'chrono.o', 'libc_a-lock.o', 'libc_a-mlock.o', 'emutls.o', 'atexit_thread.o']
         for name in forbidden:
             if '(' + name + ')' in archive:
                 raise RuntimeError('Stock runtime fallback: ' + name)
@@ -54,11 +66,20 @@ def main():
             for name in ['__cxa_guard_acquire', '__cxa_guard_release']:
                 if names.count(name) != 1:
                     raise RuntimeError('Guard provider missing')
+        if elf.stem in ['conformance', 'qualification', 'cxx20']:
+            for name in ['__emutls_get_address', '__emutls_register_common', '__cxa_thread_atexit']:
+                if names.count(name) != 1:
+                    raise RuntimeError('TLS provider missing: ' + name)
+            if 'rtos_stdcpp.dir/src/toolchains/gcc/tls.cpp.obj' not in content:
+                raise RuntimeError('TLS provider provenance missing')
+            if custom_tls and any(names.count(hook) != 1 for hook in hooks):
+                raise RuntimeError('Custom TLS allocation hook provider missing or duplicated')
         images[elf.name] = hashlib.sha256(elf.read_bytes()).hexdigest()
-    if len(images) != (8 if standard == 20 else 7):
+    if len(images) != (12 if standard == 20 else 11):
         raise RuntimeError('Missing required images')
     report = {'status': 'passed', 'layer': 'compile_link', 'kernel_manifest_sha256': hashlib.sha256((ROOT / 'cmake/profiles/qemu-a9-kernel.json').read_bytes()).hexdigest(),
-              'single_kernel_port_heap': True, 'no_stock_thread_guard_clock_lock_fallback': True, 'images_sha256': images}
+              'single_kernel_port_heap': True, 'no_stock_thread_guard_clock_lock_fallback': True,
+              'tls_allocator': 'custom' if custom_tls else 'freertos', 'images_sha256': images}
     (args.build / 'provenance.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))
 

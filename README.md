@@ -37,8 +37,13 @@ QEMU vexpress-a9. Ubuntu GCC 13 and Clang 18 run host checks. The
 
 Threading operations require running task context. TLS pointer slot 0 and
 notification index 0 are reserved; idle must run to reclaim deleted tasks.
-Language `thread_local`, extra gthread keys, ISR thread operations, external
-deletion of managed tasks, future/async, shared mutexes and non-lock-free atomic
+Language `thread_local` is supported in managed workers, including constructors,
+alignment and destructors, using lazy storage from the FreeRTOS heap by default.
+`RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=ON` selects application allocation hooks; see
+[integration](docs/integration.md#language-thread-local-storage). Startup, native-task
+and ISR TLS access terminate. Native ELF TLS is unsupported.
+Extra gthread keys, ISR thread operations, external deletion of managed tasks,
+future/async, shared mutexes and non-lock-free atomic
 fallbacks are unsupported.
 
 - [Integration](docs/integration.md): targets, configuration, examples and runtime obligations.

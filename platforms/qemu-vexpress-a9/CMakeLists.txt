@@ -34,6 +34,10 @@ add_library(platform OBJECT startup_ARMCA9.cpp system_ARMCA9.c cmsis/irq_ctrl_gi
     ca9_global_timer.c FreeRTOS_ca9_hooks.c console.cpp runtime.cpp cxx_guards.cpp cxx_nothrow.cpp test_platform.cpp)
 target_include_directories(platform PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/cmsis")
 target_link_libraries(platform PUBLIC freertos rtos-stdcpp::config PRIVATE rtos-stdcpp::test-support)
+if(RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR)
+    target_sources(platform PRIVATE tls_allocator.cpp)
+    target_compile_definitions(platform PUBLIC RTOS_STDCPP_TEST_CUSTOM_TLS_ALLOCATOR=1)
+endif()
 
 function(image name)
     add_executable(${name} ${ARGN})
@@ -52,7 +56,7 @@ endif()
 image(qualification qualification.cpp)
 image(regression regression_main.cpp "${root}/tests/regression/lifecycle_regression.cpp")
 target_include_directories(regression PRIVATE "${root}/tests/regression")
-foreach(mode THROWING_NEW KERNEL_ALLOC JOINABLE RECURSIVE_GUARD)
+foreach(mode THROWING_NEW KERNEL_ALLOC JOINABLE RECURSIVE_GUARD TLS_STARTUP TLS_NATIVE TLS_ALLOC TLS_OVERFLOW)
     string(TOLOWER "${mode}" name)
     image(fail_${name} failure.cpp)
     target_compile_definitions(fail_${name} PRIVATE FAIL_${mode}=1 FAILURE_NAME="${name}")
@@ -74,14 +78,20 @@ if(RTOS_STDCPP_QEMU)
             --output "${CMAKE_CURRENT_BINARY_DIR}/cxx20.json")
         set_tests_properties(cxx20 PROPERTIES LABELS emulator TIMEOUT 35)
     endif()
-    foreach(mode throwing_new kernel_alloc joinable recursive_guard)
+    foreach(mode throwing_new kernel_alloc joinable recursive_guard tls_startup tls_native tls_alloc tls_overflow)
+        set(allocator_arguments)
+        if(RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR AND mode STREQUAL "tls_alloc")
+            list(APPEND allocator_arguments --custom-tls-allocator)
+        endif()
         add_test(NAME fail_${mode} COMMAND "${Python3_EXECUTABLE}" "${root}/tools/run_qemu.py"
             --qemu "${RTOS_STDCPP_QEMU}" --image $<TARGET_FILE:fail_${mode}> --failure ${mode}
+            ${allocator_arguments}
             --output "${CMAKE_CURRENT_BINARY_DIR}/fail_${mode}.json")
     endforeach()
     add_test(NAME link_provenance COMMAND "${Python3_EXECUTABLE}" "${root}/tools/check_a9.py"
         --build "${CMAKE_CURRENT_BINARY_DIR}" --toolchain "${RTOS_STDCPP_TOOLCHAIN_ROOT}")
     set_tests_properties(conformance qualification regression fail_throwing_new fail_kernel_alloc fail_joinable fail_recursive_guard
+        fail_tls_startup fail_tls_native fail_tls_alloc fail_tls_overflow
         PROPERTIES LABELS emulator TIMEOUT 35)
     set_tests_properties(link_provenance PROPERTIES LABELS compile_link TIMEOUT 30)
 endif()

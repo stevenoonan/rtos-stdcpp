@@ -50,14 +50,15 @@ objects after changing these settings or native types.
 
 | Target or option | Meaning |
 |---|---|
-| `rtos-stdcpp::rtos-stdcpp` | Object library: three backend units plus selected GCC `mutex.cc` and `condition_variable.cc` |
+| `rtos-stdcpp::rtos-stdcpp` | Object library: three backend units, GCC TLS provider, and selected GCC `mutex.cc` and `condition_variable.cc` |
 | `rtos-stdcpp::config` | Object-free ABI/include/compile requirements; no dependency back onto the kernel provider |
 | `RTOS_STDCPP_BUILD_LIBRARY` | ON by default; embedded library needs an exact profile and existing provider |
 | `RTOS_STDCPP_BUILD_HOST_TESTS` | OFF by default; host tests use `BUILD_LIBRARY=OFF` |
 | `RTOS_STDCPP_CXX_STANDARD` | Host language mode, 17 (default) or 20; embedded mode derives from the profile and rejects a conflicting explicit value |
 | `RTOS_STDCPP_BUILD_TEST_SUPPORT` | OFF by default; enables optional `rtos-stdcpp::test-support` objects |
+| `RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR` | OFF by default; ON selects application-supplied TLS allocation/deallocation hooks |
 
-Link the primary object target directly into the final executable so all five
+Link the primary object target directly into the final executable so all six
 providers are delivered exactly once. An interface-only wrapper does not forward
 its object files; if wrapping, explicitly forward `$<TARGET_OBJECTS:rtos_stdcpp>`
 or retain the direct executable link. Do not compile another copy of these
@@ -102,12 +103,67 @@ not make general threading services safe before startup.
 
 Reserve TLS pointer slot 0 and notification index 0. CMSIS thread flags and
 stream/message-buffer defaults can also use index 0, so do not mix them with CV
-waits on the same task. These RTOS pointers do not implement C++ `thread_local`.
+waits on the same task. Slot 0 also locates managed language TLS state.
 Only the existing single gthread exit key is supported; do not allocate extra
 keys or expect native-task exit callbacks. Do not delete managed workers with
 `vTaskDelete` from another task: let the callable return. Idle must run to reclaim
 self-deleted TCBs/stacks, including after join. No library thread/synchronization
 operations or allocation are supported in an ISR. SMP is unqualified.
+
+## Language thread-local storage
+
+`thread_local` is supported inside managed `std::thread` and `std::jthread`
+workers in both language modes. The qualified GCC compiler emits emulated TLS;
+link the adapter directly to supply `__emutls_get_address`,
+`__emutls_register_common` and `__cxa_thread_atexit`. No linker-script or extra
+FreeRTOS TLS-pointer slot is required. Native ELF `.tdata`/`.tbss` TLS is not
+supported; integrations should reject those sections.
+
+Each variable is allocated on first access, copying its
+initializer or zero-filling, with its requested alignment. A growable per-worker
+pointer table provides constant-time lookup after initialization; its capacity
+reflects the highest shared variable index that worker has touched. Workers that
+never use TLS allocate no TLS storage. Allocation/size failures terminate through
+the platform fatal policy, with no recoverable allocation interface.
+
+The default allocator is `pvPortMalloc`/`vPortFree`. To select a custom allocator
+at compile time, set `RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=ON` before adding the
+library (or pass `-DRTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=ON` to CMake), and link an
+application source implementing both functions declared in
+`<rtos_stdcpp/tls_allocator.h>`. For example, to use the C++/newlib arena:
+
+```cpp
+#include <rtos_stdcpp/tls_allocator.h>
+#include <cstdlib>
+
+extern "C" void *rtos_stdcpp_tls_allocate(std::size_t bytes) noexcept {
+    return std::malloc(bytes);
+}
+extern "C" void rtos_stdcpp_tls_deallocate(void *pointer) noexcept {
+    std::free(pointer);
+}
+```
+
+This pair serves all TLS values, pointer tables and destructor records. It does
+not change thread stacks, completion blocks or other kernel allocations. Hooks
+must be thread-safe and must not access language `thread_local`, including
+indirectly through logging or allocation callbacks. Allocation must return
+storage aligned to at least `alignof(std::max_align_t)` or return null; null
+terminates through the existing fatal policy. The TLS runtime handles larger
+requested alignments and returns the original non-null allocation pointer to
+the deallocation hook. Both hooks run in the owning worker, and neither may
+throw. Custom mode requires both hook definitions at final link; there is no
+runtime allocator switch or silent fallback. Rebuild the adapter when changing
+the option. Builds without CMake can define `RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=1`
+when compiling the TLS provider.
+
+After callable destruction, TLS destructors run in reverse registration order,
+including new registrations made during teardown. They finish before
+`notify_all_at_thread_exit` and before join completes. Storage is reclaimed on
+worker exit, including detached workers. Access from startup/global constructors,
+native/CMSIS tasks or ISRs terminates even in Release. Attribute-helper callable
+copy/move constructors execute on the creator and inherit its context restrictions.
+External task deletion bypasses cleanup and remains unsupported.
 
 ## Minimal C++17 task example and extensions
 

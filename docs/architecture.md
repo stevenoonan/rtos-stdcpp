@@ -19,9 +19,9 @@ public pthread layer. No general backend framework or ThreadX backend exists.
 
 | Location | Responsibility |
 |---|---|
-| `include/rtos_stdcpp` | Public attributes/thread factory and wall-clock extensions |
-| `src/backends/freertos` | Thread/completion lifetime, CV waiters, one exit key and clocks |
-| `src/toolchains/gcc` | `bits/gthr-default.h` override and common ABI configuration |
+| `include/rtos_stdcpp` | Public attributes/thread factory, wall-clock extensions and TLS allocation hooks |
+| `src/backends/freertos` | Thread/completion and TLS context lifetime, CV waiters, one exit key and clocks |
+| `src/toolchains/gcc` | `bits/gthr-default.h` override, emulated TLS providers and common ABI configuration |
 | `cmake/profiles` | Embedded compiler/header/multilib and dependency identities; supported host majors |
 | `third_party/libstdcxx` | Two unmodified GCC runtime providers and the C++20 stop-token override, with source/license manifests |
 | `tests/catalog.json` | Stable case IDs, requirements and explicit skip reasons |
@@ -46,8 +46,8 @@ The profile's forced header enables GCC 14's clock-selecting mutex/CV paths.
 Mixing stock/older gthread objects with these objects is an ABI error.
 
 `rtos-stdcpp::rtos-stdcpp` is an object library containing backend `thread.cpp`,
-`gthr_key.cpp`, `freertos_time.cpp` and the selected GCC `mutex.cc` and
-`condition_variable.cc`. Direct linkage preserves the intended providers instead
+`gthr_key.cpp`, `freertos_time.cpp`, the GCC emulated TLS provider and the selected
+GCC `mutex.cc` and `condition_variable.cc`. Direct linkage preserves the intended providers instead
 of allowing stock archive members to satisfy them. The independent
 `rtos-stdcpp::config` interface propagates ABI requirements without injecting
 objects or a circular kernel dependency. Final-image verification must still
@@ -57,8 +57,9 @@ check provider selection and exactly one kernel/port/heap.
 
 Creation allocates a stable completion block and event group. The owner and
 worker each hold one reference; moving a `std::thread` does not move the block.
-The worker owns and destroys the callable/arguments, runs the registered exit
-callback, publishes completion, releases its reference and deletes itself.
+The worker owns and destroys the callable/arguments, drains language TLS
+destructors, runs the registered exit callback, reclaims TLS storage, publishes
+completion, releases its reference and deletes itself.
 Join waits for completion and releases the owner reference; detach releases the
 owner without waiting. The last release frees the completion/event resources.
 The kernel's idle task later reclaims the self-deleted TCB/stack.
@@ -72,7 +73,14 @@ reclaimed TCB. External deletion of a managed worker bypasses this contract.
 
 The existing gthread-key registry supports one registered exit key, used by exit
 notification. Its publication is atomic, and callbacks run on managed worker
-return. It is not general TLS or a guarantee for native-task deletion callbacks.
+return. Language TLS uses a separate per-worker context in the completion block,
+without consuming another gthread key or FreeRTOS pointer slot. GCC control
+descriptors receive atomic, stable indices; a growable per-worker table owns
+individually aligned allocations. Destructor registration is a LIFO list drained
+without locks before exit notification. There is no native-task cleanup contract.
+TLS-owned allocations use the FreeRTOS heap by default; a compile-time option
+selects paired application hooks for values, pointer tables and destructor
+records. Completion blocks and kernel objects retain their FreeRTOS allocator.
 
 ## Synchronization and time
 

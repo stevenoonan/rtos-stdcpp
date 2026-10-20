@@ -48,9 +48,13 @@ namespace std
       __t->_M_run();
     }
 
+    auto &tls = __gthread_t::thread_storage();
+    tls.run_destructors();
+
     if (auto *key = free_rtos_std::s_key.load(std::memory_order_acquire))
       key->CallDestructor(__gthread_t::native_task_handle());
 
+    tls.release_storage();
     local.notify_joined(); // finished; release joined threads
   }
 

@@ -10,7 +10,8 @@ if(NOT generated_result EQUAL 0)
     message(FATAL_ERROR "Test catalog generation failed")
 endif()
 add_library(rtos_stdcpp_test_support OBJECT
-    support/runner.cpp conformance/standard.cpp conformance/facilities.cpp conformance/extended.cpp)
+    support/runner.cpp conformance/standard.cpp conformance/facilities.cpp conformance/extended.cpp
+    conformance/thread_local.cpp conformance/tls_peer.cpp)
 add_library(rtos-stdcpp::test-support ALIAS rtos_stdcpp_test_support)
 target_include_directories(rtos_stdcpp_test_support PUBLIC support "${generated}")
 target_compile_features(rtos_stdcpp_test_support PUBLIC cxx_std_${RTOS_STDCPP_CXX_STANDARD})

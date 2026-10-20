@@ -156,5 +156,6 @@ void run_shared_round(Report &report, Metrics &values) {
     begin(report, Case::mutex_contention); mutexes(); end(report, Case::mutex_contention);
     begin(report, Case::condition_notification_timeout); conditions(); end(report, Case::condition_notification_timeout);
     begin(report, Case::thread_exit_notification); exit_callbacks(); end(report, Case::thread_exit_notification);
+    run_tls_round(report, values);
 }
 }

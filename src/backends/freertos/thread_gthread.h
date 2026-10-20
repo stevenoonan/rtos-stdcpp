@@ -27,6 +27,7 @@
 #include "event_groups.h"
 #include "critical_section.h"
 #include "freertos_thread_attributes.h"
+#include "tls.h"
 #include <cstdint>
 #include <cerrno>
 #include <new>
@@ -60,6 +61,7 @@ namespace free_rtos_std
       TaskHandle_t task;
       void *argument;
       unsigned references;
+      internal::tls_context tls;
     };
     static constexpr EventBits_t completed = 1;
     static constexpr BaseType_t tls_slot = 0;
@@ -162,6 +164,8 @@ namespace free_rtos_std
     }
 
     void *arg() const { return state()->argument; }
+
+    static internal::tls_context &thread_storage();
 
     [[noreturn]] void notify_joined()
     {

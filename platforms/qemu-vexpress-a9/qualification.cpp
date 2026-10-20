@@ -13,6 +13,10 @@
 #include <new>
 using namespace std::chrono_literals;
 extern "C" volatile unsigned rtos_test_idle_count;
+#ifdef RTOS_STDCPP_TEST_CUSTOM_TLS_ALLOCATOR
+extern "C" unsigned rtos_test_tls_live_allocations();
+extern "C" unsigned rtos_test_tls_allocation_count();
+#endif
 namespace {
 volatile unsigned startup_seed = 42;
 unsigned startup_value() { static unsigned value = startup_seed; return value; }
@@ -46,6 +50,10 @@ int main() {
     vTaskDelay(3);
     const auto kernel_after_warmup = xPortGetFreeHeapSize();
     const auto cpp_after_warmup = mallinfo().uordblks;
+#ifdef RTOS_STDCPP_TEST_CUSTOM_TLS_ALLOCATOR
+    const auto tls_after_warmup = rtos_test_tls_allocation_count();
+    bool tls_recovered = tls_after_warmup > 0 && rtos_test_tls_live_allocations() == 0;
+#endif
     bool recovered = true;
     for (unsigned round = 0; round < 64; ++round) {
         run_shared_round(warm, metrics);
@@ -56,6 +64,9 @@ int main() {
         vTaskDelay(3);
         recovered = recovered && xPortGetFreeHeapSize() == kernel_after_warmup
             && mallinfo().uordblks == cpp_after_warmup;
+#ifdef RTOS_STDCPP_TEST_CUSTOM_TLS_ALLOCATOR
+        tls_recovered = tls_recovered && rtos_test_tls_live_allocations() == 0;
+#endif
     }
     bool pass = finish(warm);
     // Warm-up is validated independently as part of the resource gate.
@@ -104,6 +115,9 @@ int main() {
     child.join(); end(report, Case::condition_notification_isolation);
     begin(report, Case::runtime_resources);
     TEST_REQUIRE(recovered);
+#ifdef RTOS_STDCPP_TEST_CUSTOM_TLS_ALLOCATOR
+    TEST_REQUIRE(tls_recovered && rtos_test_tls_allocation_count() > tls_after_warmup);
+#endif
     idle(); auto kernel = xPortGetFreeHeapSize(); auto used = mallinfo().uordblks;
     for (unsigned i = 0; i < 64; ++i) {
         // Separate small/big and aligned recoverable allocation forms.

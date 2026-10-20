@@ -11,7 +11,7 @@ Both embedded profiles disable exceptions and RTTI and use newlib-nano.
 | Ubuntu 24.04 x86_64 GCC | GCC 13, system libstdc++, UBSan; distro patch updates permitted | Debug/Release host arithmetic, standard-library reference cases and runner controls |
 | Ubuntu 24.04 x86_64 Clang | Clang 18 with GCC 13's C++ headers/libstdc++, UBSan; distro patch updates permitted | Same host checks; no embedded Clang claim |
 | Cortex-M55 board integration | `stm32-gcc-14.3.1-cxx17`, ST GCC 14.3.1, hard float, `thumb/v8-m.main+dp/hard`; FreeRTOS 11.2.0 / X-CUBE-FREERTOS 1.6.0 | Application-owned Debug/Release final-image and sustained physical-board qualification, real wrap and failure/reset tests |
-| Standalone M55 compile fixture | Same compiler/multilib with externally supplied matching kernel/port headers | Public APIs and five provider objects compile; no scheduler execution or final executable |
+| Standalone M55 compile fixture | Same compiler/multilib with externally supplied matching kernel/port headers | Public APIs and six provider objects compile; no scheduler execution or final executable |
 | QEMU vexpress-a9, one Cortex-A9 | `qemu-a9-gcc-14.3.1-cxx17`, same ST compiler distribution, `thumb/v7-a+fp/hard` selected with ARM/VFPv3 flags; bundled 10.4.3 kernel/ARM_CA9 port; selected QEMU 8.2.2 packages | Debug/Release, ordinary and near-wrap starts; shared cases, lifecycle/platform suites, isolated failures and final-image provenance |
 
 The exact embedded compiler identity is GNU Tools for STM32
@@ -36,7 +36,8 @@ commands and physical measurements belong to the integrating application.
 | Mutexes | Ordinary, recursive, timed and recursive-timed operations, contention and standard lock wrappers |
 | Condition variables | Predicate wait/notify-one/all, timed races, explicit predicate rechecks, `condition_variable_any`; index 0 reserved |
 | Once and local statics | Concurrent `call_once`; thread-safe function-local static initialization with platform guard provider |
-| Thread exit notification | Existing single gthread key/callback path on managed workers; referenced objects must outlive notification |
+| Thread exit notification | Existing single gthread key/callback path, after language TLS destructors; referenced objects must outlive notification |
+| Language `thread_local` | Managed workers: per-thread initialization, extended alignment, cross-TU identity, reverse-order destructors and heap recovery; GCC emulated TLS |
 | Clocks and sleep | Separate monotonic/wall clocks, duration/deadline rounding, zero/negative sleeps, kernel tick wrap |
 | Atomic facilities | Lock-free integral/pointer wait/notify and `atomic_flag`; non-lock-free fallbacks excluded |
 | C++20 threads | `jthread`, stop-source/token/callback ownership, moves, cancellation, stop-and-join destruction and attributes |
@@ -44,7 +45,7 @@ commands and physical measurements belong to the integrating application.
 | Future/async and shared mutexes | Not qualified |
 
 The C++20 suite requires **8 passes without skips**. The shared C++17 suite
-requires **11 passes and 4 approved skips**. The skip
+requires **12 passes and 4 approved skips**. The skip
 reasons are authoritative in [the catalog](../tests/catalog.json). The FreeRTOS
 lifecycle suite requires one named regression pass; each arithmetic run requires
 two passes. These suite counts are distinct from the number of CTest entries.
@@ -59,8 +60,9 @@ variant. Emulator timing is not a physical-board latency guarantee.
 Threading/synchronization operations require running task context. Startup is
 single threaded; a platform may support allocation/static initialization there,
 but not concurrent RTOS-backed constructors or blocking operations. Language
-`thread_local`, arbitrary extra gthread keys, native-task exit callbacks, ISR
-thread operations, external deletion of managed tasks, and reuse of TLS pointer
+TLS access before scheduler startup or in native tasks, native ELF TLS, arbitrary
+extra gthread keys, native-task exit callbacks, ISR thread operations, external
+deletion of managed tasks, and reuse of TLS pointer
 slot 0 or notification index 0 are unsupported. Idle must receive CPU time.
 Attributes-helper callable copy/move constructors must not block or yield.
 
@@ -68,7 +70,8 @@ Under the no-exceptions profiles, errors on throwing paths terminate through the
 platform policy. Returning null for explicit nothrow/aligned allocation requires
 the platform's qualified provider; it does not promise recoverable `std::thread`
 construction failure. A9 resets separately for throwing-new, kernel-OOM,
-joinable-thread destruction and recursive-static-guard failures. Exact armed
+joinable-thread destruction, recursive-static-guard failures, TLS context misuse,
+TLS allocation exhaustion and TLS size overflow. Exact armed
 markers/statuses distinguish expected failures from arbitrary crashes.
 
 Additional GCC versions, new kernel/port combinations, embedded Clang, libc++,

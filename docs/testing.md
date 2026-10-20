@@ -38,7 +38,7 @@ ctest --test-dir ../build/rtos-stdcpp/compile-check --output-on-failure --no-tes
 ```
 
 Select `-DRTOS_STDCPP_PROFILE=stm32-gcc-14.3.1-cxx20` for the C++20 probe.
-This compiles the public API and five provider objects. It does not link or run
+This compiles the public API and six provider objects. It does not link or run
 a board image. Applications must check their final ELF/map and kernel providers.
 
 ## Host and QEMU matrix
@@ -58,21 +58,28 @@ Cached downloads are verified again; matrix execution uses no network. The syste
 QEMU package supplies shared dependencies, while runs use the prepared binary.
 
 The full matrix tests C++17 and C++20 with GCC/Clang Debug/Release and A9
-Debug/Release, each A9 configuration with ordinary and real tick-wrap starts.
+Debug/Release, each A9 configuration with ordinary and real tick-wrap starts
+and both default and custom TLS allocation. The custom fixture uses tagged
+`malloc`/`free` allocations in the separate C++ arena, checks hook usage and exact
+recovery, and verifies the TLS object has no FreeRTOS allocation references.
+Select `--tls-allocator freertos` or `--tls-allocator custom` to run one policy
+(default: `both`); this switch affects A9 only.
 Select `--standard 17` or `--standard 20` for one mode (default: both). Select
 `--environment host --host-compiler both` for host only, `--environment a9` for A9
 only, or `--config Debug` / `Release` for one configuration. Reports contain the
 tested commit, compiler versions, commands/logs, JUnit and per-image results.
 
-A9 runs conformance, lifecycle and platform suites plus four isolated fatal
-cases and link provenance. Expected failures require the armed marker and exact
-exit status; a crash or hang is a failure. Each emulator process has a 25-second
+A9 runs conformance, lifecycle and platform suites plus eight isolated fatal
+cases and link provenance. TLS failures cover startup/native-task access,
+allocation exhaustion and size overflow. Shared TLS cases run in every stress
+round and require exact resource recovery. Expected failures require the armed
+marker and exact exit status; a crash or hang is a failure. Each emulator process has a 25-second
 deadline, with an outer CTest limit. See the [platform contract](../platforms/qemu-vexpress-a9/README.md).
 
 ## Shared reports and hardware
 
 [The catalog](../tests/catalog.json) defines case IDs, requirements and approved
-skips. The C++17 suite requires 11 passes and 4 feature skips; the lifecycle
+skips. The C++17 suite requires 12 passes and 4 feature skips; the lifecycle
 suite requires one pass. The C++20 suite requires eight passes and no skips. Assertions stay active in Release. Every required case
 must run checks, and failures remain sticky across repeated rounds.
 

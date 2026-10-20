@@ -27,6 +27,13 @@ words, default workers 512, C++20 test workers 1024, and the stack workload 1536
 and main stack must retain at least 128 words. Resource gates require exact
 recovery after idle opportunities; this is a single-core profile.
 
+`-DRTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=ON` builds the public allocation hooks from
+`tls_allocator.cpp`. This test provider uses the C++/newlib arena with tagged
+allocations and counts live blocks. Qualification requires actual hook usage,
+paired deallocation and zero live TLS blocks after worker cleanup. The default
+matrix executes both allocator configurations; the ordinary platform default
+continues to use the FreeRTOS heap.
+
 UART0 uses the PL011 flag register at offset 0x18 and TXFF bit 5. The selected
 [QEMU PL011 model](https://github.com/qemu/qemu/blob/v8.2.2/hw/char/pl011.c)
 and [board map](https://github.com/qemu/qemu/blob/v8.2.2/hw/arm/vexpress.c)

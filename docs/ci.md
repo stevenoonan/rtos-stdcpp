@@ -4,7 +4,8 @@ Pushes, pull requests and manual dispatch run the C++17/C++20 matrix on GitHub-h
 Ubuntu 24.04:
 
 - GCC 13 and Clang 18, each in Debug and Release.
-- QEMU A9 Debug and Release, each with ordinary and tick-wrap configurations.
+- QEMU A9 Debug and Release, each with ordinary and tick-wrap configurations
+  using both FreeRTOS and custom TLS allocation.
 - `Required C++ checks`, which succeeds only when all profiles succeed.
 
 Each language mode has separate jobs and artifacts. Failed, skipped or cancelled required jobs fail the

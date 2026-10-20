@@ -271,6 +271,15 @@
         "threads",
         "test_platform_hooks"
       ]
+    },
+    {
+      "id": "thread.local_storage",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
     }
   ]
 }

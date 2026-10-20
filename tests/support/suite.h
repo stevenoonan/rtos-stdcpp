@@ -7,6 +7,7 @@ struct Metrics {
         timeout_races = 0, exit_callbacks = 0, payload_destructors = 0;
 };
 void run_shared_round(Report &, Metrics &);
+void run_tls_round(Report &, Metrics &);
 void run_facility_cases(Report &);
 void run_extended_cases(Report &);
 #if __cplusplus >= 202002L

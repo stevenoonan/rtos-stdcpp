@@ -26,11 +26,14 @@ def main():
     parser.add_argument('--environment', choices=['all', 'host', 'a9'], default='all')
     parser.add_argument('--host-compiler', choices=['gcc', 'clang', 'both'])
     parser.add_argument('--config', choices=['both', 'Debug', 'Release'], default='both')
+    parser.add_argument('--tls-allocator', choices=['freertos', 'custom', 'both'], default='both',
+                        help='A9 TLS allocation policies to exercise (default: both)')
     args = parser.parse_args()
     if args.environment != 'host' and (not args.toolchain_root or not args.qemu_root):
         parser.error('A9 execution requires --toolchain-root and --qemu-root')
     standards = [17, 20] if args.standard == 'both' else [int(args.standard)]
     configs = ['Debug', 'Release'] if args.config == 'both' else [args.config]
+    tls_allocators = ['freertos', 'custom'] if args.tls_allocator == 'both' else [args.tls_allocator]
     selected_host = args.host_compiler or ('both' if args.clang else 'gcc')
     hosts = ['gcc', 'clang'] if selected_host == 'both' else [selected_host]
     if args.environment == 'a9':
@@ -42,7 +45,8 @@ def main():
     if any(output.iterdir()):
         parser.error('Use an empty output directory to preserve earlier evidence')
     report = {'status': 'running', 'started_utc': datetime.now(timezone.utc).isoformat(),
-              'network_operations': False, 'languages': ['c++' + str(x) for x in standards], 'checks': [], 'host_compilers': {}}
+              'network_operations': False, 'languages': ['c++' + str(x) for x in standards],
+              'tls_allocators': tls_allocators if args.environment != 'host' else [], 'checks': [], 'host_compilers': {}}
     try:
         report['library_commit'] = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
         report['library_status'] = subprocess.check_output(['git', '-C', str(ROOT), 'status', '--short'], text=True)
@@ -92,14 +96,19 @@ def main():
             report['qemu_binary_sha256'] = sha(binary)
             for standard in standards:
                 for config in configs:
-                    for wrap in [False, True]:
-                        name = 'a9-cxx' + str(standard) + '-' + config.lower() + ('-wrap' if wrap else ''); build = output / name
-                        run(name + '-configure', ['cmake', '-S', ROOT / 'platforms/qemu-vexpress-a9', '-B', build, '-G', 'Ninja',
-                            '-DCMAKE_BUILD_TYPE=' + config, '-DCMAKE_TOOLCHAIN_FILE=' + str(ROOT / 'cmake/toolchains/qemu-a9.cmake'),
-                            '-DRTOS_STDCPP_TOOLCHAIN_ROOT=' + str(args.toolchain_root.resolve()), '-DRTOS_STDCPP_QEMU=' + str(qemu),
-                            '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard), '-DRTOS_STDCPP_A9_TICK_WRAP=' + ('ON' if wrap else 'OFF')], 'configuration')
-                        run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
-                        run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'emulator_and_link')
+                    for allocator in tls_allocators:
+                        for wrap in [False, True]:
+                            name = ('a9-cxx' + str(standard) + '-' + config.lower()
+                                    + ('-custom-tls' if allocator == 'custom' else '') + ('-wrap' if wrap else ''))
+                            build = output / name
+                            run(name + '-configure', ['cmake', '-S', ROOT / 'platforms/qemu-vexpress-a9', '-B', build, '-G', 'Ninja',
+                                '-DCMAKE_BUILD_TYPE=' + config, '-DCMAKE_TOOLCHAIN_FILE=' + str(ROOT / 'cmake/toolchains/qemu-a9.cmake'),
+                                '-DRTOS_STDCPP_TOOLCHAIN_ROOT=' + str(args.toolchain_root.resolve()), '-DRTOS_STDCPP_QEMU=' + str(qemu),
+                                '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard),
+                                '-DRTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=' + ('ON' if allocator == 'custom' else 'OFF'),
+                                '-DRTOS_STDCPP_A9_TICK_WRAP=' + ('ON' if wrap else 'OFF')], 'configuration')
+                            run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
+                            run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'emulator_and_link')
         report['status'] = 'passed'
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         report.update(status='failed', error=str(error)); print(str(error), file=sys.stderr)

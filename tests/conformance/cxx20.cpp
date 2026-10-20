@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "suite.h"
 #include "platform.h"
+#include "tls_peer.h"
 #include <array>
 #include <atomic>
 #include <barrier>
@@ -29,8 +30,12 @@ template<class F> std::thread checked_worker(unsigned tier, F &&function) {
 void jthreads() {
     std::binary_semaphore entered(0), exited(0);
     std::atomic<unsigned> observed{0};
+    std::atomic<unsigned> tls_destroyed{0};
     {
         auto first = rtos_test::platform::jworker(1, [&](std::stop_token stop) {
+            rtos_test::tls_test::peer_lifetime(tls_destroyed);
+            TEST_EQ(41U, rtos_test::tls_test::cross_unit);
+            *rtos_test::tls_test::peer_address() = 99;
 #ifdef RTOS_STDCPP_TEST_FREERTOS
             const auto expected = rtos_test::platform::worker_attributes(1, 1024);
             TEST_EQ(expected.priority, uxTaskPriorityGet(nullptr));
@@ -49,7 +54,7 @@ void jthreads() {
         TEST_REQUIRE(!first.joinable() && second.joinable() && token.stop_possible());
         // Destruction requests stop and joins before the surrounding scope ends.
     }
-    take(exited); TEST_EQ(1U, observed.load());
+    take(exited); TEST_EQ(1U, observed.load()); TEST_EQ(1U, tls_destroyed.load());
     auto explicit_stop = rtos_test::platform::jworker(0, [](std::stop_token stop) {
         while (!stop.stop_requested()) std::this_thread::sleep_for(1ms);
     });
