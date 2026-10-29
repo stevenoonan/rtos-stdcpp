@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "FreeRTOS": {
+    "repository": "FreeRTOS/FreeRTOS-Kernel",
+    "commit": "0adc196d4bd52a2d91102b525b0aafc1e14a2386",
+    "version": "11.2.0",
+    "root": ".",
+    "port": "portable/GCC/ARM_CM55_NTZ/non_secure",
+    "paths": [
+      "include",
+      "portable/GCC/ARM_CM55_NTZ/non_secure"
+    ]
+  },
+  "ThreadX": {
+    "repository": "STMicroelectronics/STM32CubeN6",
+    "commit": "475d9daed57db70ea2a202c66aa8df6205943479",
+    "version": "6.4.0",
+    "root": "Middlewares/ST/threadx",
+    "paths": [
+      "Middlewares/ST/threadx"
+    ]
+  },
+  "note": "Public vendor kernel headers for standalone Cortex-M55 compile checks. Builds do not fetch inputs."
+}

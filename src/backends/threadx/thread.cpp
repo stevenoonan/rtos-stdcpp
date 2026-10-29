@@ -1,0 +1,120 @@
+/// Copyright 2018-2023 Piotr Grygorczuk <grygorek@gmail.com>
+/// Copyright 2023 by NXP. All rights reserved.
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in all
+/// copies or substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+
+#define _GLIBCXX_THREAD_IMPL 1
+#include <thread>
+#include <system_error>
+#include <cerrno>
+#include "tx_api.h"
+#include "backend_time.h"
+
+#include "gthr_key_type.h"
+#include "threadx_thread_attributes.h"
+
+namespace rtos_stdcpp {
+extern std::atomic<Key*> s_key;
+
+const attributes* internal::attributes_lock::_attrib{&internal::attributes_lock::_default};
+} // namespace rtos_stdcpp
+
+namespace std {
+
+static void __execute_native_thread_routine(void* __p) {
+    auto local = __gthread_t::from_start_argument(__p);
+
+    { // we own the arg now; it must be deleted after run() returns
+        thread::_State_ptr __t{static_cast<thread::_State*>(local.arg())};
+        __t->_M_run();
+    }
+
+    auto& tls = __gthread_t::thread_storage();
+    tls.run_destructors();
+
+    if (auto* key = rtos_stdcpp::s_key.load(std::memory_order_acquire)) {
+        key->call_destructor(__gthread_t::native_task_handle());
+    }
+
+    tls.release_storage();
+    local.notify_joined(); // finished; release joined threads
+}
+
+thread::_State::~_State() = default;
+
+void thread::_M_start_thread(_State_ptr state, void (*)()) {
+    const int err =
+        __gthread_create(&_M_id._M_thread, __execute_native_thread_routine, state.get());
+
+    if (err) {
+        __throw_system_error(err);
+    }
+
+    state.release();
+}
+
+void thread::join() {
+    id invalid;
+    if (_M_id._M_thread != invalid._M_thread) {
+        const int error = __gthread_join(_M_id._M_thread, nullptr);
+        if (error) {
+            __throw_system_error(error);
+        }
+    } else {
+        __throw_system_error(EINVAL);
+    }
+
+    // destroy the handle explicitly - next call to join/detach will throw
+    _M_id = std::move(invalid);
+}
+
+void thread::detach() {
+    id invalid;
+    if (_M_id._M_thread != invalid._M_thread) {
+        const int error = __gthread_detach(_M_id._M_thread);
+        if (error) {
+            __throw_system_error(error);
+        }
+    } else {
+        __throw_system_error(EINVAL);
+    }
+
+    // destroy the handle explicitly - next call to join/detach will throw
+    _M_id = std::move(invalid);
+}
+
+// Returns the number of concurrent threads supported by the implementation.
+// The value should be considered only a hint.
+//
+// Return value
+//    Number of concurrent threads supported. If the value is not well defined
+//    or not computable, returns ​0​.
+unsigned int thread::hardware_concurrency() noexcept {
+    return 0; // not computable
+}
+
+void this_thread::__sleep_for(chrono::seconds sec, chrono::nanoseconds nsec) {
+    constexpr auto billion = 1000000000LL;
+    const auto seconds = sec.count();
+    auto ns = seconds > (INT64_MAX - nsec.count()) / billion ? INT64_MAX
+                                                             : seconds * billion + nsec.count();
+    rtos_stdcpp::sleep_ns(ns);
+}
+
+} // namespace std
