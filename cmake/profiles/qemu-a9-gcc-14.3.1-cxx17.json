@@ -1,0 +1,8 @@
+{
+  "cpu_flags": [
+    "-marm",
+    "-mcpu=cortex-a9",
+    "-mfpu=vfpv3",
+    "-mfloat-abi=hard"
+  ]
+}

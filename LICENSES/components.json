@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "project": "rtos-stdcpp",
+  "components": [
+    {
+      "name": "rtos-stdcpp adapter, tests, tooling and project-authored platform support",
+      "paths": [
+        "include",
+        "src",
+        "tests",
+        "tools",
+        "cmake",
+        "examples",
+        ".github",
+        "CMakeLists.txt",
+        "CMakePresets.json",
+        "docs"
+      ],
+      "license_expression": "MIT",
+      "notice": "LICENSE",
+      "origin": "FreeRTOS_cpp11 plus independent project contributions; per-file third-party notices take precedence."
+    },
+    {
+      "name": "Original project notice",
+      "paths": [
+        "LICENSES/FreeRTOS_cpp11-original.txt"
+      ],
+      "license_expression": "MIT",
+      "source_commit": "0dc4317a96fdbd5c8fa5211c9a387f6f0fe069ba",
+      "source_path": "LICENSE"
+    },
+    {
+      "name": "Bundled FreeRTOS kernel",
+      "paths": [
+        "third_party/freertos-kernel"
+      ],
+      "license_expression": "MIT",
+      "notice": "third_party/freertos-kernel/LICENSE",
+      "origin": "FreeRTOS 10.4.3"
+    },
+    {
+      "name": "Arm CMSIS and Cortex-A9 startup/system support",
+      "paths": [
+        "platforms/qemu-vexpress-a9/cmsis",
+        "platforms/qemu-vexpress-a9/startup_ARMCA9.cpp",
+        "platforms/qemu-vexpress-a9/system_ARMCA9.c",
+        "platforms/qemu-vexpress-a9/mem_ARMCA9.h"
+      ],
+      "license_expression": "Apache-2.0",
+      "notice": "LICENSES/Apache-2.0.txt",
+      "origin": "Arm CMSIS/A9 source subset; preserve per-file notices."
+    },
+    {
+      "name": "Selected GCC runtime",
+      "paths": [
+        "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17"
+      ],
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "manifest": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx17/SOURCES.json"
+    },
+    {
+      "name": "Full license documents",
+      "paths": [
+        "LICENSES/Apache-2.0.txt",
+        "LICENSES/GPL-3.0-or-later.txt",
+        "LICENSES/GCC-exception-3.1.txt"
+      ],
+      "license_expression": "LicenseRef-Verbatim-License-Document",
+      "origin": "Copying terms printed in each document; not a relicensing of source code."
+    },
+    {
+      "name": "GCC C++20 stop-token override",
+      "paths": [
+        "third_party/libstdcxx/stm32-gcc-14.3.1-cxx20"
+      ],
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "manifest": "third_party/libstdcxx/stm32-gcc-14.3.1-cxx20/SOURCES.json"
+    }
+  ]
+}

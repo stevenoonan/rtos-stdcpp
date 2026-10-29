@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+include_guard(GLOBAL)
+function(rtos_stdcpp_add_runtime target)
+    cmake_parse_arguments(R "" "BACKEND;CONFIG_TARGET;PROVIDER_TARGET" "" ${ARGN})
+    if(R_UNPARSED_ARGUMENTS OR NOT TARGET "${R_CONFIG_TARGET}")
+        message(FATAL_ERROR "Runtime requires CONFIG_TARGET and BACKEND FreeRTOS, ThreadX or NONE")
+    endif()
+    set(root "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/..")
+    add_library(${target} OBJECT "${root}/src/runtime/newlib_malloc_lock.c"
+        "${root}/src/runtime/cxx_guards.cpp" "${root}/src/runtime/cxx_nothrow.cpp"
+        "${root}/src/runtime/hooks.c")
+    target_include_directories(${target} PUBLIC "${root}/include")
+    target_link_libraries(${target} PRIVATE "${R_CONFIG_TARGET}")
+    if(R_BACKEND STREQUAL "FreeRTOS" OR R_BACKEND STREQUAL "ThreadX")
+        string(TOLOWER "${R_BACKEND}" backend)
+        target_sources(${target} PRIVATE "${root}/src/runtime/${backend}.c")
+    elseif(R_BACKEND STREQUAL "NONE" AND R_PROVIDER_TARGET AND TARGET "${R_PROVIDER_TARGET}")
+        target_link_libraries(${target} PUBLIC "${R_PROVIDER_TARGET}")
+    else()
+        message(FATAL_ERROR "Runtime BACKEND NONE requires PROVIDER_TARGET")
+    endif()
+endfunction()

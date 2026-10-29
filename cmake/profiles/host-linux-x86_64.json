@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "environment": "Ubuntu 24.04 x86_64; distro patch updates permitted",
+  "profiles": {
+    "gcc": {
+      "cc": "gcc-13",
+      "cxx": "g++-13",
+      "major": 13
+    },
+    "clang": {
+      "cc": "clang-18",
+      "cxx": "clang++-18",
+      "major": 18
+    }
+  }
+}

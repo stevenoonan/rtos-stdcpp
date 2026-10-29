@@ -1,0 +1,178 @@
+# SPDX-License-Identifier: MIT
+name: C++ concurrency qualification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: concurrency-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  host:
+    name: Host C++${{ matrix.standard }} ${{ matrix.compiler }} ${{ matrix.config }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        config: [Debug, Release]
+        standard: [17, 20]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install supported host compilers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-13 g++-13 clang-18 libclang-rt-18-dev cmake ninja-build
+      - name: Audit delivered dependencies and license notices
+        run: python3 tools/check_licenses.py
+      - name: Execute C++ host tests with UBSan
+        run: >-
+          python3 tools/run_matrix.py --environment host --host-compiler '${{ matrix.compiler }}'
+          --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
+          --output "$RUNNER_TEMP/results"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/results
+          if-no-files-found: error
+          retention-days: 7
+  a9:
+    name: A9 C++${{ matrix.standard }} ${{ matrix.config }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        config: [Debug, Release]
+        standard: [17, 20]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ${{ runner.temp }}/prepared/packages
+            ${{ runner.temp }}/prepared/qemu/packages
+          key: a9-packages-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('cmake/profiles/st-gcc-14.3.1-download.json', 'cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json') }}
+      - name: Install emulator runtime dependencies
+        run: |
+          sudo apt-get update
+          # Headless tests need no recommended GUI, audio, or extra storage packages.
+          sudo apt-get install -y --no-install-recommends qemu-system-arm cmake ninja-build
+      - name: Prepare exact compiler and emulator
+        run: python3 tools/setup_ci.py --kind a9 --destination "$RUNNER_TEMP/prepared"
+      - name: Execute C++ A9 tests and real tick-wrap variants
+        run: >-
+          python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
+          --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
+          --output "$RUNNER_TEMP/results"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/results
+          if-no-files-found: error
+          retention-days: 7
+  embedded:
+    name: Standalone ${{ matrix.backend }} compile and release checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [FreeRTOS, ThreadX]
+    defaults:
+      run:
+        working-directory: source
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: source
+          persist-credentials: false
+      - name: Read pinned public kernel inputs
+        id: kernels
+        env:
+          SELECTED_BACKEND: ${{ matrix.backend }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          pin = json.loads(Path('cmake/profiles/embedded-kernel-inputs.json').read_text())[os.environ['SELECTED_BACKEND']]
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('repository=' + pin['repository'] + '\n')
+              output.write('commit=' + pin['commit'] + '\n')
+              output.write('sparse<<PATHS\n' + '\n'.join(pin['paths']) + '\nPATHS\n')
+          PY
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: ${{ steps.kernels.outputs.repository }}
+          ref: ${{ steps.kernels.outputs.commit }}
+          path: inputs/kernels
+          sparse-checkout: ${{ steps.kernels.outputs.sparse }}
+          persist-credentials: false
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ${{ runner.temp }}/prepared/packages
+          key: embedded-compiler-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('source/cmake/profiles/st-gcc-14.3.1-download.json') }}
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake ninja-build
+      - name: Prepare the qualified compiler
+        run: python3 tools/setup_ci.py --kind embedded --destination "$RUNNER_TEMP/prepared"
+      - name: Check isolated sources in both language modes and build configurations
+        env:
+          SELECTED_BACKEND: ${{ matrix.backend }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+          pin = json.loads(Path('cmake/profiles/embedded-kernel-inputs.json').read_text())[os.environ['SELECTED_BACKEND']]
+          kernels = Path(os.environ['GITHUB_WORKSPACE']) / 'inputs/kernels'
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          command = [
+              sys.executable, 'tools/check_standalone.py', '--skip-host',
+              '--backend', os.environ['SELECTED_BACKEND'],
+              '--toolchain-root', str(temporary / 'prepared/toolchain'),
+              '--output', str(temporary / 'release-checks'),
+          ]
+          if os.environ['SELECTED_BACKEND'] == 'FreeRTOS':
+              command += ['--freertos-kernel-root', str(kernels / pin['root']),
+                          '--freertos-port-include', str(kernels / pin['port'])]
+          else:
+              command += ['--threadx-root', str(kernels / pin['root'])]
+          subprocess.run(command, check=True)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: standalone-${{ matrix.backend }}-${{ github.sha }}
+          path: ${{ runner.temp }}/release-checks
+          if-no-files-found: error
+          retention-days: 7
+  required:
+    name: Required C++ checks
+    needs: [host, a9, embedded]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every profile to succeed
+        env:
+          HOST_RESULT: ${{ needs.host.result }}
+          A9_RESULT: ${{ needs.a9.result }}
+          EMBEDDED_RESULT: ${{ needs.embedded.result }}
+        run: test "$HOST_RESULT" = success && test "$A9_RESULT" = success && test "$EMBEDDED_RESULT" = success

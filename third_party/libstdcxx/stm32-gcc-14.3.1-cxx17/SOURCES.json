@@ -1,0 +1,61 @@
+{
+  "url": "https://github.com/STMicroelectronics/gnu-tools-for-stm32",
+  "ref": "14.3.rel1",
+  "commit": "b8cdff71b827478c8510c70b3a15d2b50c759255",
+  "files": [
+    {
+      "path": "libstdc++-v3/src/c++11/mutex.cc",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/mutex.cc",
+      "sha256": "c4f859e34d1b3e1f3dd1a9e5084518965d64dd77338eed2112d53ac4176c9ba6",
+      "bytes": 3033,
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "local_modifications": [],
+      "verification": "Byte-identical to immutable source URL; rechecked 2026-10-19"
+    },
+    {
+      "path": "libstdc++-v3/src/c++11/condition_variable.cc",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/condition_variable.cc",
+      "sha256": "8d7776f730b290f71cebd34d32c5caed32e2d19284d98375962c52ce7b2e7015",
+      "bytes": 3199,
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "local_modifications": [],
+      "verification": "Byte-identical to immutable source URL; rechecked 2026-10-19"
+    },
+    {
+      "path": "libstdc++-v3/src/c++11/future.cc",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/libstdc++-v3/src/c++11/future.cc",
+      "sha256": "e55b5945a4bf2024e22affc8d7d37ea63bd62e5cbb95ac8ed03534cefc642cf3",
+      "bytes": 3664,
+      "license_expression": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "local_modifications": [],
+      "verification": "Byte-identical to the pinned ST GCC source; moved from the STM32 test bed on 2026-10-20"
+    },
+    {
+      "path": "COPYING.RUNTIME",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/COPYING.RUNTIME",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "bytes": 3324,
+      "local_modifications": [],
+      "verification": "Byte-identical to immutable source URL; rechecked 2026-10-19",
+      "document_type": "Verbatim license document; copying terms are printed in the document"
+    },
+    {
+      "path": "COPYING3",
+      "url": "https://raw.githubusercontent.com/STMicroelectronics/gnu-tools-for-stm32/b8cdff71b827478c8510c70b3a15d2b50c759255/src/gcc/COPYING3",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147,
+      "local_modifications": [],
+      "verification": "Byte-identical to immutable source URL; rechecked 2026-10-19",
+      "document_type": "Verbatim license document; copying terms are printed in the document"
+    }
+  ],
+  "schema_version": 2,
+  "profile": "stm32-gcc-14.3.1-cxx17",
+  "owner": "rtos-stdcpp",
+  "authoritative_for": [
+    "STM32N6570-DK GNU Tools for STM32 14.3.rel1.20251027-0700 C++17"
+  ],
+  "compiler_id": "arm-none-eabi-g++ (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623",
+  "local_modifications": [],
+  "selection_notes": "mutex.cc, condition_variable.cc and future.cc are built with the matching gthread configuration. No libatomic fallback; general future/async qualification remains separate."
+}

@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "time.deadline_rounding",
+      "suite": "arithmetic",
+      "requirements": [
+        "cxx17",
+        "type_only_kernel_stubs"
+      ]
+    },
+    {
+      "id": "time.tick_extension",
+      "suite": "arithmetic",
+      "requirements": [
+        "cxx17",
+        "type_only_kernel_stubs"
+      ]
+    },
+    {
+      "id": "thread.lifecycle",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "mutex.contention",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.notification_timeout",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "thread.exit_notification",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "mutex.recursive_timed",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.any",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "once.concurrent",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "thread.move_stack_workload",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "future.async",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Matching future runtime has not been qualified"
+    },
+    {
+      "id": "mutex.shared",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Shared mutex support has not been qualified"
+    },
+    {
+      "id": "atomic.unsupported",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Non-lock-free atomic fallbacks are not supported"
+    },
+    {
+      "id": "cxx20.synchronization",
+      "suite": "cxx17",
+      "requirements": [
+        "separate_qualification"
+      ],
+      "skip_reason": "Requires the C++20 suite"
+    },
+    {
+      "id": "lifecycle.identity",
+      "suite": "regression",
+      "requirements": [
+        "cxx17",
+        "freertos_gthreads",
+        "idle_cleanup"
+      ]
+    },
+    {
+      "id": "harness.assertions",
+      "suite": "fixture",
+      "requirements": [
+        "cxx17"
+      ]
+    },
+    {
+      "id": "thread.arguments_hash",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "initialization.local_statics",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.predicate_recheck",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "runtime.startup",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "time.clocks_sleep",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "runtime.resources",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "condition.notification_isolation",
+      "suite": "a9",
+      "requirements": [
+        "qemu_a9",
+        "freertos_gthreads",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "jthread.lifecycle",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "stop.callbacks",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "stop.priority_progress",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "condition.stop_wait",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "atomic.wait_notify",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "semaphore.operations",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "latch.operations",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "barrier.phases",
+      "suite": "cxx20",
+      "requirements": [
+        "cxx20",
+        "threads",
+        "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "thread.local_storage",
+      "suite": "cxx17",
+      "requirements": [
+        "cxx17",
+        "threads",
+        "test_platform_hooks"
+      ]
+    }
+  ]
+}
