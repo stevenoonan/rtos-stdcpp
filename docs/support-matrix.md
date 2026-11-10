@@ -9,24 +9,25 @@ headers and libraries through `rtos-stdcpp::config`.
 
 | Backend | Profile family | Configuration contract |
 | --- | --- | --- |
-| FreeRTOS | `stm32-gcc-14.3.1-cxx17` / `cxx20`, `qemu-a9-gcc-14.3.1-cxx17` / `cxx20` | [FreeRTOS integration](backends/freertos.md) |
-| ThreadX | `stm32-gcc-14.3.1-cxx17` / `cxx20` | [ThreadX integration](backends/threadx.md) |
+| FreeRTOS | `stm32-gcc-14.3.1-cxx17`, `qemu-a9-gcc-14.3.1-cxx17`, `qemu-m4/m7/m55-gcc-14.3.1-cxx17` (also `cxx20`) | [FreeRTOS integration](backends/freertos.md) |
+| ThreadX | `stm32-gcc-14.3.1-cxx17` / `cxx20`, `qemu-m4-gcc-14.3.1-cxx17`, `qemu-m7-gcc-14.3.1-cxx17`, `qemu-m55-gcc-14.3.1-cxx17` (also `cxx20`) | [ThreadX integration](backends/threadx.md) |
 
 The CMake profile/backend combinations above are distinct from executed evidence
-below. The standalone compile fixture checks both backends. The QEMU runner selects
-FreeRTOS; ThreadX execution uses a consumer-owned board runner. Both backends share the
+below. The standalone compile fixture checks both backends. The A9 runner
+executes FreeRTOS; the Cortex-M runner executes both backends. Both backends share the
 [integration contract](integration.md) and language-TLS implementation.
 
 ## Executed and build-only profiles
 
 | Environment | Compiler, runtime and dependencies | Evidence |
 |---|---|---|
-| Ubuntu 24.04 x86_64 GCC | GCC 13, system libstdc++, UBSan | Debug/Release host arithmetic, standard-library reference cases and runner controls |
-| Ubuntu 24.04 x86_64 Clang | Clang 18 with GCC 13's C++ headers/libstdc++, UBSan | Same host checks |
+| Ubuntu 24.04 x86_64 GCC | GCC 13, system libstdc++, UBSan and ASan+UBSan | Debug/Release host arithmetic, standard-library reference cases and runner controls |
+| Ubuntu 24.04 x86_64 Clang | Clang 18 with GCC 13's C++ headers/libstdc++, UBSan and ASan+UBSan | Same host checks |
 | FreeRTOS Cortex-M55 board integration | `stm32-gcc-14.3.1-cxx17`, ST GCC 14.3.1, hard float, `thumb/v8-m.main+dp/hard`; FreeRTOS 11.2.0 / X-CUBE-FREERTOS 1.6.0 | Application-owned Debug/Release final-image and sustained physical-board qualification, real wrap and failure/reset tests |
 | ThreadX STM32N6570-DK integration | `stm32-gcc-14.3.1-cxx20`, same ST compiler/multilib; consumer-pinned STM32CubeN6 ThreadX 6.4 Cortex-M55 port | Consumer-owned Debug/Release C++17/C++20 shared suites, tick wrap, FPU preemption, lwIP primitives and repeated resource recovery; broader board/failure/network qualification is separate |
 | Standalone FreeRTOS/ThreadX M55 compile fixtures | Same compiler/multilib with explicit vendor kernel/port headers | C++17/C++20 Debug/Release public APIs, native bootstrap (ThreadX), compiler runtime and TLS allocation policies compile; no scheduler execution or final executable |
 | QEMU vexpress-a9, one Cortex-A9 | `qemu-a9-gcc-14.3.1-cxx17`, same ST compiler distribution, `thumb/v7-a+fp/hard` selected with ARM/VFPv3 flags; bundled 10.4.3 kernel/ARM_CA9 port; selected QEMU 8.2.2 packages | Debug/Release, ordinary and near-wrap starts; shared cases, lifecycle/platform suites, isolated failures and runtime link checks |
+| QEMU MPS2 AN386/AN500 and MPS3 AN547 | Cortex-M4/M7/M55 respectively, ST GCC 14.3.1 hard float, QEMU 8.2.2, official FreeRTOS 11.2.0 and ThreadX 6.4.1 GNU ports | C++17/C++20 Debug/Release, default/custom TLS allocation, ordinary/near-wrap ticks; shared suites, lifecycle regression, resource/FPU/wrap tests, isolated failures and runtime link/ABI checks |
 
 The tested embedded compiler is GNU Tools for STM32
 `14.3.rel1.20251027-0700`, GCC `14.3.1 20250623`.
@@ -37,7 +38,7 @@ three unmodified [GCC runtime sources](../THIRD_PARTY_NOTICES.md#gcc-runtime-sou
 C++20 selects `stm32-gcc-14.3.1-cxx20` or `qemu-a9-gcc-14.3.1-cxx20`. These
 reuse the C++17 profiles' CPU flags and GCC runtime sources and select the
 [stop-token override](../THIRD_PARTY_NOTICES.md#gcc-runtime-sources).
-The [CI matrix](ci.md) runs both language modes across host and A9 profiles. Board
+The [CI matrix](ci.md) runs both language modes across host, A9 and Cortex-M profiles. Board
 commands and physical measurements belong to the integrating application.
 
 ## Feature boundary
@@ -58,14 +59,17 @@ commands and physical measurements belong to the integrating application.
 
 The C++20 suite requires **8 passes without skips**. The shared C++17 suite
 requires **12 passes and 4 approved skips**. The skip
-reasons are authoritative in [the catalog](../tests/catalog.json). The FreeRTOS
+reasons are authoritative in [the catalog](../tests/catalog.json). The shared backend
 lifecycle suite requires one named regression pass; each arithmetic run requires
 two passes. These suite counts are distinct from the number of CTest entries.
-The A9 platform suite requires four passes, including a tick-interrupt masking
-probe across three hardware timer periods, 64 shared stress rounds
-and 64 allocation/thread recovery cycles after warm-up, exact resource recovery,
-at least 128 free stack words and a real kernel-overflow observation in the wrap
-variant. Emulator timing is not a physical-board latency guarantee.
+The common emulator qualification suite requires six passes on both backends:
+startup constructors, interrupt masking, clocks/sleep/wrap, 64 shared stress
+rounds, exact warmed allocation/thread/TLS recovery and FP register preservation.
+FreeRTOS additionally requires notification-index isolation and its kernel-heap
+failure image. See the [parity contract](testing.md#backend-parity) for exact
+measurements and backend-specific reasons. M55 runs in secure single mode;
+TrustZone transitions and MVE are not qualified. Emulator timing is not a
+physical-board latency guarantee.
 
 ## Context, failures and exclusions
 

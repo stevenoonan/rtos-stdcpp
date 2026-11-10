@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: MIT
-// Test transport support, to be linked only by a separately qualified A9 image.
 #include "platform.h"
 #include "console.h"
-#include "runner.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include <chrono>
+#include "qualification_platform.h"
+#include "ca9_global_timer.h"
+#include "critical_section.h"
 #include <cstdlib>
+extern "C" {
+volatile uint32_t rtos_test_tick_count;
+
+void vApplicationTickHook() {
+    rtos_test_tick_count = rtos_test_tick_count + 1;
+}
+}
 
 namespace rtos_test::platform {
 [[noreturn]] void fatal(const char* file, unsigned line) {
@@ -14,30 +19,17 @@ namespace rtos_test::platform {
     print(":");
     print(line);
     print("\n");
-    std::_Exit(EXIT_FAILURE);
-}
-
-void idle_opportunity() {
-    vTaskDelay(1);
-}
-
-uint32_t millis() {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::steady_clock::now().time_since_epoch())
-        .count();
-}
-
-void observe_stack() {
-    TEST_REQUIRE(uxTaskGetStackHighWaterMark(nullptr) >= 128);
-}
-
-rtos_stdcpp::attributes worker_attributes(unsigned tier, uint32_t words) {
-    rtos_stdcpp::attributes attributes{};
-    attributes.priority = tskIDLE_PRIORITY + 1 + 2 * tier;
-    attributes.task_name = "test-worker";
-    if (words) {
-        attributes.stack_word_count = words;
-    }
-    return attributes;
+    std::_Exit(1);
 }
 } // namespace rtos_test::platform
+
+namespace rtos_test::qualification {
+bool masked_tick_probe() {
+    rtos_stdcpp::critical_section guard;
+    const auto before = xTaskGetTickCount();
+    const auto start = GlobTimer_Counter();
+    while (GlobTimer_Counter() - start < 3 * (100000000ULL / configTICK_RATE_HZ)) {
+    }
+    return xTaskGetTickCount() == before;
+}
+} // namespace rtos_test::qualification

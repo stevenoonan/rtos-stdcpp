@@ -20,5 +20,31 @@
       "Middlewares/ST/threadx"
     ]
   },
-  "note": "Public vendor kernel headers for standalone Cortex-M55 compile checks. Builds do not fetch inputs."
+  "note": "Public vendor kernel headers for standalone Cortex-M55 compile checks. Builds do not fetch inputs.",
+  "ThreadX-QEMU": {
+    "repository": "eclipse-threadx/threadx",
+    "commit": "07eac307405dbf09d409844e31c37b0649d6c074",
+    "version": "6.4.1",
+    "root": ".",
+    "paths": [
+      "common",
+      "ports/cortex_m4/gnu",
+      "ports/cortex_m7/gnu",
+      "ports/cortex_m55/gnu"
+    ]
+  },
+  "FreeRTOS-QEMU": {
+    "repository": "FreeRTOS/FreeRTOS-Kernel",
+    "commit": "0adc196d4bd52a2d91102b525b0aafc1e14a2386",
+    "version": "11.2.0",
+    "root": ".",
+    "port": "portable/GCC/ARM_CM55_NTZ/non_secure",
+    "paths": [
+      "include",
+      "portable/MemMang",
+      "portable/GCC/ARM_CM4F",
+      "portable/GCC/ARM_CM7/r0p1",
+      "portable/GCC/ARM_CM55_NTZ/non_secure"
+    ]
+  }
 }

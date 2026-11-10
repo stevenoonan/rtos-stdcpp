@@ -25,7 +25,7 @@ def fetch(url, path, checksum):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--kind', required=True, choices=['a9', 'embedded'])
+    parser.add_argument('--kind', required=True, choices=['qemu', 'a9', 'embedded'])
     parser.add_argument('--destination', required=True, type=Path)
     args = parser.parse_args()
     destination = args.destination.resolve()
@@ -53,7 +53,7 @@ def main():
             bundle.extract(item, toolchain)
             if not item.is_dir():
                 path.chmod((item.external_attr >> 16) & 0o777 or 0o644)
-    if args.kind == 'a9':
+    if args.kind in ['qemu', 'a9']:
         subprocess.run([sys.executable, str(ROOT / 'tools/setup_qemu.py'), '--destination', str(destination / 'qemu')], check=True)
     print('Prepared ' + args.kind + ' dependencies at ' + str(destination))
 
