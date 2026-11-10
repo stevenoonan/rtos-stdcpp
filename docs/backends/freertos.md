@@ -96,7 +96,17 @@ covered in [shared integration](../integration.md#standard-apis-and-extensions).
 
 ## Thread lifetime and cleanup
 
-Managed IDs name a stable completion block. The worker destroys its callable,
+The backend lifecycle methods live in
+[`lifecycle.cpp`](../../src/backends/freertos/lifecycle.cpp): creation, join,
+detach, completion notification and final reference release. The same file owns
+the private lifetime-ID registry. The gthread header retains the handle layout,
+comparisons and small accessors; `thread.cpp` supplies the `std::thread` API glue.
+
+Managed IDs contain a completion-block address and a nonzero 32-bit lifetime
+number. On the supported 32-bit targets, the handle and `std::thread::id` are eight
+bytes. Join and detach still access the completion block directly. See the
+[identity contract](../thread-identity.md) for allocation, wrap and ABI rules.
+The worker destroys its callable,
 drains language TLS and exit callbacks, reclaims TLS storage, publishes completion
 and self-deletes. Join waits for completion and releases the owner's reference;
 detach releases that reference without waiting. The last reference frees the
@@ -106,6 +116,8 @@ TCB and stack, so allow idle to run even after join returns.
 Do not delete managed workers externally with `vTaskDelete`; let the callable
 return. Native tasks do not have the managed language-TLS or exit-callback
 contract. The one existing gthread key is reserved for libstdc++ exit work.
+Native IDs retain tagged TCB addresses and numeric component zero; they do not
+receive the managed lifetime-number protection.
 
 ## Allocation and compiler runtime
 

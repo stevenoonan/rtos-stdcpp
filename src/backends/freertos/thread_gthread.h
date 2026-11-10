@@ -28,9 +28,8 @@
 #include "critical_section.h"
 #include "freertos_thread_attributes.h"
 #include "tls.h"
+#include "../../common/thread_identity.h"
 #include <cstdint>
-#include <cerrno>
-#include <new>
 
 #if __cplusplus > 201703L
 #include <compare>
@@ -66,110 +65,53 @@ class gthr_freertos {
         void* argument;
         unsigned references;
         internal::tls_context tls;
+        internal::thread_registration registration;
     };
 
     static constexpr EventBits_t completed = 1;
     static constexpr BaseType_t tls_slot = 0;
 
-    // A single canonical word makes IDs, copies and GCC's raw-byte ID hashes
-    // agree. Managed IDs name the completion block, not a reusable/deleted TCB.
-    // Native (non-adapter) tasks use a tagged TCB address; aligned blocks have
-    // the low bit clear. ID copies are non-owning, as required by std::thread::id.
-    uintptr_t _identity{0};
+    // Two canonical words preserve direct lifecycle access and distinguish
+    // successive workers at a recycled address. Native tasks use a tagged TCB
+    // address and numeric ID zero. Copies are non-owning and never dereferenced
+    // for comparisons or hashing, including after the completion block is freed.
+    internal::thread_identity _identity{};
 
-    explicit constexpr gthr_freertos(uintptr_t identity) : _identity(identity) {}
+    explicit constexpr gthr_freertos(uintptr_t address, uint32_t number = 0)
+        : _identity{address, number} {}
 
     completion* state() const {
-        return reinterpret_cast<completion*>(_identity);
+        return reinterpret_cast<completion*>(_identity.address);
     }
 
     bool managed() const {
-        return _identity != 0 && (_identity & 1U) == 0;
+        return _identity.address && (_identity.address & 1U) == 0 && _identity.number;
     }
 
-    static void release(completion* shared) {
-        bool last;
-        {
-            critical_section guard;
-            configASSERT(shared->references != 0);
-            last = --shared->references == 0;
-        }
-        if (last) {
-            // No references remain. Deallocation may suspend scheduling, but must
-            // not keep timer IRQs masked while walking allocator/kernel lists.
-            vEventGroupDelete(shared->event);
-            vPortFree(shared);
-        }
-    }
+    static void release(completion* shared);
 
 public:
     using task_foo = void (*)(void*);
     using native_task_type = TaskHandle_t;
     constexpr gthr_freertos() = default;
 
+    uint32_t numeric_id() const noexcept {
+        return static_cast<uint32_t>(_identity.number);
+    }
+
     // Copy/move/default destruction never transfer or release ownership. Only
     // create/join/detach/worker-exit own references; std::thread enforces the
     // requirement to join/detach before destruction or move-assignment.
 
-    bool create_thread(task_foo function, void* argument) {
-        void* storage = pvPortMalloc(sizeof(completion));
-        if (!storage) {
-            return false;
-        }
-        auto* shared = ::new (storage) completion{};
-        shared->event = xEventGroupCreate();
-        if (!shared->event) {
-            vPortFree(shared);
-            return false;
-        }
-        shared->argument = argument;
-        shared->task = nullptr;
-        shared->references = 2; // std::thread owner and worker
-        {
-            scheduler_section guard;
-            const auto& attr = *internal::attributes_lock::_attrib;
-            // The stable shared block is the entry argument. Nothing in the worker
-            // depends on the address/lifetime of a std::thread object or temporary.
-            if (xTaskCreate(function, attr.task_name, attr.stack_word_count, shared, attr.priority,
-                            &shared->task) == pdPASS) {
-                vTaskSetThreadLocalStoragePointer(shared->task, tls_slot, shared);
-                _identity = reinterpret_cast<uintptr_t>(shared);
-                configASSERT((_identity & 1U) == 0);
-                return true;
-            }
-        }
-        vEventGroupDelete(shared->event);
-        vPortFree(shared);
-        return false;
-    }
+    bool create_thread(task_foo function, void* argument);
 
-    int join() {
-        if (!managed()) {
-            return EINVAL;
-        }
-        if (*this == self()) {
-            return EDEADLK;
-        }
-        auto* shared = state();
-        while ((xEventGroupWaitBits(shared->event, completed, pdFALSE, pdTRUE, portMAX_DELAY) &
-                completed) == 0) {
-        }
-        release(shared);
-        _identity = 0;
-        return 0;
-    }
+    int join();
 
-    int detach() {
-        if (!managed()) {
-            return EINVAL;
-        }
-        release(state());
-        _identity = 0;
-        return 0;
-    }
+    int detach();
 
     static gthr_freertos from_start_argument(void* argument) {
-        return gthr_freertos{reinterpret_cast<uintptr_t>(argument)};
+        return gthr_freertos{reinterpret_cast<uintptr_t>(argument),
+                             static_cast<completion*>(argument)->registration.id};
     }
 
     void* arg() const {
@@ -178,24 +120,13 @@ public:
 
     static internal::tls_context& thread_storage();
 
-    [[noreturn]] void notify_joined() {
-        auto* shared = state();
-        vTaskSetThreadLocalStoragePointer(nullptr, tls_slot, nullptr);
-        // Keep the worker reference until set-bits returns: a newly unblocked
-        // joiner can run immediately and release its own reference in the meantime.
-        xEventGroupSetBits(shared->event, completed);
-        release(shared);
-        // The owner never inspects/deletes this TCB. Kernel idle cleanup owns it.
-        vTaskDelete(nullptr);
-        for (;;) {
-        } // vTaskDelete's C declaration does not carry noreturn.
-    }
+    [[noreturn]] void notify_joined();
 
     static gthr_freertos self() {
         auto task = xTaskGetCurrentTaskHandle();
         auto shared = pvTaskGetThreadLocalStoragePointer(task, tls_slot);
-        return gthr_freertos{shared ? reinterpret_cast<uintptr_t>(shared)
-                                    : reinterpret_cast<uintptr_t>(task) | 1U};
+        return shared ? from_start_argument(shared)
+                      : gthr_freertos{reinterpret_cast<uintptr_t>(task) | 1U};
     }
 
     static native_task_type native_task_handle() {

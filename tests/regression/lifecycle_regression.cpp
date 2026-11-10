@@ -3,6 +3,8 @@
 #include <thread>
 #include <atomic>
 #include <functional>
+#include <array>
+#include <type_traits>
 #include "freertos/regression_platform.h"
 using namespace rtos_test::regression_platform;
 
@@ -93,6 +95,33 @@ uint32_t freertos_cpp11_lifecycle_regression(void)
   REGRESSION_CHECK(copied == worker_id && expected_hash == worker_hash);
   REGRESSION_CHECK(!identity.joinable());
   passed |= 16;
+
+  // The handle is two canonical words. Saved IDs remain usable after reclamation,
+  // even when the allocator gives a new worker the same completion address.
+  static_assert(sizeof(std::thread::id) == 2 * sizeof(uintptr_t));
+  static_assert(std::is_trivially_copyable_v<std::thread::native_handle_type>);
+  static_assert(std::has_unique_object_representations_v<std::thread::native_handle_type>);
+  std::array<std::thread::id, 64> old_ids{};
+  std::array<size_t, 64> old_hashes{};
+  uint32_t previous_number = 0;
+  for (unsigned i = 0; i < old_ids.size(); ++i) {
+    std::thread::id self_id;
+    std::thread worker([&] { self_id = std::this_thread::get_id(); });
+    old_ids[i] = worker.get_id();
+    old_hashes[i] = std::hash<std::thread::id>{}(old_ids[i]);
+    const auto number = worker.native_handle().numeric_id();
+    REGRESSION_CHECK(number != 0);
+    if (i) {
+      REGRESSION_CHECK(number == (previous_number == UINT32_MAX ? 1U : previous_number + 1));
+    }
+    previous_number = number;
+    worker.join();
+    REGRESSION_CHECK(self_id == old_ids[i]);
+    for (unsigned j = 0; j < i; ++j) {
+      REGRESSION_CHECK(old_ids[j] != old_ids[i]);
+      REGRESSION_CHECK(std::hash<std::thread::id>{}(old_ids[j]) == old_hashes[j]);
+    }
+  }
 
   delay_ms(20);
 #ifdef RTOS_STDCPP_TEST_FREERTOS

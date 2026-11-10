@@ -132,7 +132,7 @@ def main():
                         commands = json.loads((build / 'compile_commands.json').read_text())
                         counts = Counter(Path(entry['file']).name for entry in commands)
                         native = ['lifecycle.cpp', 'threadx_time.cpp', 'threadx.c', 'application.cpp'] if backend == 'ThreadX' else [
-                            'tls_context.cpp', 'freertos_time.cpp', 'freertos.c']
+                            'lifecycle.cpp', 'tls_context.cpp', 'freertos_time.cpp', 'freertos.c']
                         providers = ['thread.cpp', 'gthr_key.cpp', 'tls.cpp', 'mutex.cc',
                                      'condition_variable.cc', 'future.cc', 'public_api.cpp',
                                      'newlib_malloc_lock.c', 'cxx_guards.cpp', 'cxx_nothrow.cpp', 'hooks.c', *native]

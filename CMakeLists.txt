@@ -21,7 +21,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 rtos-stdcpp contributors
 cmake_minimum_required(VERSION 3.22)
-project(rtos-stdcpp VERSION 1.0.0 LANGUAGES C CXX)
+project(rtos-stdcpp VERSION 1.1.0 LANGUAGES C CXX)
 
 option(RTOS_STDCPP_BUILD_LIBRARY "Build the embedded adapter" ON)
 option(RTOS_STDCPP_BUILD_HOST_TESTS "Build standalone host tests and runner controls" OFF)
@@ -65,7 +65,8 @@ if(RTOS_STDCPP_BUILD_LIBRARY)
     elseif(RTOS_STDCPP_BACKEND STREQUAL "FreeRTOS")
         set(backend freertos)
         set(backend_target "${RTOS_STDCPP_FREERTOS_TARGET}")
-        set(backend_sources src/backends/freertos/tls_context.cpp src/backends/freertos/freertos_time.cpp)
+        set(backend_sources src/backends/freertos/lifecycle.cpp
+            src/backends/freertos/tls_context.cpp src/backends/freertos/freertos_time.cpp)
     else()
         message(FATAL_ERROR "RTOS_STDCPP_BACKEND must be FreeRTOS or ThreadX")
     endif()

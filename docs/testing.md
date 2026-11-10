@@ -19,9 +19,10 @@ ctest --preset host-debug --no-tests=error
 
 Use `host-release` for Release. Build output goes to `../build/rtos-stdcpp`.
 Set `-DRTOS_STDCPP_CXX_STANDARD=20` for C++20; use a separate build directory
-when keeping both modes. Each C++17 configuration has five CTest entries; C++20
+when keeping both modes. Each C++17 configuration has eight CTest entries; C++20
 adds the required concurrency suite: actual backend arithmetic at two tick
-rates, standard-library reference cases, and normal/optimized runner controls.
+rates, thread identity/allocator and backend lifecycle fixtures, standard-library
+reference cases, and normal/optimized runner controls.
 Host threads use the host runtime; they do not exercise either embedded kernel.
 
 ## Embedded compile checks
