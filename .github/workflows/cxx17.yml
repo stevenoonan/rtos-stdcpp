@@ -26,7 +26,7 @@ jobs:
         config: [Debug, Release]
         standard: [17, 20]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
       - name: Install supported host compilers
@@ -38,14 +38,12 @@ jobs:
           python3 tools/run_matrix.py --environment host --host-compiler '${{ matrix.compiler }}'
           --config '${{ matrix.config }}' --standard '${{ matrix.standard }}' --sanitizer '${{ matrix.sanitizer }}'
           --output "$RUNNER_TEMP/results"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./.github/actions/upload-results
         if: always()
         with:
-          name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ matrix.sanitizer }}-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/results
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: .
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ matrix.sanitizer }}-${{ github.sha }}
   a9:
     name: A9 C++${{ matrix.standard }} ${{ matrix.config }}
     runs-on: ubuntu-24.04
@@ -56,7 +54,7 @@ jobs:
         config: [Debug, Release]
         standard: [17, 20]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-qemu
@@ -65,14 +63,12 @@ jobs:
           python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
           --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
           --output "$RUNNER_TEMP/results"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./.github/actions/upload-results
         if: always()
         with:
-          name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/results
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: .
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
   cortex_m:
     name: ${{ matrix.backend }} ${{ matrix.core }} C++${{ matrix.standard }} ${{ matrix.config }}
     runs-on: ubuntu-24.04
@@ -85,7 +81,7 @@ jobs:
         config: [Debug, Release]
         standard: [17, 20]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           path: source
           persist-credentials: false
@@ -104,7 +100,7 @@ jobs:
               output.write('repository=' + pin['repository'] + '\ncommit=' + pin['commit'] + '\n')
               output.write('sparse<<PATHS\n' + '\n'.join(pin['paths']) + '\nPATHS\n')
           PY
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           repository: ${{ steps.kernel.outputs.repository }}
           ref: ${{ steps.kernel.outputs.commit }}
@@ -122,13 +118,12 @@ jobs:
           --threadx-root "$GITHUB_WORKSPACE/inputs/kernel" --freertos-root "$GITHUB_WORKSPACE/inputs/kernel"
           --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
           --output "$RUNNER_TEMP/results"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./source/.github/actions/upload-results
         if: always()
         with:
-          name: cortex-m-${{ matrix.backend }}-${{ matrix.core }}-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
-          path: ${{ runner.temp }}/results
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: source
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: cortex-m-${{ matrix.backend }}-${{ matrix.core }}-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
   embedded:
     name: Standalone ${{ matrix.backend }} compile and release checks
     runs-on: ubuntu-24.04
@@ -141,7 +136,7 @@ jobs:
       run:
         working-directory: source
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           path: source
           persist-credentials: false
@@ -160,14 +155,14 @@ jobs:
               output.write('commit=' + pin['commit'] + '\n')
               output.write('sparse<<PATHS\n' + '\n'.join(pin['paths']) + '\nPATHS\n')
           PY
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           repository: ${{ steps.kernels.outputs.repository }}
           ref: ${{ steps.kernels.outputs.commit }}
           path: inputs/kernels
           sparse-checkout: ${{ steps.kernels.outputs.sparse }}
           persist-credentials: false
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ runner.temp }}/prepared/packages
           key: embedded-compiler-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('source/cmake/profiles/st-gcc-14.3.1-download.json') }}
@@ -201,13 +196,12 @@ jobs:
               command += ['--threadx-root', str(kernels / pin['root'])]
           subprocess.run(command, check=True)
           PY
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./source/.github/actions/upload-results
         if: always()
         with:
-          name: standalone-${{ matrix.backend }}-${{ github.sha }}
-          path: ${{ runner.temp }}/release-checks
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: source
+          results-directory: ${{ runner.temp }}/release-checks
+          artifact-name: standalone-${{ matrix.backend }}-${{ github.sha }}
   required:
     name: Required C++ checks
     needs: [host, a9, cortex_m, embedded]

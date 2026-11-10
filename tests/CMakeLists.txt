@@ -77,3 +77,8 @@ if(RTOS_STDCPP_BUILD_HOST_TESTS)
     add_test(NAME matrix_negative_controls COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/support/check_matrix.py")
     set_tests_properties(matrix_negative_controls PROPERTIES LABELS "host;harness" TIMEOUT 15)
 endif()
+
+if(RTOS_STDCPP_BUILD_HOST_TESTS)
+    add_test(NAME artifact_selection_controls COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/support/check_artifacts.py")
+    set_tests_properties(artifact_selection_controls PROPERTIES LABELS "host;harness" TIMEOUT 15)
+endif()

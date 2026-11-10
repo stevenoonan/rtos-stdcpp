@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: MIT
+name: Upload selected qualification results
+description: Retain small reports for seven days and failed configuration debugging files for three days.
+inputs:
+  source-directory:
+    description: Checkout directory relative to GITHUB_WORKSPACE.
+    default: '.'
+  results-directory:
+    description: Matrix result directory.
+    required: true
+  artifact-name:
+    description: Unique artifact name for this matrix job.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Select reports and failed configuration debugging files
+      id: select
+      if: always()
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      env:
+        RESULTS_DIRECTORY: ${{ inputs.results-directory }}
+        SOURCE_DIRECTORY: ${{ inputs.source-directory }}
+        JOB_STATUS: ${{ job.status }}
+      run: >-
+        python3 "$SOURCE_DIRECTORY/tools/collect_ci_artifacts.py"
+        --results "$RESULTS_DIRECTORY" --output "$RUNNER_TEMP/selected-artifacts" --job-status "$JOB_STATUS" --github-output "$GITHUB_OUTPUT"
+    - name: Upload reports and logs
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      if: always()
+      with:
+        name: ${{ inputs.artifact-name }}-reports
+        path: ${{ runner.temp }}/selected-artifacts/reports
+        if-no-files-found: error
+        retention-days: 7
+    - name: Upload failed configuration debugging files
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      if: ${{ always() && steps.select.outputs.has_debugging == 'true' }}
+      with:
+        name: ${{ inputs.artifact-name }}-debugging
+        path: ${{ runner.temp }}/selected-artifacts/debugging
+        if-no-files-found: error
+        retention-days: 3

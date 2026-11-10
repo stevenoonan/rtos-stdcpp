@@ -19,11 +19,11 @@ ctest --preset host-debug --no-tests=error
 
 Use `host-release` for Release. Build output goes to `../build/rtos-stdcpp`.
 Set `-DRTOS_STDCPP_CXX_STANDARD=20` for C++20; use a separate build directory
-when keeping both modes. Each UBSan C++17 configuration has eleven CTest
+when keeping both modes. Each UBSan C++17 configuration has twelve CTest
 entries; C++20 adds its concurrency suite. These cover both backends' deadline
 arithmetic at two tick rates, FreeRTOS tick extension, thread identity/allocator
 and backend lifecycle fixtures, standard-library reference cases, runner controls
-and matrix orchestration controls.
+and matrix orchestration/artifact selection controls.
 Set `-DRTOS_STDCPP_HOST_SANITIZER=address` in a separate build directory for
 ASan+UBSan with leak detection; CI sets `ASAN_OPTIONS=detect_leaks=1:halt_on_error=1`.
 This adds a CTest negative control that requires a heap-use-after-free diagnostic
