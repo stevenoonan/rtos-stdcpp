@@ -25,6 +25,8 @@ project(rtos-stdcpp VERSION 1.1.0 LANGUAGES C CXX)
 
 option(RTOS_STDCPP_BUILD_LIBRARY "Build the embedded adapter" ON)
 option(RTOS_STDCPP_BUILD_HOST_TESTS "Build standalone host tests and runner controls" OFF)
+set(RTOS_STDCPP_HOST_SANITIZER "undefined" CACHE STRING "Host sanitizer: undefined or address")
+set_property(CACHE RTOS_STDCPP_HOST_SANITIZER PROPERTY STRINGS undefined address)
 option(RTOS_STDCPP_BUILD_TEST_SUPPORT "Build reusable embedded test cases and report support" OFF)
 option(RTOS_STDCPP_TLS_CUSTOM_ALLOCATOR "Use application-provided TLS allocation/deallocation hooks" OFF)
 set(RTOS_STDCPP_PROFILE "" CACHE STRING "Embedded CPU/runtime/language profile")
@@ -51,13 +53,16 @@ set(CMAKE_CXX_EXTENSIONS NO)
 
 if(RTOS_STDCPP_BUILD_LIBRARY)
     set(available_profiles stm32-gcc-14.3.1-cxx17 qemu-a9-gcc-14.3.1-cxx17
-        stm32-gcc-14.3.1-cxx20 qemu-a9-gcc-14.3.1-cxx20)
+        stm32-gcc-14.3.1-cxx20 qemu-a9-gcc-14.3.1-cxx20
+        qemu-m4-gcc-14.3.1-cxx17 qemu-m4-gcc-14.3.1-cxx20
+        qemu-m7-gcc-14.3.1-cxx17 qemu-m7-gcc-14.3.1-cxx20
+        qemu-m55-gcc-14.3.1-cxx17 qemu-m55-gcc-14.3.1-cxx20)
     if(NOT RTOS_STDCPP_PROFILE IN_LIST available_profiles)
         message(FATAL_ERROR "Select an available RTOS_STDCPP_PROFILE (${available_profiles})")
     endif()
     if(RTOS_STDCPP_BACKEND STREQUAL "ThreadX")
-        if(NOT RTOS_STDCPP_PROFILE MATCHES "^stm32-")
-            message(FATAL_ERROR "ThreadX currently supports the STM32 Cortex-M55 profiles")
+        if(NOT RTOS_STDCPP_PROFILE MATCHES "^(stm32-|qemu-m(4|7|55)-)")
+            message(FATAL_ERROR "ThreadX requires a Cortex-M profile")
         endif()
         set(backend threadx)
         set(backend_target "${RTOS_STDCPP_THREADX_TARGET}")

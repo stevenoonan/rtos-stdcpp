@@ -7,6 +7,10 @@
 - Move FreeRTOS lifecycle implementation into `lifecycle.cpp`.
 - Add the backend `numeric_id()` accessor.
 - Expand host and embedded thread identity and lifecycle tests.
+- Qualify FreeRTOS and ThreadX equally on QEMU Cortex-M4, M7 and M55.
+- Add native ASan and leak checks alongside UBSan.
+- Share emulator qualification, failure tests, runtime audits and CI setup.
+- Reduce CI artifact uploads and update pinned actions to Node.js 24.
 
 ## 1.0.0 - 2026-10-29
 

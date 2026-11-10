@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "backend_time.h"
 #include "runner.h"
+#include "time_rounding.h"
 #include <cmath>
 #include <cstdio>
 #include <initializer_list>
@@ -8,30 +9,6 @@
 using namespace rtos_stdcpp;
 
 namespace {
-void rounding() {
-    for (int64_t ns : {INT64_MIN, INT64_C(-1), INT64_C(0), INT64_C(1), INT64_C(999999),
-                       INT64_C(1000000), INT64_C(1000001), INT64_C(86400000000000), INT64_MAX}) {
-        auto ticks = deadline_ticks(ns);
-        TEST_REQUIRE(ticks < portMAX_DELAY);
-        if (ns <= 0) {
-            TEST_EQ(0U, ticks);
-        } else {
-            long double requested =
-                std::ceil(static_cast<long double>(ns) * configTICK_RATE_HZ / 1000000000.0L) + 1;
-            auto expected = requested > portMAX_DELAY / 2 ? portMAX_DELAY / 2
-                                                          : static_cast<uint32_t>(requested);
-            TEST_EQ(expected, ticks);
-        }
-    }
-    uint32_t random = 0x12345678;
-    for (unsigned i = 0; i < 100000; ++i) {
-        random = random * 1664525U + 1013904223U;
-        auto ns = int64_t(random) * 1000;
-        auto ticks = deadline_ticks(ns);
-        TEST_REQUIRE(ticks > 0 && ticks < portMAX_DELAY);
-        TEST_REQUIRE(uint64_t(ticks) * (1000000000 / configTICK_RATE_HZ) >= uint64_t(ns));
-    }
-}
 
 void extension() {
     uint32_t random = 0x12345678;
@@ -50,7 +27,9 @@ int main() {
     rtos_test::Report report;
     rtos_test::reset(report, rtos_test::Suite::arithmetic);
     rtos_test::begin(report, rtos_test::Case::time_deadline_rounding);
-    rounding();
+    check_deadline_rounding(configTICK_RATE_HZ, portMAX_DELAY, [](bool value) {
+        TEST_REQUIRE(value);
+    });
     rtos_test::end(report, rtos_test::Case::time_deadline_rounding);
     rtos_test::begin(report, rtos_test::Case::time_tick_extension);
     extension();

@@ -22,7 +22,7 @@ ctest --preset host-debug --no-tests=error
 
 Install CMake 3.22+, Ninja, Python 3 and GCC 13 first. These are host reference
 and arithmetic tests. [Testing](docs/testing.md) describes Clang, embedded
-compile checks and the standalone FreeRTOS QEMU A9 suite.
+compile checks, the FreeRTOS QEMU A9 suite and FreeRTOS/ThreadX execution on the same QEMU Cortex-M4/M7/M55 models.
 
 For firmware, start with [shared integration](docs/integration.md), then follow
 [FreeRTOS integration](docs/backends/freertos.md) or
@@ -35,7 +35,7 @@ runtime providers have their own [runtime guide](docs/runtime.md).
 ## Support and limits
 
 The [support matrix](docs/support-matrix.md) separates host checks, FreeRTOS
-QEMU/board results and ThreadX board results.
+QEMU/board results and ThreadX QEMU/board results.
 
 Language `thread_local` is supported in managed workers, including constructors,
 alignment and destructors. The backend guides specify native context storage,

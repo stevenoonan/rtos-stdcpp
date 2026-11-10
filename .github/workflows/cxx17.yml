@@ -11,38 +11,39 @@ concurrency:
   cancel-in-progress: true
 env:
   PYTHONDONTWRITEBYTECODE: '1'
+  ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+  UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
 jobs:
   host:
-    name: Host C++${{ matrix.standard }} ${{ matrix.compiler }} ${{ matrix.config }}
+    name: Host C++${{ matrix.standard }} ${{ matrix.compiler }} ${{ matrix.config }} ${{ matrix.sanitizer }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
         compiler: [gcc, clang]
+        sanitizer: [undefined, address]
         config: [Debug, Release]
         standard: [17, 20]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
       - name: Install supported host compilers
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-13 g++-13 clang-18 libclang-rt-18-dev cmake ninja-build
-      - name: Execute C++ host tests with UBSan
+      - name: Execute C++ host tests with sanitizers
         run: >-
           python3 tools/run_matrix.py --environment host --host-compiler '${{ matrix.compiler }}'
-          --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
+          --config '${{ matrix.config }}' --standard '${{ matrix.standard }}' --sanitizer '${{ matrix.sanitizer }}'
           --output "$RUNNER_TEMP/results"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./.github/actions/upload-results
         if: always()
         with:
-          name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/results
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: .
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: host-cxx${{ matrix.standard }}-${{ matrix.compiler }}-${{ matrix.config }}-${{ matrix.sanitizer }}-${{ github.sha }}
   a9:
     name: A9 C++${{ matrix.standard }} ${{ matrix.config }}
     runs-on: ubuntu-24.04
@@ -53,35 +54,76 @@ jobs:
         config: [Debug, Release]
         standard: [17, 20]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            ${{ runner.temp }}/prepared/packages
-            ${{ runner.temp }}/prepared/qemu/packages
-          key: a9-packages-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('cmake/profiles/st-gcc-14.3.1-download.json', 'cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json') }}
-      - name: Install emulator runtime dependencies
-        run: |
-          sudo apt-get update
-          # Headless tests need no recommended GUI, audio, or extra storage packages.
-          sudo apt-get install -y --no-install-recommends qemu-system-arm cmake ninja-build
-      - name: Prepare exact compiler and emulator
-        run: python3 tools/setup_ci.py --kind a9 --destination "$RUNNER_TEMP/prepared"
+      - uses: ./.github/actions/setup-qemu
       - name: Execute C++ A9 tests and real tick-wrap variants
         run: >-
           python3 tools/run_matrix.py --environment a9 --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
           --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
           --output "$RUNNER_TEMP/results"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./.github/actions/upload-results
         if: always()
         with:
-          name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/results
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: .
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: a9-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
+  cortex_m:
+    name: ${{ matrix.backend }} ${{ matrix.core }} C++${{ matrix.standard }} ${{ matrix.config }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [FreeRTOS, ThreadX]
+        core: [m4, m7, m55]
+        config: [Debug, Release]
+        standard: [17, 20]
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          path: source
+          persist-credentials: false
+      - name: Read pinned kernel input
+        id: kernel
+        working-directory: source
+        env:
+          SELECTED_BACKEND: ${{ matrix.backend }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          pin = json.loads(Path('cmake/profiles/embedded-kernel-inputs.json').read_text())[os.environ['SELECTED_BACKEND'] + '-QEMU']
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('repository=' + pin['repository'] + '\ncommit=' + pin['commit'] + '\n')
+              output.write('sparse<<PATHS\n' + '\n'.join(pin['paths']) + '\nPATHS\n')
+          PY
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          repository: ${{ steps.kernel.outputs.repository }}
+          ref: ${{ steps.kernel.outputs.commit }}
+          path: inputs/kernel
+          sparse-checkout: ${{ steps.kernel.outputs.sparse }}
+          persist-credentials: false
+      - uses: ./source/.github/actions/setup-qemu
+        with:
+          source-directory: source
+      - name: Execute real kernel with both TLS allocators and tick-wrap variants
+        working-directory: source
+        run: >-
+          python3 tools/run_cortex_m_matrix.py --backend '${{ matrix.backend }}' --core '${{ matrix.core }}'
+          --config '${{ matrix.config }}' --standard '${{ matrix.standard }}'
+          --threadx-root "$GITHUB_WORKSPACE/inputs/kernel" --freertos-root "$GITHUB_WORKSPACE/inputs/kernel"
+          --toolchain-root "$RUNNER_TEMP/prepared/toolchain" --qemu-root "$RUNNER_TEMP/prepared/qemu"
+          --output "$RUNNER_TEMP/results"
+      - uses: ./source/.github/actions/upload-results
+        if: always()
+        with:
+          source-directory: source
+          results-directory: ${{ runner.temp }}/results
+          artifact-name: cortex-m-${{ matrix.backend }}-${{ matrix.core }}-cxx${{ matrix.standard }}-${{ matrix.config }}-${{ github.sha }}
   embedded:
     name: Standalone ${{ matrix.backend }} compile and release checks
     runs-on: ubuntu-24.04
@@ -94,7 +136,7 @@ jobs:
       run:
         working-directory: source
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           path: source
           persist-credentials: false
@@ -113,14 +155,14 @@ jobs:
               output.write('commit=' + pin['commit'] + '\n')
               output.write('sparse<<PATHS\n' + '\n'.join(pin['paths']) + '\nPATHS\n')
           PY
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           repository: ${{ steps.kernels.outputs.repository }}
           ref: ${{ steps.kernels.outputs.commit }}
           path: inputs/kernels
           sparse-checkout: ${{ steps.kernels.outputs.sparse }}
           persist-credentials: false
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ runner.temp }}/prepared/packages
           key: embedded-compiler-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('source/cmake/profiles/st-gcc-14.3.1-download.json') }}
@@ -154,16 +196,15 @@ jobs:
               command += ['--threadx-root', str(kernels / pin['root'])]
           subprocess.run(command, check=True)
           PY
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: ./source/.github/actions/upload-results
         if: always()
         with:
-          name: standalone-${{ matrix.backend }}-${{ github.sha }}
-          path: ${{ runner.temp }}/release-checks
-          if-no-files-found: error
-          retention-days: 7
+          source-directory: source
+          results-directory: ${{ runner.temp }}/release-checks
+          artifact-name: standalone-${{ matrix.backend }}-${{ github.sha }}
   required:
     name: Required C++ checks
-    needs: [host, a9, embedded]
+    needs: [host, a9, cortex_m, embedded]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -171,6 +212,7 @@ jobs:
       - name: Require every profile to succeed
         env:
           HOST_RESULT: ${{ needs.host.result }}
+          CORTEX_M_RESULT: ${{ needs.cortex_m.result }}
           A9_RESULT: ${{ needs.a9.result }}
           EMBEDDED_RESULT: ${{ needs.embedded.result }}
-        run: test "$HOST_RESULT" = success && test "$A9_RESULT" = success && test "$EMBEDDED_RESULT" = success
+        run: test "$HOST_RESULT" = success && test "$A9_RESULT" = success && test "$CORTEX_M_RESULT" = success && test "$EMBEDDED_RESULT" = success

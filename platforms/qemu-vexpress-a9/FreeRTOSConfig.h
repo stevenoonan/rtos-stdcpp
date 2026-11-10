@@ -70,7 +70,7 @@ uint32_t SystemCoreClockFreq();
 #define configTICK_RATE_HZ						( ( TickType_t ) 1000 )
 #define configUSE_PREEMPTION					1
 #define configUSE_IDLE_HOOK 1
-#define configUSE_TICK_HOOK						0
+#define configUSE_TICK_HOOK 1
 #define configMAX_PRIORITIES					( 7 )
 #define configMINIMAL_STACK_SIZE				( ( unsigned short ) 250 ) /* Large in case configUSE_TASK_FPU_SUPPORT is 2 in which case all tasks have an FPU context. */
 #define configTOTAL_HEAP_SIZE					( 512 * 1024 )

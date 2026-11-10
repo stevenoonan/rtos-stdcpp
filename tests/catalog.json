@@ -126,8 +126,8 @@
       "suite": "regression",
       "requirements": [
         "cxx17",
-        "freertos_gthreads",
-        "idle_cleanup"
+        "managed_gthreads",
+        "lifecycle_cleanup"
       ]
     },
     {
@@ -166,38 +166,33 @@
     },
     {
       "id": "runtime.startup",
-      "suite": "a9",
+      "suite": "qualification",
       "requirements": [
-        "qemu_a9",
-        "freertos_gthreads",
+        "embedded_kernel",
         "platform_runtime"
       ]
     },
     {
       "id": "time.clocks_sleep",
-      "suite": "a9",
+      "suite": "qualification",
       "requirements": [
-        "qemu_a9",
-        "freertos_gthreads",
+        "embedded_kernel",
         "platform_runtime"
       ]
     },
     {
       "id": "runtime.resources",
-      "suite": "a9",
+      "suite": "qualification",
       "requirements": [
-        "qemu_a9",
-        "freertos_gthreads",
+        "embedded_kernel",
         "platform_runtime"
       ]
     },
     {
       "id": "condition.notification_isolation",
-      "suite": "a9",
+      "suite": "freertos",
       "requirements": [
-        "qemu_a9",
-        "freertos_gthreads",
-        "platform_runtime"
+        "freertos_gthreads"
       ]
     },
     {
@@ -279,6 +274,30 @@
         "cxx17",
         "threads",
         "test_platform_hooks"
+      ]
+    },
+    {
+      "id": "runtime.interrupt_masking",
+      "suite": "qualification",
+      "requirements": [
+        "embedded_kernel",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "runtime.stress",
+      "suite": "qualification",
+      "requirements": [
+        "embedded_kernel",
+        "platform_runtime"
+      ]
+    },
+    {
+      "id": "runtime.fpu_context",
+      "suite": "qualification",
+      "requirements": [
+        "embedded_kernel",
+        "platform_runtime"
       ]
     }
   ]

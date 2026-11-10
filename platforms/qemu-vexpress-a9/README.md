@@ -13,6 +13,10 @@ Set `RTOS_STDCPP_CXX_STANDARD=17` (default) or `20` at configure time. The GCC
 mutex, condition-variable and future sources are shared with the Cortex-M55
 profiles.
 
+Image registration, qualification and fatal tests, allocator hooks and runtime
+audits are shared with the Cortex-M fixture. The FP probe covers D0-D31; the
+interrupt-mask probe uses the independent A9 global timer.
+
 The tests use the bundled FreeRTOS 10.4.3 kernel. No dependency is fetched by
 configure/build/test.
 
@@ -25,7 +29,7 @@ and main stack must retain at least 128 words. Resource gates require exact
 recovery after idle opportunities; this is a single-core profile.
 
 `-DRTOS_STDCPP_TLS_CUSTOM_ALLOCATOR=ON` builds the public allocation hooks from
-`tls_allocator.cpp`. This test provider uses the C++/newlib arena with tagged
+[the shared TLS fixture](../../tests/qualification/tls_allocator.cpp). This test provider uses the C++/newlib arena with tagged
 allocations and counts live blocks. Qualification requires actual hook usage,
 paired deallocation and zero live TLS blocks after worker cleanup. The default
 matrix executes both allocator configurations; the ordinary platform default

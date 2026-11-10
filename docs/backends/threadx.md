@@ -135,8 +135,10 @@ The [standalone compile fixture](../../examples/compile-check/README.md) and
 [release checker](../testing.md#release-checks) build ThreadX public API, bootstrap
 and compiler runtime objects in C++17/C++20. CI checks Debug/Release and both TLS
 allocator policies with pinned public kernel headers. These compile checks do
-not execute a kernel or produce a board image. The QEMU runner remains FreeRTOS.
-ThreadX execution and final-image checks belong to the consumer's board
-integration; use the shared
+not execute a kernel or produce a board image. The separate Cortex-M QEMU
+matrix executes the real ThreadX kernel on M4/M7/M55 with the same common tests
+as FreeRTOS; see the [parity contract](../testing.md#backend-parity).
+Physical-board execution and application final-image checks still belong to the
+consumer; use the shared
 [test support](../testing.md#shared-reports-and-hardware) in its runner. The [support matrix](../support-matrix.md) distinguishes available
 backend behavior, recorded board checks and remaining qualification work.

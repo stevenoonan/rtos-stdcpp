@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: MIT
+name: Prepare qualified QEMU tools
+description: Install runtime dependencies and prepare checksum-verified compiler and emulator inputs.
+inputs:
+  source-directory:
+    description: Checkout directory relative to GITHUB_WORKSPACE.
+    default: '.'
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+      with:
+        path: |
+          ${{ runner.temp }}/prepared/packages
+          ${{ runner.temp }}/prepared/qemu/packages
+        key: qemu-packages-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles(format('{0}/cmake/profiles/st-gcc-14.3.1-download.json', inputs.source-directory), format('{0}/cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json', inputs.source-directory)) }}
+    - name: Install emulator runtime dependencies
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends qemu-system-arm cmake ninja-build
+    - name: Prepare exact compiler and emulator
+      shell: bash
+      working-directory: ${{ inputs.source-directory }}
+      run: python3 tools/setup_ci.py --kind qemu --destination "$RUNNER_TEMP/prepared"

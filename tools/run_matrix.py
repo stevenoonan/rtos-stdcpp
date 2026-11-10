@@ -2,8 +2,6 @@
 # SPDX-License-Identifier: MIT
 """Reproduce the qualified host/A9 C++17/C++20 matrix using prepared offline inputs."""
 import argparse
-from datetime import datetime, timezone
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,15 +9,13 @@ import shutil
 import subprocess
 import sys
 sys.dont_write_bytecode = True
-ROOT = Path(__file__).resolve().parents[1]
-
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+from matrix_support import ROOT, MatrixResults, verify_compiler, verify_qemu
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--toolchain-root', type=Path)
     parser.add_argument('--qemu-root', type=Path, help='Directory produced by setup_qemu.py')
+    parser.add_argument('--sanitizer', choices=['undefined', 'address'], default='undefined')
     parser.add_argument('--standard', choices=['17', '20', 'both'], default='both')
     parser.add_argument('--clang', action='store_true', help='Also require the optional Clang host profile')
     parser.add_argument('--output', required=True, type=Path)
@@ -38,30 +34,15 @@ def main():
     hosts = ['gcc', 'clang'] if selected_host == 'both' else [selected_host]
     if args.environment == 'a9':
         hosts = []
-    output = args.output.resolve()
-    if output == ROOT or ROOT in output.parents:
-        parser.error('Use an output outside the library tree')
-    output.mkdir(parents=True, exist_ok=True)
-    if any(output.iterdir()):
-        parser.error('Use an empty output directory to preserve earlier evidence')
-    report = {'status': 'running', 'started_utc': datetime.now(timezone.utc).isoformat(),
-              'network_operations': False, 'languages': ['c++' + str(x) for x in standards],
-              'tls_allocators': tls_allocators if args.environment != 'host' else [], 'checks': [], 'host_compilers': {}}
     try:
-        report['library_commit'] = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
-        report['library_status'] = subprocess.check_output(['git', '-C', str(ROOT), 'status', '--short'], text=True)
-    except subprocess.SubprocessError:
-        report['library_commit'] = 'source archive; Git revision unavailable'
-    def save():
-        (output / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
-    def run(name, command, layer):
-        command = list(map(str, command)); log = output / (name + '.log')
-        with log.open('w') as stream:
-            result = subprocess.run(command, stdout=stream, stderr=subprocess.STDOUT, timeout=180)
-        report['checks'].append({'name': name, 'layer': layer, 'command': command, 'log': log.name, 'returncode': result.returncode, 'status': 'passed' if result.returncode == 0 else 'failed'})
-        save(); print(name + ': ' + report['checks'][-1]['status'], flush=True)
-        if result.returncode:
-            raise RuntimeError('Check failed; inspect ' + str(log))
+        results = MatrixResults(args.output, sanitizer=args.sanitizer,
+            languages=['c++' + str(x) for x in standards], host_compilers={},
+            tls_allocators=tls_allocators if args.environment != 'host' else [])
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
+    report = results.report
+    run = results.run
+    output = results.output
     try:
         host_lock = json.loads((ROOT / 'cmake/profiles/host-linux-x86_64.json').read_text())
         for profile in hosts:
@@ -81,19 +62,15 @@ def main():
             flags = ['--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13'] if profile == 'clang' else []
             for standard in standards:
                 for config in configs:
-                    name = profile + '-cxx' + str(standard) + '-' + config.lower(); build = output / name
+                    name = profile + ('-asan' if args.sanitizer == 'address' else '') + '-cxx' + str(standard) + '-' + config.lower(); build = output / name
                     run(name + '-configure', ['cmake', '-S', ROOT, '-B', build, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=' + config,
                         '-DCMAKE_C_COMPILER=' + compilers['cc'], '-DCMAKE_CXX_COMPILER=' + compilers['cxx'], '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
-                        '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard), '-DRTOS_STDCPP_BUILD_LIBRARY=OFF', '-DRTOS_STDCPP_BUILD_HOST_TESTS=ON', '-DCMAKE_CXX_FLAGS=' + ' '.join(flags)], 'configuration')
+                        '-DRTOS_STDCPP_CXX_STANDARD=' + str(standard), '-DRTOS_STDCPP_HOST_SANITIZER=' + args.sanitizer, '-DRTOS_STDCPP_BUILD_LIBRARY=OFF', '-DRTOS_STDCPP_BUILD_HOST_TESTS=ON', '-DCMAKE_CXX_FLAGS=' + ' '.join(flags)], 'configuration')
                     run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
                     run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'host')
         if args.environment != 'host':
-            qemu_lock = json.loads((ROOT / 'cmake/profiles/qemu-8.2.2-ubuntu24-x86_64.json').read_text())
-            qemu = args.qemu_root.resolve() / 'qemu-system-arm'
-            binary = args.qemu_root.resolve() / 'root/usr/bin/qemu-system-arm'
-            if sha(binary) != qemu_lock['binary_sha256'] or subprocess.check_output([str(qemu), '--version'], text=True).splitlines()[0] != qemu_lock['version']:
-                raise RuntimeError('QEMU does not match the selected profile')
-            report['qemu_binary_sha256'] = sha(binary)
+            qemu, report['qemu_binary_sha256'] = verify_qemu(args.qemu_root)
+            report['compiler_version'] = verify_compiler(args.toolchain_root)
             for standard in standards:
                 for config in configs:
                     for allocator in tls_allocators:
@@ -109,11 +86,10 @@ def main():
                                 '-DRTOS_STDCPP_A9_TICK_WRAP=' + ('ON' if wrap else 'OFF')], 'configuration')
                             run(name + '-build', ['cmake', '--build', build, '--parallel', '8'], 'compile_link')
                             run(name + '-test', ['ctest', '--test-dir', build, '--output-on-failure', '--no-tests=error', '--output-junit', build / 'junit.xml'], 'emulator_and_link')
-        report['status'] = 'passed'
+        return results.finish()
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
-        report.update(status='failed', error=str(error)); print(str(error), file=sys.stderr)
-    report['finished_utc'] = datetime.now(timezone.utc).isoformat(); save()
-    return int(report['status'] != 'passed')
+        print(str(error), file=sys.stderr)
+        return results.finish(error)
 
 if __name__ == '__main__':
     sys.exit(main())

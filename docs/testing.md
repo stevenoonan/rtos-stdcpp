@@ -1,7 +1,7 @@
 # Testing
 
 Run commands from the library root. Use CMake 3.22+, Ninja and Python 3. The host
-matrix uses Ubuntu 24.04 x86_64, GCC 13 and Clang 18 with libstdc++ and UBSan.
+matrix uses Ubuntu 24.04 x86_64, GCC 13 and Clang 18 with libstdc++, UBSan and ASan+UBSan.
 Install prerequisites explicitly:
 
 ```sh
@@ -19,10 +19,15 @@ ctest --preset host-debug --no-tests=error
 
 Use `host-release` for Release. Build output goes to `../build/rtos-stdcpp`.
 Set `-DRTOS_STDCPP_CXX_STANDARD=20` for C++20; use a separate build directory
-when keeping both modes. Each C++17 configuration has eight CTest entries; C++20
-adds the required concurrency suite: actual backend arithmetic at two tick
-rates, thread identity/allocator and backend lifecycle fixtures, standard-library
-reference cases, and normal/optimized runner controls.
+when keeping both modes. Each UBSan C++17 configuration has twelve CTest
+entries; C++20 adds its concurrency suite. These cover both backends' deadline
+arithmetic at two tick rates, FreeRTOS tick extension, thread identity/allocator
+and backend lifecycle fixtures, standard-library reference cases, runner controls
+and matrix orchestration/artifact selection controls.
+Set `-DRTOS_STDCPP_HOST_SANITIZER=address` in a separate build directory for
+ASan+UBSan with leak detection; CI sets `ASAN_OPTIONS=detect_leaks=1:halt_on_error=1`.
+This adds a CTest negative control that requires a heap-use-after-free diagnostic
+and the exact expected exit status. The default `undefined` lane remains enabled.
 Host threads use the host runtime; they do not exercise either embedded kernel.
 
 ## Embedded compile checks
@@ -70,7 +75,7 @@ location must be new, empty and outside the library. Host checks default to
 CI uses the public vendor revisions recorded in
 [embedded kernel inputs](../cmake/profiles/embedded-kernel-inputs.json).
 `tools/setup_ci.py --kind embedded --destination /absolute/path/to/tools`
-explicitly downloads/prepares the qualified compiler; unlike `--kind a9`, it
+explicitly downloads/prepares the qualified compiler; unlike `--kind qemu`, it
 omits emulator setup. Builds and release checks use the prepared inputs offline.
 
 ## Host and QEMU matrix
@@ -78,7 +83,7 @@ omits emulator setup. Builds and release checks use the prepared inputs offline.
 Prepare tools and choose a new empty result directory outside the source tree:
 
 ```sh
-python3 tools/setup_ci.py --kind a9 --destination /absolute/path/to/tools
+python3 tools/setup_ci.py --kind qemu --destination /absolute/path/to/tools
 python3 tools/run_matrix.py \
   --toolchain-root /absolute/path/to/tools/toolchain \
   --qemu-root /absolute/path/to/tools/qemu --clang \
@@ -103,17 +108,83 @@ Select `--standard 17` or `--standard 20` for one mode (default: both). Select
 only, or `--config Debug` / `Release` for one configuration. Reports contain the
 tested commit, compiler versions, commands/logs, JUnit and per-image results.
 
-A9 runs conformance, lifecycle and platform suites plus eight isolated fatal
-cases and runtime link checks. TLS failures cover startup/native-task access,
+A9 runs the shared conformance, lifecycle and qualification suites, FreeRTOS
+notification isolation, eight isolated fatal cases and runtime link checks. TLS failures cover startup/native-task access,
 allocation exhaustion and size overflow. Shared TLS cases run in every stress
 round and require exact resource recovery. Expected failures require the armed
 marker and exact exit status; a crash or hang is a failure. Each emulator process has a 25-second
 deadline, with an outer CTest limit. See the [platform contract](../platforms/qemu-vexpress-a9/README.md).
 
+## Cortex-M execution
+
+Prepare the same compiler/QEMU tools above, then check out the public kernels at
+the `FreeRTOS-QEMU` and `ThreadX-QEMU` commits in
+[embedded kernel inputs](../cmake/profiles/embedded-kernel-inputs.json).
+The runner verifies their commits and rejects tracked changes. The pinned paths
+are also sufficient for sparse checkouts using Git's cone mode, which includes
+the FreeRTOS root C files automatically.
+
+```sh
+python3 tools/run_cortex_m_matrix.py \
+  --toolchain-root /absolute/path/to/tools/toolchain \
+  --qemu-root /absolute/path/to/tools/qemu \
+  --freertos-root /absolute/path/to/pinned-freertos \
+  --threadx-root /absolute/path/to/pinned-threadx \
+  --output /absolute/path/to/new-cortex-m-results
+python3 tools/run_matrix.py --environment host --host-compiler both \
+  --sanitizer address --output /absolute/path/to/new-asan-results
+```
+
+The Cortex-M command runs all 96 backend/core/language/configuration/allocator/tick
+variants. Select `--backend FreeRTOS|ThreadX`, `--core m4|m7|m55`,
+`--standard 17|20`, `--config Debug|Release`, `--tls-allocator default|custom`, or
+`--tick-wrap normal|wrap` to narrow it. Only selected kernels' paths are required.
+Each ThreadX C++17 build has 11 CTest entries; FreeRTOS has 13 because of its two
+backend-specific checks. C++20 adds one entry to each. The actual kernel, port,
+adapter and optional runtime providers execute in the emulator. Logs, JUnit and
+reports remain in the output directory. See the
+[platform contract](../platforms/qemu-cortex-m/README.md).
+
+## Backend parity
+
+Both backends run exactly the same required shared cases and seven fatal
+scenarios on each M4/M7/M55 model. Shared qualification has six required cases:
+
+| Case | Common requirement |
+| --- | --- |
+| `runtime.startup` | Allocation and guarded local-static initialization from startup constructors |
+| `runtime.interrupt_masking` | Kernel ticks remain fixed while a hardware counter advances across three tick periods |
+| `time.clocks_sleep` | Real 32-bit wrap, monotonic extension, negative/zero/subtick sleeps, sleep-until and wall-clock adjustments |
+| `runtime.stress` | Four C++17 warm-up rounds, then 64 shared C++17 and, when selected, C++20 rounds with exact resource recovery |
+| `runtime.resources` | Warmed heap/thread/TLS recovery, 128 further joined/detached workers, destructors, aligned/nothrow allocation and OOM |
+| `runtime.fpu_context` | Distinct FP register contents survive tick interrupts and preemption across priority tiers |
+
+Resource hooks measure newlib usage, live kernel tasks and custom TLS blocks;
+FreeRTOS also measures its separate kernel heap. Host arithmetic checks use the
+same deadline-rounding oracle and boundary/random vectors for each backend at
+100 Hz and 1 kHz. Tick-extension arithmetic is FreeRTOS-specific: ThreadX
+maintains a 64-bit counter directly; runtime wrap checks still run on both. Cortex-M probes keep S0-S31
+live without compiler spills. Supplemental A9 probes keep D0-D31 live. MPS
+interrupt masking uses the SysTick hardware COUNTFLAG while delivery is masked;
+A9 uses its independent global timer. Stack observations require 128 free words.
+
+FreeRTOS adds a required notification-index-isolation suite and an armed
+kernel-heap allocation failure. ThreadX has no notification-array equivalent and
+uses the same arena for kernel adapter and C++ allocations, so the common
+allocation/TLS failure scenarios cover its allocator policy. These are documented
+backend differences, not skipped common cases. C++17 retains its four approved
+feature skips equally on both backends.
+
+Qualification images have a 90-second emulator deadline and 100-second CTest
+limit; other images have 25/35-second limits. Each fatal image must print its
+exact armed marker and exit with the expected status; arbitrary crashes and
+unexpected survival fail. The common runtime audit checks provider uniqueness,
+stock fallback exclusion, CPU/newlib ABI flags and TLS allocator selection.
+
 ## Shared reports and hardware
 
 [The catalog](../tests/catalog.json) defines case IDs, requirements and approved
-skips. The C++17 suite requires 12 passes and 4 feature skips; the FreeRTOS
+skips. The C++17 suite requires 12 passes and 4 feature skips; the shared backend
 lifecycle suite requires one pass. The C++20 suite requires eight passes and no
 skips. Assertions stay active in Release. Every required case must run checks,
 and failures remain sticky across repeated rounds.
@@ -130,8 +201,7 @@ python3 tools/run_tests.py --suite cxx17 --layer host --timeout 20 \
 
 For embedded acceptance, enable `RTOS_STDCPP_BUILD_TEST_SUPPORT`, directly link
 `rtos-stdcpp::test-support` and implement [platform.h](../tests/support/platform.h).
-This shared support can be used with either selected backend; the native
-FreeRTOS lifecycle/platform runners are separate from shared conformance.
+This shared support can be used with either selected backend; the lifecycle and emulator qualification runners build on the shared conformance cases.
 `run_suite` executes all cases once; stress runners can call `run_shared_round`
 repeatedly and `run_facility_cases` once. The runner is serial at case level;
 worker checks must finish before ending a case. In C++20, `run_cxx20_suite`

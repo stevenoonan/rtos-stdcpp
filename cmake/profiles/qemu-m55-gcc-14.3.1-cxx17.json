@@ -1,0 +1,9 @@
+{
+  "cpu_flags": [
+    "-mthumb",
+    "-mcpu=cortex-m55",
+    "-mfpu=fpv5-d16",
+    "-mfloat-abi=hard",
+    "-mcmse"
+  ]
+}

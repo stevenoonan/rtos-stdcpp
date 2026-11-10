@@ -5,7 +5,7 @@
 #include <functional>
 #include <array>
 #include <type_traits>
-#include "freertos/regression_platform.h"
+#include "regression_platform.h"
 using namespace rtos_test::regression_platform;
 
 namespace
@@ -22,7 +22,7 @@ void await(const std::atomic<bool> &flag)
 
 uint32_t freertos_cpp11_lifecycle_regression(void)
 {
-#ifdef RTOS_STDCPP_TEST_FREERTOS
+#ifdef RTOS_STDCPP_TEST_EMBEDDED
   rtos_test::reset(rtos_test::rtos_stdcpp_regression_report, rtos_test::Suite::regression);
   rtos_test::begin(rtos_test::rtos_stdcpp_regression_report, rtos_test::Case::lifecycle_identity);
 #endif
@@ -124,7 +124,7 @@ uint32_t freertos_cpp11_lifecycle_regression(void)
   }
 
   delay_ms(20);
-#ifdef RTOS_STDCPP_TEST_FREERTOS
+#ifdef RTOS_STDCPP_TEST_EMBEDDED
   rtos_test::end(rtos_test::rtos_stdcpp_regression_report, rtos_test::Case::lifecycle_identity);
   if (!rtos_test::finish(rtos_test::rtos_stdcpp_regression_report)) rtos_test::require_failed(__FILE__, __LINE__);
 #endif
