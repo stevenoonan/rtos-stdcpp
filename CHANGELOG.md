@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 - Unreleased
+
+- Prevent immediate managed thread ID reuse after memory recycling in both backends.
+- Increase thread IDs to eight bytes on 32-bit targets, requiring all C++ consumers and runtime objects to be rebuilt.
+- Move FreeRTOS lifecycle implementation into `lifecycle.cpp`.
+- Add the backend `numeric_id()` accessor.
+- Expand host and embedded thread identity and lifecycle tests.
+
 ## 1.0.0 - 2026-10-29
 
 ### Features

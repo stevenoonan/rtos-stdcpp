@@ -14,6 +14,7 @@ alignas(8) unsigned char reaper_stack[2048];
 TX_SEMAPHORE reap_signal;
 gthr_threadx::completion* pending;
 bool initialized;
+internal::thread_id_registry thread_ids;
 
 void reap(ULONG) {
     for (;;) {
@@ -55,6 +56,9 @@ void gthr_threadx::release(completion* p) {
     {
         critical_section guard;
         last = --p->references == 0;
+        if (last) {
+            thread_ids.erase(p->registration);
+        }
     }
     if (last) {
         check(tx_event_flags_delete(&p->event));
@@ -93,17 +97,34 @@ bool gthr_threadx::create_thread(void (*function)(void*), void* argument) {
     p->argument = argument;
     p->function = function;
     p->references = 2;
+    bool registered;
+    {
+        critical_section guard;
+        const auto seed = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(p)) ^
+                          static_cast<uint32_t>(tx_time_get());
+        registered = thread_ids.insert(p->registration, seed);
+    }
+    if (!registered) {
+        tx_event_flags_delete(&p->event);
+        std::free(p->stack);
+        std::free(p);
+        return false;
+    }
     auto status = tx_thread_create(&p->task, p->name, entry, reinterpret_cast<ULONG>(p), p->stack,
                                    attr.stack_word_count * sizeof(ULONG), attr.priority,
                                    attr.priority, TX_NO_TIME_SLICE, TX_DONT_START);
     if (status != TX_SUCCESS) {
+        {
+            critical_section guard;
+            thread_ids.erase(p->registration);
+        }
         tx_event_flags_delete(&p->event);
         std::free(p->stack);
         std::free(p);
         return false;
     }
     p->task.rtos_stdcpp_context = p;
-    identity = reinterpret_cast<uintptr_t>(p);
+    identity = {reinterpret_cast<uintptr_t>(p), p->registration.id};
     check(tx_thread_resume(&p->task));
     return true;
 }
@@ -132,8 +153,11 @@ gthr_threadx gthr_threadx::self() {
     if (!t) {
         return {};
     }
-    return gthr_threadx(t->rtos_stdcpp_context ? reinterpret_cast<uintptr_t>(t->rtos_stdcpp_context)
-                                               : reinterpret_cast<uintptr_t>(t) | 1U);
+    if (t->rtos_stdcpp_context) {
+        return from_start_argument(t->rtos_stdcpp_context);
+    }
+    // Native tasks retain tagged address identities; they have no registration.
+    return gthr_threadx(reinterpret_cast<uintptr_t>(t) | 1U);
 }
 
 internal::tls_context& gthr_threadx::thread_storage() {

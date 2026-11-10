@@ -6,6 +6,7 @@
 #include "critical_section.h"
 #include "threadx_thread_attributes.h"
 #include "tls.h"
+#include "../../common/thread_identity.h"
 #include <cstdint>
 #include <cerrno>
 #include <cstdlib>
@@ -50,19 +51,21 @@ public:
         unsigned references;
         completion* next;
         internal::tls_context tls;
+        internal::thread_registration registration;
     };
 
 private:
-    uintptr_t identity = 0;
+    internal::thread_identity identity{};
 
-    explicit constexpr gthr_threadx(uintptr_t value) : identity(value) {}
+    explicit constexpr gthr_threadx(uintptr_t address, uint32_t number = 0)
+        : identity{address, number} {}
 
     completion* state() const {
-        return reinterpret_cast<completion*>(identity);
+        return reinterpret_cast<completion*>(identity.address);
     }
 
     bool managed() const {
-        return identity && !(identity & 1U);
+        return identity.address && !(identity.address & 1U) && identity.number;
     }
 
     static void entry(ULONG);
@@ -70,6 +73,11 @@ private:
 public:
     using native_task_type = TX_THREAD*;
     constexpr gthr_threadx() = default;
+
+    uint32_t numeric_id() const noexcept {
+        return static_cast<uint32_t>(identity.number);
+    }
+
     static void release(completion*);
     bool create_thread(void (*function)(void*), void* argument);
 
@@ -83,7 +91,7 @@ public:
         ULONG flags;
         check(tx_event_flags_get(&state()->event, 1, TX_OR, &flags, TX_WAIT_FOREVER));
         release(state());
-        identity = 0;
+        identity = {};
         return 0;
     }
 
@@ -92,12 +100,13 @@ public:
             return EINVAL;
         }
         release(state());
-        identity = 0;
+        identity = {};
         return 0;
     }
 
     static gthr_threadx from_start_argument(void* p) {
-        return gthr_threadx(reinterpret_cast<uintptr_t>(p));
+        return gthr_threadx(reinterpret_cast<uintptr_t>(p),
+                            static_cast<completion*>(p)->registration.id);
     }
 
     void* arg() const {

@@ -90,14 +90,19 @@ and C++20 helpers are covered in
 
 ## Thread lifetime and cleanup
 
-Managed IDs name a stable completion block. Join waits for language TLS and exit
+Managed IDs contain a completion-block address and a nonzero 32-bit lifetime
+number. On the supported 32-bit target, the handle and `std::thread::id` are eight
+bytes. Join and detach still access the completion block directly. See the
+[identity contract](../thread-identity.md) for allocation, wrap and ABI rules.
+Join waits for language TLS and exit
 callbacks, native thread completion, TCB deletion and stack reclamation. Detach
 releases the owner's reference; a reaper deletes completed workers and releases
 their final reference. Allow the reaper at priority `TX_MAX_PRIORITIES - 1` to
 run. It has a permanent, statically allocated 2 KiB stack.
 
 Do not terminate/delete managed workers externally. Native IDs use tagged TCB
-addresses; language TLS is supported only on managed workers. The one existing
+addresses with numeric component zero; these native IDs do not receive the
+managed lifetime-number protection. Language TLS is supported only on managed workers. The one existing
 gthread key is reserved for libstdc++ exit work. The optional
 `rtos_stdcpp_threadx_thread_cleanup(TX_THREAD*)` hook runs on the reaper before
 TCB deletion and can reclaim consumer per-thread state.
